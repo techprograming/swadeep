@@ -91,7 +91,7 @@ export default function Hero() {
                   href="/programs"
                   className="inline-flex items-center justify-center px-8 py-4 rounded-full text-base font-bold text-white bg-saffron hover:bg-saffron-dark shadow-lg shadow-saffron/20 hover:shadow-saffron/40 hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-saffron"
                 >
-                  <span>Read More</span>
+                  <span>Explore Our Work</span>
                   <svg
                     className="w-5 h-5 ml-2"
                     fill="none"
@@ -112,7 +112,7 @@ export default function Hero() {
                   href="/donate"
                   className="inline-flex items-center justify-center px-8 py-4 rounded-full text-base font-bold text-cream hover:text-forest-dark bg-transparent hover:bg-cream border-2 border-cream/80 hover:border-cream shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cream"
                 >
-                  <span>Donation</span>
+                  <span>Support Our Mission</span>
                 </Link>
               </div>
 
@@ -132,10 +132,9 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Column: Visual Showcase Card featuring Community & Field Photography */}
-          <div className="lg:col-span-5 relative hidden lg:block">
+            {/* Right Column: Visual Showcase Card featuring Community & Field Photography */}
+            <div className="lg:col-span-5 relative hidden lg:block">
             <div className="relative mx-auto max-w-md w-full">
               <div className="rounded-3xl bg-forest-800/80 backdrop-blur-xl border border-white/20 p-6 shadow-2xl space-y-5">
                 <div className="h-60 rounded-2xl relative overflow-hidden flex flex-col justify-end p-5 border border-white/10 group">
@@ -218,6 +217,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

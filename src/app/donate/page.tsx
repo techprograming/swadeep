@@ -251,11 +251,14 @@ export default function DonatePage() {
           {/* 6. Dedicated Donor Support & Grievance Contact */}
           <div className="bg-forest-50 border border-forest-200 rounded-3xl p-8 text-center space-y-4">
             <h3 className="font-heading text-xl font-bold text-forest-dark">
-              Donor Inquiries &amp; Receipt Confirmation
+              Donor Inquiries &amp; Transfer Verification
             </h3>
             <p className="font-body text-charcoal/90 text-base max-w-2xl mx-auto leading-relaxed">
               For any questions regarding donations, wire transfers, 80G receipts, or CSR partnerships, please reach out to our accounts desk:
             </p>
+            <div className="p-4 bg-white/80 rounded-2xl border border-forest/10 max-w-xl mx-auto text-xs sm:text-sm text-forest-dark font-medium">
+              Donors are kindly requested to verify account details through our official phone line or email prior to initiating electronic transfers.
+            </div>
             <div className="flex flex-wrap justify-center items-center gap-6 pt-2 font-body text-sm sm:text-base">
               <a
                 href={`mailto:${BANKING_DETAILS.feedbackEmail}`}
