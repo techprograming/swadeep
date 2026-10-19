@@ -140,6 +140,20 @@ export default function GalleryPage() {
       ? GALLERY_ITEMS
       : GALLERY_ITEMS.filter((item) => item.category === selectedCategory);
 
+  const handleNext = useCallback(() => {
+    if (!activeItem) return;
+    const currentIndex = filteredItems.findIndex((item) => item.id === activeItem.id);
+    const nextIndex = (currentIndex + 1) % filteredItems.length;
+    setActiveItem(filteredItems[nextIndex]);
+  }, [activeItem, filteredItems]);
+
+  const handlePrev = useCallback(() => {
+    if (!activeItem) return;
+    const currentIndex = filteredItems.findIndex((item) => item.id === activeItem.id);
+    const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
+    setActiveItem(filteredItems[prevIndex]);
+  }, [activeItem, filteredItems]);
+
   // Lightbox keyboard navigation (Escape, ArrowLeft, ArrowRight)
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -148,16 +162,12 @@ export default function GalleryPage() {
       if (e.key === "Escape") {
         setActiveItem(null);
       } else if (e.key === "ArrowRight") {
-        const currentIndex = filteredItems.findIndex((item) => item.id === activeItem.id);
-        const nextIndex = (currentIndex + 1) % filteredItems.length;
-        setActiveItem(filteredItems[nextIndex]);
+        handleNext();
       } else if (e.key === "ArrowLeft") {
-        const currentIndex = filteredItems.findIndex((item) => item.id === activeItem.id);
-        const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
-        setActiveItem(filteredItems[prevIndex]);
+        handlePrev();
       }
     },
-    [activeItem, filteredItems]
+    [activeItem, handleNext, handlePrev]
   );
 
   useEffect(() => {
@@ -376,8 +386,8 @@ export default function GalleryPage() {
             className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-3xl w-full border border-white/20 relative animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Image */}
-            <div className="relative w-full h-72 sm:h-96 bg-forest-900">
+            {/* Modal Image with Controls */}
+            <div className="relative w-full h-72 sm:h-96 bg-forest-900 group">
               <Image
                 src={activeItem.image}
                 alt={activeItem.title}
@@ -385,7 +395,37 @@ export default function GalleryPage() {
                 sizes="(max-width: 1024px) 100vw, 800px"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent pointer-events-none" />
+
+              {/* Previous Button Overlay */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-forest text-white flex items-center justify-center transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-saffron"
+                aria-label="Previous photograph"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Next Button Overlay */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-forest text-white flex items-center justify-center transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-saffron"
+                aria-label="Next photograph"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
 
               {/* Close Button */}
               <button
@@ -448,12 +488,32 @@ export default function GalleryPage() {
                 {activeItem.description}
               </p>
 
-              <div className="pt-4 border-t border-cream-dark flex items-center justify-between text-xs text-charcoal/60">
-                <span>Use Left / Right Arrow keys to browse</span>
+              {/* Modal Navigation Footer */}
+              <div className="pt-4 border-t border-cream-dark flex flex-wrap items-center justify-between gap-3 text-xs text-charcoal/70">
+                <div className="flex items-center space-x-2">
+                  <button
+                    type="button"
+                    onClick={handlePrev}
+                    className="px-3.5 py-1.5 rounded-lg bg-cream-dark hover:bg-forest hover:text-white font-bold transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>Previous</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="px-3.5 py-1.5 rounded-lg bg-cream-dark hover:bg-forest hover:text-white font-bold transition-colors inline-flex items-center gap-1"
+                  >
+                    <span>Next</span>
+                  </button>
+                  <span className="text-charcoal/60 ml-2 hidden sm:inline">
+                    Photo {filteredItems.findIndex((it) => it.id === activeItem.id) + 1} of {filteredItems.length}
+                  </span>
+                </div>
+
                 <button
                   type="button"
                   onClick={() => setActiveItem(null)}
-                  className="px-4 py-2 rounded-lg bg-cream-dark hover:bg-forest hover:text-white font-bold transition-colors"
+                  className="px-5 py-2 rounded-lg bg-forest text-white hover:bg-forest-light font-bold transition-colors shadow-xs"
                 >
                   Close
                 </button>

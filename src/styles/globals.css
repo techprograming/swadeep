@@ -66,3 +66,27 @@
     transform: translateY(0);
   }
 }
+
+/* WCAG Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Prevent double-tap zoom on interactive elements for mobile touch responsiveness */
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}

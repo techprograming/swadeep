@@ -244,17 +244,25 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar: Copyright & Made with Love */}
+      {/* Bottom Bar: Copyright, Privacy & Navigation */}
       <div className="border-t border-forest-800 bg-forest-900/60 py-6">
-        <div className="container-wide section-padding flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-cream/80 space-y-3 sm:space-y-0">
+        <div className="container-wide section-padding flex flex-col md:flex-row items-center justify-between text-xs sm:text-sm text-cream/80 gap-4">
           <p>
             &copy; {currentYear} {SITE_CONFIG.name}. All rights reserved.
           </p>
-          <p className="flex items-center space-x-1">
-            <span>Made with</span>
-            <HeartIcon className="w-4 h-4 text-saffron fill-current inline-block mx-1" aria-hidden="true" />
-            <span>for India</span>
-          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
+            <Link href="/privacy" className="hover:text-saffron transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-cream/40">•</span>
+            <Link href="/donate" className="hover:text-saffron transition-colors">
+              80G Tax Exemption
+            </Link>
+            <span className="text-cream/40">•</span>
+            <Link href="/impact" className="hover:text-saffron transition-colors">
+              Impact &amp; Reports
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

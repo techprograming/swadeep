@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { SITE_CONFIG } from "@/lib/constants";
+import { SITE_CONFIG, OFFICE_LOCATIONS } from "@/lib/constants";
 import { isValidEmail } from "@/lib/utils";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 import {
@@ -41,6 +41,7 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [botHoneypot, setBotHoneypot] = useState("");
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -123,7 +124,7 @@ export default function ContactPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, website: botHoneypot }),
       });
 
       const data = await response.json();
@@ -266,6 +267,20 @@ export default function ContactPage() {
               )}
 
               <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                {/* Anti-spam Bot Honeypot */}
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="website-field">Leave this empty</label>
+                  <input
+                    id="website-field"
+                    type="text"
+                    name="website"
+                    value={botHoneypot}
+                    onChange={(e) => setBotHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 {/* Name & Email Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {/* Name Field */}
@@ -492,23 +507,54 @@ export default function ContactPage() {
                   </h3>
                 </div>
 
-                <div className="space-y-5 text-sm text-charcoal/80 font-body">
-                  {/* Address */}
-                  <div className="flex items-start space-x-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-forest-50 text-forest flex items-center justify-center shrink-0 border border-forest-100">
-                      <MapPinIcon className="w-5 h-5 text-forest" />
+                <div className="space-y-6 text-sm text-charcoal/80 font-body">
+                  {/* Operating Headquarters */}
+                  <div className="flex items-start space-x-3.5 p-3.5 rounded-2xl bg-forest-50/60 border border-forest-100">
+                    <div className="w-10 h-10 rounded-xl bg-forest text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <MapPinIcon className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <span className="block text-xs font-bold text-forest uppercase tracking-wider">
-                        Registered Office
-                      </span>
-                      <p className="font-medium text-charcoal/90 mt-0.5 leading-snug">
-                        {SITE_CONFIG.address}
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-forest uppercase tracking-wider">
+                          Operating Headquarters
+                        </span>
+                        <span className="text-[10px] font-bold bg-forest/10 text-forest px-2 py-0.5 rounded-full">
+                          Main Office
+                        </span>
+                      </div>
+                      <p className="font-semibold text-charcoal mt-1 leading-snug">
+                        {OFFICE_LOCATIONS.operating.fullAddress}
+                      </p>
+                      <p className="text-xs text-charcoal/70 mt-1">
+                        Key Contact: <strong>{OFFICE_LOCATIONS.operating.contactPerson}</strong> ({OFFICE_LOCATIONS.operating.phone})
                       </p>
                     </div>
                   </div>
 
-                  {/* Phone */}
+                  {/* Registered Office */}
+                  <div className="flex items-start space-x-3.5 p-3.5 rounded-2xl bg-cream-dark/50 border border-forest/10">
+                    <div className="w-10 h-10 rounded-xl bg-forest-100 text-forest flex items-center justify-center shrink-0">
+                      <MapPinIcon className="w-5 h-5 text-forest" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-charcoal/80 uppercase tracking-wider">
+                          Registered Office
+                        </span>
+                        <span className="text-[10px] font-semibold bg-charcoal/5 text-charcoal/70 px-2 py-0.5 rounded-full">
+                          Trust Records
+                        </span>
+                      </div>
+                      <p className="font-medium text-charcoal/90 mt-1 leading-snug">
+                        {OFFICE_LOCATIONS.registered.fullAddress}
+                      </p>
+                      <p className="text-xs text-charcoal/60 mt-0.5">
+                        {OFFICE_LOCATIONS.registered.note}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Phone Helpline */}
                   <div className="flex items-start space-x-3.5">
                     <div className="w-10 h-10 rounded-xl bg-forest-50 text-forest flex items-center justify-center shrink-0 border border-forest-100">
                       <PhoneCallIcon className="w-5 h-5 text-forest" />
@@ -518,11 +564,14 @@ export default function ContactPage() {
                         Helpline / Telephone
                       </span>
                       <a
-                        href={`tel:${SITE_CONFIG.phone}`}
-                        className="font-medium text-charcoal/90 hover:text-saffron transition-colors mt-0.5 block"
+                        href={`tel:${SITE_CONFIG.phoneRaw || "+919428309408"}`}
+                        className="font-bold text-forest-dark hover:text-saffron transition-colors mt-0.5 block text-base"
                       >
                         {SITE_CONFIG.phone}
                       </a>
+                      <span className="text-xs text-charcoal/60">
+                        Direct line to Kalyan Dangar
+                      </span>
                     </div>
                   </div>
 
@@ -533,14 +582,17 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <span className="block text-xs font-bold text-forest uppercase tracking-wider">
-                        Official Inquiries
+                        Official Email Inquiries
                       </span>
                       <a
                         href={`mailto:${SITE_CONFIG.email}`}
-                        className="font-medium text-charcoal/90 hover:text-saffron transition-colors mt-0.5 block"
+                        className="font-bold text-forest-dark hover:text-saffron transition-colors mt-0.5 block"
                       >
                         {SITE_CONFIG.email}
                       </a>
+                      <span className="text-xs text-charcoal/60">
+                        Donations: <a href="mailto:donation@swadeep.org" className="underline hover:text-forest">donation@swadeep.org</a>
+                      </span>
                     </div>
                   </div>
 
@@ -553,10 +605,10 @@ export default function ContactPage() {
                       <span className="block text-xs font-bold text-forest uppercase tracking-wider">
                         Office Working Hours
                       </span>
-                      <p className="font-medium text-charcoal/90 mt-0.5">
-                        Monday – Saturday: 9:30 AM – 6:30 PM
+                      <p className="font-semibold text-charcoal mt-0.5">
+                        Monday – Saturday: 10:00 AM – 6:00 PM IST
                       </p>
-                      <span className="text-xs text-charcoal/60">Sunday: Closed</span>
+                      <span className="text-xs text-charcoal/60">Sunday: Closed for field operations</span>
                     </div>
                   </div>
                 </div>
@@ -635,50 +687,45 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Map Placeholder Div */}
-              <div className="bg-forest-light rounded-3xl p-6 sm:p-8 text-cream shadow-xl border border-white/20 relative overflow-hidden flex flex-col justify-between min-h-[260px]">
-                {/* Decorative Map Pattern grid */}
-                <div
-                  className="absolute inset-0 opacity-15 pointer-events-none"
-                  aria-hidden="true"
-                  style={{
-                    backgroundImage: `linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)`,
-                    backgroundSize: "32px 32px",
-                  }}
-                />
-
-                <div className="relative z-10 flex items-center justify-between">
-                  <span className="bg-forest-dark/80 px-3 py-1 rounded-full text-xs font-bold text-saffron-light">
-                    Location Overview
-                  </span>
-                  <CompassIcon className="w-6 h-6 text-saffron-light" />
-                </div>
-
-                <div className="relative z-10 my-4 text-center space-y-2">
-                  <div className="w-12 h-12 mx-auto rounded-full bg-saffron text-white flex items-center justify-center shadow-lg animate-bounce">
-                    <MapPinIcon className="w-6 h-6 text-white" />
+              {/* Verified Google Maps Embed Card */}
+              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-forest/10 space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="bg-forest-50 text-forest border border-forest-200 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                      Verified Location
+                    </span>
+                    <h4 className="font-heading text-lg font-bold text-forest-dark mt-2">
+                      Ahmedabad Operating Office
+                    </h4>
                   </div>
-                  <h4 className="font-heading text-lg sm:text-xl font-bold text-white">
-                    Headquarters: Prahlad Nagar, Ahmedabad
-                  </h4>
-                  <p className="text-sm sm:text-base text-cream/90 max-w-sm mx-auto leading-relaxed">
-                    SWADEEP, 21, Abhinandan Park Society, Prernatirth Derasar Rd, Prahlad Nagar, Ahmedabad, Gujarat 380015
-                  </p>
+                  <CompassIcon className="w-6 h-6 text-forest shrink-0" />
                 </div>
 
-                <div className="relative z-10 pt-3 border-t border-white/10 text-center">
+                {/* Interactive Map Iframe */}
+                <div className="w-full h-64 rounded-2xl overflow-hidden border border-forest/15 shadow-inner relative">
+                  <iframe
+                    title="Swadeep Ahmedabad Operating Headquarters Google Map"
+                    src="https://maps.google.com/maps?q=SWADEEP,%2021,%20Abhinandan%20Park%20Society,%20Prernatirth%20Derasar%20Rd,%20Prahlad%20Nagar,%20Ahmedabad,%20Gujarat%20380015&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                    aria-label="Google Maps interactive embed of Swadeep Operating Headquarters"
+                  />
+                </div>
+
+                <div className="pt-2 text-center">
                   <a
                     href="https://maps.google.com/?q=SWADEEP+21+Abhinandan+Park+Society+Prernatirth+Derasar+Rd+Prahlad+Nagar+Ahmedabad+Gujarat+380015"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-sm font-bold text-white hover:text-saffron-light transition-colors"
+                    className="inline-flex items-center justify-center px-6 py-2.5 rounded-full text-sm font-bold text-white bg-forest hover:bg-forest-light transition-colors shadow-sm"
                   >
-                    <span>Open in Google Maps</span>
+                    <span>Get Directions in Google Maps</span>
                     <svg
-                      className="w-3.5 h-3.5 ml-1"
+                      className="w-4 h-4 ml-1.5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      aria-hidden="true"
                     >
                       <path
                         strokeLinecap="round"

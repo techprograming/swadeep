@@ -7,6 +7,7 @@ interface ContactRequestBody {
   phone?: unknown;
   subject?: unknown;
   message?: unknown;
+  website?: unknown; // Honeypot field for bot spam detection
 }
 
 export async function POST(request: Request) {
@@ -18,6 +19,15 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { success: false, error: "Invalid JSON request payload." },
         { status: 400 }
+      );
+    }
+
+    // Honeypot check: If the hidden 'website' field is filled by a bot, silently succeed
+    if (typeof body.website === "string" && body.website.trim().length > 0) {
+      console.warn("[Contact API] Bot honeypot triggered. Silently dropping payload.");
+      return NextResponse.json(
+        { success: true, message: "Thank you for contacting Swadeep." },
+        { status: 200 }
       );
     }
 

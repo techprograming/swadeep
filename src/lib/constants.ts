@@ -22,20 +22,99 @@ export const SITE_CONFIG = {
   email: "swadeepindiango@gmail.com",
   donationEmail: "donation@swadeep.org",
   phone: "+91-942-830-9408",
+  phoneRaw: "+919428309408",
   contactPerson: "Kalyan Dangar (09428309408)",
+  operatingAddress:
+    "SWADEEP, 21, Abhinandan Park Society, Prernatirth Derasar Rd, Prahlad Nagar, Ahmedabad, Gujarat 380015",
+  registeredAddress:
+    "184/A Anand Hall station road- SIHOR, District Bhavnagar, Gujarat",
   address:
     "SWADEEP, 21, Abhinandan Park Society, Prernatirth Derasar Rd, Prahlad Nagar, Ahmedabad, Gujarat 380015",
   oldSiteAddress:
     "21, Abhinandan Park Society, Opp. Vastrapur Rly. Stn., Butbhavani Rly. Crossing, Vejalpur – Ahmedabad -380051",
   pan: "AAKTS6375E",
   fcraNumber: "041980081",
+  trustRegistrationNo: "E/1739/Bhavnagar",
   award: "CSR Conclave 2019",
+  workingHours: "Monday to Saturday: 10:00 AM – 6:00 PM IST (Sunday Closed)",
   social: {
     facebook: "https://www.facebook.com/SwadeepShikshanVikasSanstha/",
     twitter: "https://twitter.com",
     instagram: "https://instagram.com",
     youtube: "https://www.youtube.com/@swadeepindia2543",
   },
+} as const;
+
+export const OFFICE_LOCATIONS = {
+  operating: {
+    label: "Operating Headquarters & Communication Office",
+    labelGu: "મુખ્ય કાર્યાલય અને પત્રવ્યવહાર સરનામું",
+    tag: "Operating Office",
+    organization: "Swadeep Shikshan Vikas Sanstha",
+    addressLine1: "21, Abhinandan Park Society",
+    addressLine2: "Prernatirth Derasar Road, Prahlad Nagar",
+    city: "Ahmedabad",
+    state: "Gujarat",
+    pincode: "380015",
+    fullAddress:
+      "SWADEEP, 21, Abhinandan Park Society, Prernatirth Derasar Rd, Prahlad Nagar, Ahmedabad, Gujarat 380015",
+    contactPerson: "Kalyan Dangar",
+    phone: "+91-942-830-9408",
+    phoneRaw: "+919428309408",
+    email: "swadeepindiango@gmail.com",
+    workingHours: "Monday – Saturday: 10:00 AM – 6:00 PM IST",
+    mapQuery:
+      "SWADEEP,+21,+Abhinandan+Park+Society,+Prernatirth+Derasar+Rd,+Prahlad+Nagar,+Ahmedabad,+Gujarat+380015",
+    mapEmbedUrl:
+      "https://maps.google.com/maps?q=SWADEEP,%2021,%20Abhinandan%20Park%20Society,%20Prernatirth%20Derasar%20Rd,%20Prahlad%20Nagar,%20Ahmedabad,%20Gujarat%20380015&t=&z=15&ie=UTF8&iwloc=&output=embed",
+  },
+  registered: {
+    label: "Registered Office (Trust Deed & Legal Records)",
+    labelGu: "નોંધાયેલ કાનૂની કાર્યાલય",
+    tag: "Registered Office",
+    organization: "Swadeep Shikshan Vikas Sanstha",
+    addressLine1: "184/A Anand Hall Station Road",
+    addressLine2: "Sihor",
+    city: "Sihor, District Bhavnagar",
+    state: "Gujarat",
+    pincode: "364240",
+    fullAddress:
+      "184/A Anand Hall station road- SIHOR, District Bhavnagar, Gujarat",
+    contactPerson: "Kalyan Dangar",
+    phone: "+91-942-830-9408",
+    phoneRaw: "+919428309408",
+    email: "swadeepindiango@gmail.com",
+    workingHours: "By appointment / Official correspondence",
+    note: "Official registered office as per Trust Deed and Banking Records with Bank of India, Sihor Branch",
+  },
+} as const;
+
+export const VERIFIED_IMPACT_METRICS = {
+  reportingPeriod: "2005 – Present",
+  source: "Swadeep Official Field Records & Annual Reports",
+  lastVerified: "October 2026",
+  childrenBenefited: "60,000+",
+  villagesCovered: "200+",
+  icdsCentres: "277",
+  primarySchools: "100",
+  secondarySchools: "30",
+  dentalHealth: "13,000",
+  healthAndSafety: "14,000",
+  generalHealthCamps: "2,000",
+  fishermenSupported: "500",
+  coastalVillages: "10",
+  solarStreetLights: "1,050",
+  infrastructureVillages: "40",
+  disasterMasksDistributed: "1,00,000",
+  disasterHouseholdsHelped: "1,000",
+  summaryStats: [
+    { label: "Children Benefited", value: "60,000+", subtext: "Across 200 Villages" },
+    { label: "ICDS Centres Supported", value: "277", subtext: "Pre-primary Education" },
+    { label: "Schools Reached", value: "130", subtext: "100 Primary + 30 Secondary" },
+    { label: "Health Beneficiaries", value: "27,000+", subtext: "Dental & General Health" },
+    { label: "Fishermen & Livelihood", value: "500+", subtext: "10 Coastal Villages" },
+    { label: "Solar Street Lights", value: "1,050", subtext: "40 Rural Villages" },
+  ],
 } as const;
 
 export interface NavDropdownItem {
@@ -57,7 +136,7 @@ export const NAV_LINKS: readonly NavLinkItem[] = [
     dropdown: [
       { label: "Overview", href: "/", description: "Homepage overview & latest initiatives" },
       { label: "Who Are We?", href: "/#who-are-we-heading", description: "Our founding story and mission" },
-      { label: "What We Do?", href: "/#focus-areas", description: "Thematic development areas" },
+      { label: "Our Focus Areas", href: "/#focus-areas", description: "Thematic development areas" },
       { label: "Our Achievements", href: "/#impact-stats-heading", description: "Key measurable impact milestones" },
       { label: "Our Partners", href: "/#partners", description: "Funding partners & collaborators" },
       { label: "Our Trustees", href: "/#our-trustees", description: "Board of trustees & leadership" },
@@ -69,15 +148,15 @@ export const NAV_LINKS: readonly NavLinkItem[] = [
     dropdown: [
       { label: "Who Are We?", href: "/about", description: "History, vision, and core principles" },
       { label: "Our Vision & Mission", href: "/about#vision-mission", description: "Guiding purpose & empowerment goals" },
-      { label: "Our Trustees", href: "/about#our-trustees", description: "Governing board & leadership" },
-      { label: "Our Achievements", href: "/about#achievements", description: "Thematic achievements & statistics" },
-      { label: "What They Say About Us", href: "/about#testimonials", description: "Partner & staff testimonials" },
+      { label: "Board of Trustees", href: "/about#our-trustees", description: "Governing board & leadership" },
+      { label: "What They Say", href: "/about#testimonials", description: "Partner & staff testimonials" },
     ],
   },
   {
-    label: "What We Do",
+    label: "Our Work",
     href: "/programs",
     dropdown: [
+      { label: "All Programs", href: "/programs", description: "Overview of all grassroots initiatives" },
       { label: "Education", href: "/programs#education", description: "Pre-primary, LRC, digital & high school" },
       { label: "Health", href: "/programs#health", description: "Project Arogya, dental hygiene & camps" },
       { label: "Livelihood", href: "/programs#livelihood", description: "Marine fisheries, SHGs & Sagar Shala" },
@@ -86,45 +165,32 @@ export const NAV_LINKS: readonly NavLinkItem[] = [
     ],
   },
   {
-    label: "Gallery",
+    label: "Impact & Reports",
+    href: "/impact",
+    dropdown: [
+      { label: "Impact Dashboard", href: "/impact", description: "Verified milestones across 200+ villages" },
+      { label: "Thematic Achievements", href: "/impact#thematic-stats", description: "Detailed sector-wise data" },
+      { label: "Documentation & Reports", href: "/impact#reports", description: "Annual report summaries and evidence" },
+    ],
+  },
+  {
+    label: "Media",
     href: "/gallery",
     dropdown: [
       { label: "Photo Gallery", href: "/gallery", description: "All field photographs & project glimpses" },
-      { label: "Education Photos", href: "/gallery?category=Education", description: "LRC coaching & classroom activities" },
-      { label: "Health Drives", href: "/gallery?category=Health", description: "Medical & dental hygiene camps" },
-      { label: "Livelihood & Fisheries", href: "/gallery?category=Livelihood", description: "Fishermen support & SHG empowerment" },
-      { label: "Infrastructure Projects", href: "/gallery?category=Infrastructure", description: "BaLA Anganwadis & school facilities" },
+      { label: "Official Video Gallery", href: "/videos", description: "YouTube videos from @swadeepindia2543" },
+      { label: "Education Media", href: "/gallery?category=Education", description: "LRC coaching & classroom activities" },
+      { label: "Health Drives Media", href: "/gallery?category=Health", description: "Medical & dental hygiene camps" },
     ],
   },
   {
-    label: "Videos",
-    href: "/videos",
-    dropdown: [
-      { label: "Official Video Gallery", href: "/videos", description: "All videos from @swadeepindia2543" },
-      { label: "Anganwadi & ICDS Training", href: "/videos?category=Anganwadi", description: "Worker training & action songs" },
-      { label: "Foundational Literacy", href: "/videos?category=Education", description: "Writing & reading skills sessions" },
-      { label: "Health & Nutrition", href: "/videos?category=Health", description: "Dietary awareness & interactive learning" },
-      { label: "Culture & Value Education", href: "/videos?category=Culture", description: "Moral storytelling & youth discussions" },
-    ],
-  },
-  {
-    label: "Donation",
-    href: "/donate",
-    dropdown: [
-      { label: "Donate to the Cause", href: "/donate", description: "Tax exemption under Section 80G" },
-      { label: "Domestic Bank Transfer", href: "/donate#bank-details", description: "Bank of India NEFT / RTGS / IMPS" },
-      { label: "FCRA Foreign Remittance", href: "/donate#bank-details", description: "State Bank of India New Delhi Branch" },
-      { label: "Cheque & Draft Info", href: "/donate#bank-details", description: "Mailing address for physical donations" },
-    ],
-  },
-  {
-    label: "Contact Us",
+    label: "Contact",
     href: "/contact",
     dropdown: [
-      { label: "Send Us an Email", href: "/contact#contact-form", description: "Submit your message or inquiry" },
-      { label: "Office Address", href: "/contact#location", description: "Ahmedabad, Gujarat headquarters" },
-      { label: "Frequently Asked Questions", href: "/contact#faq", description: "Partnership & collaboration FAQs" },
-      { label: "Direct Phone Call", href: "tel:+919428309408", description: "+91-942-830-9408" },
+      { label: "Contact Us", href: "/contact", description: "Headquarters & Sihor office locations" },
+      { label: "Send an Inquiry", href: "/contact#contact-form", description: "Submit your message or partnership query" },
+      { label: "Office Address & Map", href: "/contact#location", description: "Ahmedabad Prahlad Nagar Google Map" },
+      { label: "Frequently Asked Questions", href: "/contact#faq", description: "Collaboration & general FAQs" },
     ],
   },
 ] as const;
@@ -360,30 +426,59 @@ export const TESTIMONIALS = [
 
 export const BANKING_DETAILS = {
   taxBenefitText:
-    "Swadeep is a non-profit organization and hence, any donation given to organization is liable for tax exemption.",
-  chequeDetails:
-    "You may either transfer donation directly to organization bank account or send cheque/draft in favour of Swadeep Shikshan Vikas Sanstha at 21, Abhinandan Park Society, Opp. Vastrapur Railway Station, Butbhavani Railway Crossing, Vejalpur – Ahmedabad -380051. Contact: Kalyan Dangar 09428309408.",
+    "Swadeep Shikshan Vikas Sanstha is a registered non-profit organization. Donations made to the organization are eligible for tax exemption under Section 80G of the Income Tax Act.",
+  taxExemptionSection: "Section 80G",
   pan: "AAKTS6375E",
+  fcraNumber: "041980081",
+  trustRegistrationNo: "E/1739/Bhavnagar",
+  receiptSteps: [
+    {
+      step: "01",
+      title: "Direct Bank Transfer",
+      description:
+        "Transfer your donation directly using the domestic (NEFT / RTGS / IMPS) or foreign FCRA bank account details given below.",
+    },
+    {
+      step: "02",
+      title: "Share UTR & Donor Details",
+      description:
+        "Email your transfer confirmation / UTR reference number along with your Full Legal Name, PAN number, Postal Address, and Phone Number to donation@swadeep.org.",
+    },
+    {
+      step: "03",
+      title: "Receive 80G Tax Exemption Certificate",
+      description:
+        "Our accounts team will verify the remittance and issue an official stamped 80G donation receipt and certificate via email within 5 to 7 working days.",
+    },
+  ],
   domestic: {
     accountName: "SWADEEP SHIKSHAN VIKAS SANSTHA",
     bankName: "Bank of India",
     address: "184/A Anand Hall station road- SIHOR, District Bhavnagar",
-    branch: "SIHOR",
+    branch: "SIHOR (Branch Code: 003208)",
     accountNumber: "320810110005282",
     ifsc: "BKID0003208",
+    micr: "364013051",
+    accountType: "Current / Savings Account",
+    currency: "INR (Indian Rupees)",
   },
   fcra: {
     registrationNumber: "041980081",
     bankName: "State Bank of India",
     branch: "SBI New Delhi Main Branch, (00691)",
     accountNumber: "40102583793",
-    accountType: "FCRA Savings Account",
+    accountType: "FCRA Designated Savings Account",
     ifsc: "SBIN0000691",
     swift: "SBININBB104",
     address:
       "SBI New Delhi Main Branch, FCRA. Foreign Exchange Division, 11, Parliament Street, New Delhi- 110001.",
+    currency: "Foreign Currencies (USD, GBP, EUR, etc.)",
   },
+  chequeDetails:
+    "You may also send a cheque or demand draft in favour of 'Swadeep Shikshan Vikas Sanstha' payable at Ahmedabad to: SWADEEP, 21, Abhinandan Park Society, Prernatirth Derasar Rd, Prahlad Nagar, Ahmedabad, Gujarat 380015. Contact: Kalyan Dangar (09428309408).",
   feedbackEmail: "donation@swadeep.org",
+  donorHelpline: "+91-942-830-9408",
+  contactPerson: "Kalyan Dangar",
 } as const;
 
 export interface TrusteeMember {
