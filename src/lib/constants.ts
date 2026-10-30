@@ -119,12 +119,15 @@ export const VERIFIED_IMPACT_METRICS = {
 
 export interface NavDropdownItem {
   label: string;
+  labelGu: string;
   href: string;
   description?: string;
+  descriptionGu?: string;
 }
 
 export interface NavLinkItem {
   label: string;
+  labelGu: string;
   href: string;
   dropdown: readonly NavDropdownItem[];
 }
@@ -132,65 +135,82 @@ export interface NavLinkItem {
 export const NAV_LINKS: readonly NavLinkItem[] = [
   {
     label: "Home",
+    labelGu: "હોમ",
     href: "/",
     dropdown: [
-      { label: "Overview", href: "/", description: "Homepage overview & latest initiatives" },
-      { label: "Who Are We?", href: "/#who-are-we-heading", description: "Our founding story and mission" },
-      { label: "Our Focus Areas", href: "/#focus-areas", description: "Thematic development areas" },
-      { label: "Our Achievements", href: "/#impact-stats-heading", description: "Key measurable impact milestones" },
-      { label: "Our Partners", href: "/#partners", description: "Funding partners & collaborators" },
-      { label: "Our Trustees", href: "/#our-trustees", description: "Board of trustees & leadership" },
+      { label: "Overview", labelGu: "પરિચય", href: "/", description: "Homepage overview & latest initiatives", descriptionGu: "મુખ્ય પૃષ્ઠ અને તાજેતરની પહેલ" },
+      { label: "Who Are We?", labelGu: "અમે કોણ છીએ?", href: "/#who-are-we-heading", description: "Our founding story and mission", descriptionGu: "સ્થાપના ઇતિહાસ અને ધ્યેય" },
+      { label: "What We Do", labelGu: "અમારી કામગીરી", href: "/#focus-areas", description: "Thematic development areas", descriptionGu: "મુખ્ય પાંચ ક્ષેત્રીય વિકાસ કામગીરી" },
+      { label: "Our Achievements", labelGu: "આપણી સિદ્ધિઓ", href: "/#impact-stats-heading", description: "Key measurable impact milestones", descriptionGu: "પ્રમાણિત ક્ષેત્રીય આંકડા" },
+      { label: "Our Partners", labelGu: "સહયોગી પાર્ટનર્સ", href: "/#partners", description: "Funding partners & collaborators", descriptionGu: "કોર્પોરેટ અને સરકારી સહયોગીઓ" },
+      { label: "Our Trustees", labelGu: "ટ્રસ્ટી મંડળ", href: "/#our-trustees", description: "Board of trustees & leadership", descriptionGu: "ટ્રસ્ટી મંડળ અને સંચાલન" },
     ],
   },
   {
     label: "About Us",
+    labelGu: "અમારા વિશે",
     href: "/about",
     dropdown: [
-      { label: "Who Are We?", href: "/about", description: "History, vision, and core principles" },
-      { label: "Our Vision & Mission", href: "/about#vision-mission", description: "Guiding purpose & empowerment goals" },
-      { label: "Board of Trustees", href: "/about#our-trustees", description: "Governing board & leadership" },
-      { label: "What They Say", href: "/about#testimonials", description: "Partner & staff testimonials" },
+      { label: "Overview", labelGu: "સંસ્થા પરિચય", href: "/about", description: "History, vision, and core principles", descriptionGu: "ઇતિહાસ, દ્રષ્ટિકોણ અને મૂલ્યો" },
+      { label: "History", labelGu: "ઇતિહાસ", href: "/about#history", description: "Grassroots journey from 2005 to present", descriptionGu: "૨૦૦૫ થી અવિરત સમાજ સેવા" },
+      { label: "Mission & Vision", labelGu: "ધ્યેય અને દ્રષ્ટિકોણ", href: "/about#vision-mission", description: "Guiding purpose & empowerment goals", descriptionGu: "વંચિતોના ઉત્થાનનો સંકલ્પ" },
+      { label: "Trustees & Leadership", labelGu: "ટ્રસ્ટી મંડળ અને નેતૃત્વ", href: "/about#our-trustees", description: "Governing board & leadership", descriptionGu: "સંચાલક મંડળ અને આગેવાનો" },
+      { label: "Partners", labelGu: "સહયોગીઓ", href: "/about#partners", description: "Institutional & funding collaborators", descriptionGu: "સંસ્થાકીય અને CSR સહયોગીઓ" },
     ],
   },
   {
-    label: "Our Work",
+    label: "What We Do",
+    labelGu: "અમારી કામગીરી",
     href: "/programs",
     dropdown: [
-      { label: "All Programs", href: "/programs", description: "Overview of all grassroots initiatives" },
-      { label: "Education", href: "/programs#education", description: "Pre-primary, LRC, digital & high school" },
-      { label: "Health", href: "/programs#health", description: "Project Arogya, dental hygiene & camps" },
-      { label: "Livelihood", href: "/programs#livelihood", description: "Marine fisheries, SHGs & Sagar Shala" },
-      { label: "Rural Infrastructure", href: "/programs#infrastructure", description: "Schools, Anganwadi BaLA & solar lights" },
-      { label: "Disaster Management", href: "/programs#disaster", description: "Relief work, COVID-19 & Tauktae cyclone" },
+      { label: "Overview", labelGu: "તમામ પ્રકલ્પો", href: "/programs", description: "Overview of all grassroots initiatives", descriptionGu: "સર્વાંગી ગ્રામીણ વિકાસ પહેલ" },
+      { label: "Education", labelGu: "શિક્ષણ", href: "/programs/education", description: "Pre-primary to secondary education & LRC", descriptionGu: "આંગણવાડીથી માધ્યમિક સુધી શિક્ષણ" },
+      { label: "Health", labelGu: "આરોગ્ય", href: "/programs/health", description: "Project Arogya, dental hygiene & camps", descriptionGu: "દાંતની સંભાળ, જાગૃતિ અને શિબિરો" },
+      { label: "Livelihood", labelGu: "આજીવિકા", href: "/programs/livelihood", description: "Marine fisheries, SHGs & Sagar Shala", descriptionGu: "સાગરકાંઠા માછીમાર અને મહિલા જૂથો" },
+      { label: "Rural Infrastructure", labelGu: "ગ્રામીણ માળખાકીય સુવિધાઓ", href: "/programs/infrastructure", description: "Schools, Anganwadi BaLA & solar lights", descriptionGu: "શાળા મકાન, બાલા આંગણવાડી, સોલાર લાઈટ્સ" },
+      { label: "Disaster Management", labelGu: "આપત્તિ વ્યવસ્થાપન", href: "/programs/disaster", description: "Relief work, COVID-19 & Tauktae cyclone", descriptionGu: "હોનારત, કોવિડ અને વાવાઝોડા રાહત" },
     ],
   },
   {
     label: "Impact & Reports",
+    labelGu: "અસરો અને અહેવાલો",
     href: "/impact",
     dropdown: [
-      { label: "Impact Dashboard", href: "/impact", description: "Verified milestones across 200+ villages" },
-      { label: "Thematic Achievements", href: "/impact#thematic-stats", description: "Detailed sector-wise data" },
-      { label: "Documentation & Reports", href: "/impact#reports", description: "Annual report summaries and evidence" },
+      { label: "Our Impact", labelGu: "પ્રમાણિત અસરો", href: "/impact", description: "Verified milestones across 200+ villages", descriptionGu: "૨૦૦+ ગામોમાં નોંધાયેલ પરિણામો" },
+      { label: "Annual Reports", labelGu: "વાર્ષિક અહેવાલો", href: "/impact#reports", description: "Annual report summaries and evidence", descriptionGu: "વાર્ષિક પ્રવૃત્તિ અને ઓડિટ અહેવાલો" },
+      { label: "Project Reports", labelGu: "પ્રોજેક્ટ અહેવાલો", href: "/impact#project-reports", description: "Field reports on education and livelihood", descriptionGu: "ક્ષેત્રીય પ્રોજેક્ટ કાર્ય અહેવાલો" },
+      { label: "Financial Information", labelGu: "નાણાકીય માહિતી", href: "/donate#banking-details", description: "80G tax exemption, FCRA, & bank accounts", descriptionGu: "80G મુક્તિ, FCRA અને બેંક ખાતા વિગત" },
     ],
   },
   {
-    label: "Media",
-    href: "/gallery",
+    label: "Resources",
+    labelGu: "સંસાધનો",
+    href: "/resources",
     dropdown: [
-      { label: "Photo Gallery", href: "/gallery", description: "All field photographs & project glimpses" },
-      { label: "Official Video Gallery", href: "/videos", description: "YouTube videos from @swadeepindia2543" },
-      { label: "Education Media", href: "/gallery?category=Education", description: "LRC coaching & classroom activities" },
-      { label: "Health Drives Media", href: "/gallery?category=Health", description: "Medical & dental hygiene camps" },
+      { label: "Gallery", labelGu: "ફોટો ગેલેરી", href: "/gallery", description: "All field photographs & project glimpses", descriptionGu: "ક્ષેત્રીય તસવીરો અને કાર્યક્રમો" },
+      { label: "Videos", labelGu: "વીડિયો સંગ્રહ", href: "/videos", description: "Official channel video documentation", descriptionGu: "સત્તાવાર યુટ્યુબ ચેનલના પ્રેરક વીડિયો" },
+      { label: "News & Updates", labelGu: "સમાચાર અને અપડેટ્સ", href: "/resources#news", description: "Latest community interventions & updates", descriptionGu: "તાજેતરના કાર્યક્રમો અને ક્ષેત્રીય સમાચાર" },
+      { label: "Publications", labelGu: "પ્રકાશનો", href: "/resources#publications", description: "Pedagogical materials & brochures", descriptionGu: "શૈક્ષણિક સાહિત્ય અને પુસ્તિકાઓ" },
     ],
   },
   {
-    label: "Contact",
+    label: "Get Involved",
+    labelGu: "જોડાવો",
+    href: "/get-involved",
+    dropdown: [
+      { label: "Volunteer", labelGu: "સ્વયંસેવક બનો", href: "/get-involved#volunteer", description: "Join grassroots initiatives in Gujarat", descriptionGu: "ગુજરાતમાં ક્ષેત્રીય સેવા આપો" },
+      { label: "Partnerships", labelGu: "સંસ્થાકીય ભાગીદારી", href: "/get-involved#partnerships", description: "Corporate CSR and institutional linkages", descriptionGu: "CSR અને સંસ્થાકીય સહયોગ" },
+      { label: "Support Our Mission", labelGu: "ધ્યેયને સમર્થન આપો", href: "/get-involved#support", description: "Contribute to education, health & livelihood", descriptionGu: "શિક્ષણ અને સેવા કાર્યમાં સહભાગી બનો" },
+    ],
+  },
+  {
+    label: "Contact Us",
+    labelGu: "સંપર્ક",
     href: "/contact",
     dropdown: [
-      { label: "Contact Us", href: "/contact", description: "Headquarters & Sihor office locations" },
-      { label: "Send an Inquiry", href: "/contact#contact-form", description: "Submit your message or partnership query" },
-      { label: "Office Address & Map", href: "/contact#location", description: "Ahmedabad Prahlad Nagar Google Map" },
-      { label: "Frequently Asked Questions", href: "/contact#faq", description: "Collaboration & general FAQs" },
+      { label: "Contact Information", labelGu: "સંપર્ક વિગત", href: "/contact", description: "Headquarters & Sihor office locations", descriptionGu: "અમદાવાદ અને શિહોર કાર્યાલય" },
+      { label: "Send an Inquiry", labelGu: "સંદેશ મોકલો", href: "/contact#contact-form", description: "Submit your message or partnership query", descriptionGu: "આપનો સંદેશ અથવા પૂછપરછ મોકલો" },
+      { label: "Office Address & Map", labelGu: "સરનામું અને નકશો", href: "/contact#location", description: "Ahmedabad Prahlad Nagar Google Map", descriptionGu: "ગૂગલ મેપ અને કાર્યાલય સરનામું" },
     ],
   },
 ] as const;

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { isValidEmail, sanitizeInput } from "@/lib/utils";
+import { pool, testConnection, inMemoryFallback } from "../../../../server/src/db";
+import jwt from "jsonwebtoken";
+import { config } from "../../../../server/src/config";
 
 interface ContactRequestBody {
   name?: unknown;
@@ -109,7 +112,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // Sanitize all inputs using sanitizeInput to protect against XSS
+    // Sanitize all inputs
     const sanitizedData = {
       name: sanitizeInput(trimmedName),
       email: sanitizeInput(trimmedEmail),
@@ -119,14 +122,37 @@ export async function POST(request: Request) {
       receivedAt: new Date().toISOString(),
     };
 
-    // Log the sanitized submission securely on the server
-    console.log("[Contact API] Received validated inquiry:", {
-      name: sanitizedData.name,
-      email: sanitizedData.email,
-      phone: sanitizedData.phone,
-      subject: sanitizedData.subject,
-      receivedAt: sanitizedData.receivedAt,
-    });
+    // Store in PostgreSQL or fallback
+    try {
+      const dbStatus = await testConnection();
+      if (dbStatus.connected) {
+        await pool.query(
+          `INSERT INTO inquiries (name, email, phone, subject, message, status, is_read)
+           VALUES ($1, $2, $3, $4, $5, 'new', false)`,
+          [
+            sanitizedData.name,
+            sanitizedData.email,
+            sanitizedData.phone || null,
+            sanitizedData.subject,
+            sanitizedData.message,
+          ]
+        );
+      } else {
+        inMemoryFallback.inquiries.unshift({
+          id: inMemoryFallback.inquiries.length + 1,
+          name: sanitizedData.name,
+          email: sanitizedData.email,
+          phone: sanitizedData.phone || null,
+          subject: sanitizedData.subject,
+          message: sanitizedData.message,
+          status: "new",
+          is_read: false,
+          created_at: sanitizedData.receivedAt,
+        });
+      }
+    } catch (dbErr) {
+      console.warn("[Contact Route DB Save Warning]", dbErr);
+    }
 
     return NextResponse.json(
       {
@@ -149,6 +175,50 @@ export async function POST(request: Request) {
         error:
           "An unexpected server error occurred while processing your request. Please try again later.",
       },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(request: Request) {
+  // Check authorization header
+  const authHeader = request.headers.get("authorization");
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return NextResponse.json(
+      { success: false, error: "Unauthorized access." },
+      { status: 401 }
+    );
+  }
+
+  const token = authHeader.split(" ")[1];
+  try {
+    jwt.verify(token, config.jwtSecret);
+  } catch {
+    return NextResponse.json(
+      { success: false, error: "Invalid or expired token." },
+      { status: 401 }
+    );
+  }
+
+  try {
+    const dbStatus = await testConnection();
+    if (dbStatus.connected) {
+      const res = await pool.query(
+        "SELECT id, name, email, phone, subject, message, status, is_read, created_at FROM inquiries ORDER BY created_at DESC LIMIT 100"
+      );
+      return NextResponse.json({
+        success: true,
+        inquiries: res.rows,
+      });
+    } else {
+      return NextResponse.json({
+        success: true,
+        inquiries: inMemoryFallback.inquiries,
+      });
+    }
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch inquiries." },
       { status: 500 }
     );
   }
