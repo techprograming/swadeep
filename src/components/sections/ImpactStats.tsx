@@ -66,6 +66,57 @@ export default function ImpactStats() {
           </p>
         </div>
 
+        {/* 4 Verified High-Level Headline Impact Metrics (Prompt Step 4 Specification) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 max-w-5xl mx-auto pt-2">
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 text-center border border-white/15">
+            <div className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-saffron tracking-tight">
+              60K+
+            </div>
+            <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
+              {isGujarati ? "બાળકો સુધી પહોંચ" : "Children Reached"}
+            </div>
+            <div className="text-[11px] text-cream/70 mt-0.5">
+              {isGujarati ? "૨૭૭ આંગણવાડી અને શાળાઓ" : "Across 200+ Villages"}
+            </div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 text-center border border-white/15">
+            <div className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-saffron tracking-tight">
+              200+
+            </div>
+            <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
+              {isGujarati ? "ગામોમાં કાર્યક્ષેત્ર" : "Villages Covered"}
+            </div>
+            <div className="text-[11px] text-cream/70 mt-0.5">
+              {isGujarati ? "ગુજરાતના વિવિધ જિલ્લાઓ" : "Gujarat Rural Footprint"}
+            </div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 text-center border border-white/15">
+            <div className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-saffron tracking-tight">
+              500+
+            </div>
+            <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
+              {isGujarati ? "સમુદાય / આજીવિકા લાભાર્થી" : "Community Beneficiaries"}
+            </div>
+            <div className="text-[11px] text-cream/70 mt-0.5">
+              {isGujarati ? "માછીમારો અને મહિલા SHG" : "Fishermen & Women SHGs"}
+            </div>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 text-center border border-white/15">
+            <div className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-saffron tracking-tight">
+              20+
+            </div>
+            <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
+              {isGujarati ? "વર્ષોની અવિરત સેવા" : "Years of Grassroots Work"}
+            </div>
+            <div className="text-[11px] text-cream/70 mt-0.5">
+              {isGujarati ? "૨૦૦૫ થી સતત સમર્પણ" : "Serving Since 2005"}
+            </div>
+          </div>
+        </div>
+
         {/* Tab Buttons — Smooth touch scroll on mobile, flex-wrap centered on desktop */}
         <div className="w-full overflow-x-auto scrollbar-none py-1 -mx-4 px-4 sm:mx-0 sm:px-0">
           <div

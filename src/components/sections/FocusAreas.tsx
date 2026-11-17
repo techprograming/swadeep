@@ -63,7 +63,9 @@ export default function FocusAreas() {
               description={area.description}
               icon={<DynamicIcon name={area.icon} size={22} className="text-forest" />}
               stat={area.stats}
-              href={`/programs#${area.id}`}
+              href={`/programs/${area.id}`}
+              ctaText="Explore Program →"
+              ctaHref={`/programs/${area.id}`}
               header={
                 <div className="relative w-full h-44 sm:h-48 overflow-hidden rounded-xl">
                   <Image

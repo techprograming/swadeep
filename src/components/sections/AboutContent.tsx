@@ -200,6 +200,193 @@ export default function AboutContent() {
         </div>
       </section>
 
+      {/* 4. Our Journey Visual Timeline (Prompt Step 7 Specification) */}
+      <section id="our-journey" className="section-padding py-20 lg:py-24 bg-white scroll-mt-24" aria-label="Our Journey">
+        <div className="container-wide max-w-5xl mx-auto space-y-12">
+          <SectionHeading
+            badge={isGujarati ? "સંસ્થાની વિકાસ યાત્રા" : "HISTORICAL TIMELINE"}
+            gujaratiText="અમારી ૨૦+ વર્ષોની અવિરત સેવા યાત્રા"
+            title={isGujarati ? "અમારી યાત્રા — ૨૦૦૫ થી આજ સુધી" : "Our Journey: 2005 to Present"}
+            subtitle={
+              isGujarati
+                ? "વંચિત સમુદાયો સાથે પાયાના સ્તરે સતત વિકાસ, સંશોધન અને સશક્તિકરણની ઐતિહાસિક સફર."
+                : "A verified chronological milestone record of Swadeep's grassroots transformation across Gujarat."
+            }
+            align="center"
+          />
+
+          <div className="relative border-l-2 border-[#174B38]/20 ml-4 sm:ml-32 md:ml-40 space-y-10 py-4">
+            {/* 2005 Foundation */}
+            <div className="relative pl-6 sm:pl-8 group">
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#174B38] border-4 border-white shadow-sm" />
+              <div className="hidden sm:block absolute -left-36 top-1 font-heading font-black text-xl text-[#174B38]">
+                2005
+              </div>
+              <div className="bg-cream/40 p-5 sm:p-6 rounded-2xl border border-forest/10 hover:border-forest/30 transition-all space-y-2">
+                <span className="sm:hidden inline-block text-xs font-bold text-white bg-[#174B38] px-2.5 py-0.5 rounded-full mb-1">
+                  2005
+                </span>
+                <div className="text-xs font-bold text-[#F47B2A] uppercase tracking-wider">
+                  {isGujarati ? "સંસ્થાની સ્થાપના" : "FOUNDATION"}
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-forest-dark">
+                  {isGujarati ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થાની સ્થાપના" : "Establishment in Ahmedabad, Gujarat"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
+                  {isGujarati
+                    ? "અમદાવાદમાં વંચિત સમુદાયો, મહિલાઓ અને બાળકોના ઉત્થાન માટે સામાજિક સેવાની ભાવના સાથે સંસ્થાની શરૂઆત થઈ."
+                    : "Founded in Ahmedabad with the clear urge and smart strategies to empower vulnerable communities through education and social service."}
+                </p>
+              </div>
+            </div>
+
+            {/* 2008 Early Education */}
+            <div className="relative pl-6 sm:pl-8 group">
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#174B38] border-4 border-white shadow-sm" />
+              <div className="hidden sm:block absolute -left-36 top-1 font-heading font-black text-xl text-[#174B38]">
+                2008
+              </div>
+              <div className="bg-cream/40 p-5 sm:p-6 rounded-2xl border border-forest/10 hover:border-forest/30 transition-all space-y-2">
+                <span className="sm:hidden inline-block text-xs font-bold text-white bg-[#174B38] px-2.5 py-0.5 rounded-full mb-1">
+                  2008
+                </span>
+                <div className="text-xs font-bold text-[#F47B2A] uppercase tracking-wider">
+                  {isGujarati ? "પૂર્વ-પ્રાથમિક શિક્ષણ" : "EARLY EDUCATION INITIATIVES"}
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-forest-dark">
+                  {isGujarati ? "આંગણવાડી અને BaLA પહેલ" : "Anganwadi Interventions & BaLA Learning"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
+                  {isGujarati
+                    ? "૨૭૭ આંગણવાડી કેન્દ્રોમાં બાળ-મૈત્રીપૂર્ણ શિક્ષણ સામગ્રી (BaLA), બાળગીતો અને શિક્ષિકા તાલીમ કાર્યક્રમો શરૂ કર્યા."
+                    : "Pioneered Building as Learning Aid (BaLA) in 277 ICDS Anganwadi centres, joyful rhyme literature, and caregiver capacity workshops."}
+                </p>
+              </div>
+            </div>
+
+            {/* 2012 Community Dev */}
+            <div className="relative pl-6 sm:pl-8 group">
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#174B38] border-4 border-white shadow-sm" />
+              <div className="hidden sm:block absolute -left-36 top-1 font-heading font-black text-xl text-[#174B38]">
+                2012
+              </div>
+              <div className="bg-cream/40 p-5 sm:p-6 rounded-2xl border border-forest/10 hover:border-forest/30 transition-all space-y-2">
+                <span className="sm:hidden inline-block text-xs font-bold text-white bg-[#174B38] px-2.5 py-0.5 rounded-full mb-1">
+                  2012
+                </span>
+                <div className="text-xs font-bold text-[#F47B2A] uppercase tracking-wider">
+                  {isGujarati ? "સમુદાય વિકાસ" : "COMMUNITY DEVELOPMENT & EXPANSION"}
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-forest-dark">
+                  {isGujarati ? "૧૦૦ પ્રાથમિક અને ૩૦ માધ્યમિક શાળાઓ" : "Scaling Primary Education & Resource Centres"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
+                  {isGujarati
+                    ? "૨૦૦ થી વધુ ગામોમાં શૈક્ષણિક પહોંચ વધારી ૬૦,૦૦૦ થી વધુ બાળકો સુધી લર્નિંગ રિસોર્સ સેન્ટર (LRC) અને પુસ્તકાલયો સ્થાપ્યા."
+                    : "Expanded educational footprint across 200+ villages, establishing Learning Resource Centres (LRCs) and supporting over 60,000 children."}
+                </p>
+              </div>
+            </div>
+
+            {/* 2015 Health & Livelihood */}
+            <div className="relative pl-6 sm:pl-8 group">
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#174B38] border-4 border-white shadow-sm" />
+              <div className="hidden sm:block absolute -left-36 top-1 font-heading font-black text-xl text-[#174B38]">
+                2015
+              </div>
+              <div className="bg-cream/40 p-5 sm:p-6 rounded-2xl border border-forest/10 hover:border-forest/30 transition-all space-y-2">
+                <span className="sm:hidden inline-block text-xs font-bold text-white bg-[#174B38] px-2.5 py-0.5 rounded-full mb-1">
+                  2015
+                </span>
+                <div className="text-xs font-bold text-[#F47B2A] uppercase tracking-wider">
+                  {isGujarati ? "આરોગ્ય અને આજીવિકા" : "HEALTH & LIVELIHOOD"}
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-forest-dark">
+                  {isGujarati ? "પ્રોજેક્ટ આરોગ્ય અને સાગરશાળા પહેલ" : "Project Arogya & Coastal Sagar Shala"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
+                  {isGujarati
+                    ? "૧૩,૦૦૦ લાભાર્થીઓ માટે દંત આરોગ્ય શિબિરો અને મુંદ્રા-જાફરાબાદના ૫૦૦ માછીમારો માટે આજીવિકા કેન્દ્ર અને સાગરશાળા શરૂ કરી."
+                    : "Launched Project Arogya dental hygiene programs reaching 13,000 beneficiaries and established coastal fisheries livelihood support for 500 fishermen."}
+                </p>
+              </div>
+            </div>
+
+            {/* 2019 CSR Conclave */}
+            <div className="relative pl-6 sm:pl-8 group">
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#F47B2A] border-4 border-white shadow-sm" />
+              <div className="hidden sm:block absolute -left-36 top-1 font-heading font-black text-xl text-[#F47B2A]">
+                2019
+              </div>
+              <div className="bg-amber-50/70 p-5 sm:p-6 rounded-2xl border border-amber-200 hover:border-amber-400 transition-all space-y-2">
+                <span className="sm:hidden inline-block text-xs font-bold text-white bg-[#F47B2A] px-2.5 py-0.5 rounded-full mb-1">
+                  2019
+                </span>
+                <div className="text-xs font-bold text-[#F47B2A] uppercase tracking-wider">
+                  {isGujarati ? "રાષ્ટ્રીય સન્માન" : "INSTITUTIONAL RECOGNITION"}
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-amber-950">
+                  {isGujarati ? "CSR કોન્ક્લેવ ૨૦૧૯ એવોર્ડ" : "CSR Conclave 2019 Award"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
+                  {isGujarati
+                    ? "ટાટા પાવર અને અન્ય અગ્રણી ભાગીદારો સાથે મળીને ગ્રામીણ શિક્ષણ અને સમુદાય ઉત્થાનમાં ઉત્કૃષ્ટ યોગદાન બદલ પ્રતિષ્ઠિત સન્માન પ્રાપ્ત કર્યું."
+                    : "Honored with the CSR Conclave 2019 Award for high-impact corporate social responsibility collaboration with Tata Power, CGPL, APM Terminals, and AIF."}
+                </p>
+              </div>
+            </div>
+
+            {/* 2020 Disaster Response */}
+            <div className="relative pl-6 sm:pl-8 group">
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#174B38] border-4 border-white shadow-sm" />
+              <div className="hidden sm:block absolute -left-36 top-1 font-heading font-black text-xl text-[#174B38]">
+                2020-21
+              </div>
+              <div className="bg-cream/40 p-5 sm:p-6 rounded-2xl border border-forest/10 hover:border-forest/30 transition-all space-y-2">
+                <span className="sm:hidden inline-block text-xs font-bold text-white bg-[#174B38] px-2.5 py-0.5 rounded-full mb-1">
+                  2020-21
+                </span>
+                <div className="text-xs font-bold text-[#F47B2A] uppercase tracking-wider">
+                  {isGujarati ? "આપત્તિ વ્યવસ્થાપન" : "DISASTER RESPONSE"}
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-forest-dark">
+                  {isGujarati ? "કોવિડ-૧૯ અને તૌકતે વાવાઝોડું રાહત" : "Emergency COVID-19 & Cyclone Tauktae Relief"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
+                  {isGujarati
+                    ? "૧,૦૦,૦૦૦ થી વધુ માસ્ક વિતરણ, રાશન કિટ સહાય અને સૌરાષ્ટ્રના દરિયાકાંઠાના ૧,૦૦૦ થી વધુ પરિવારોને વાવાઝોડા પછી તાત્કાલિક રાહત પહોંચાડી."
+                    : "Mobilized frontline disaster response distributing 100,000 safety masks, essential food kits, and emergency rehab for 1,000+ cyclone-affected families."}
+                </p>
+              </div>
+            </div>
+
+            {/* Present Day */}
+            <div className="relative pl-6 sm:pl-8 group">
+              <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#174B38] border-4 border-white shadow-sm ring-4 ring-[#174B38]/20" />
+              <div className="hidden sm:block absolute -left-36 top-1 font-heading font-black text-xl text-[#174B38]">
+                Present
+              </div>
+              <div className="bg-forest-50/60 p-5 sm:p-6 rounded-2xl border border-forest/20 hover:border-forest/40 transition-all space-y-2">
+                <span className="sm:hidden inline-block text-xs font-bold text-white bg-[#174B38] px-2.5 py-0.5 rounded-full mb-1">
+                  Present Day
+                </span>
+                <div className="text-xs font-bold text-[#174B38] uppercase tracking-wider">
+                  {isGujarati ? "ટકાઉ વિકાસ" : "PRESENT DAY"}
+                </div>
+                <h3 className="font-heading font-extrabold text-xl text-forest-dark">
+                  {isGujarati ? "સર્વાંગી ગ્રામીણ વિકાસ અને માળખાકીય સુરક્ષા" : "Integrated Rural Development & Solar Security"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
+                  {isGujarati
+                    ? "૪૦ ગામોમાં ૧,૦૫૦ સોલાર સ્ટ્રીટ લાઈટ્સ, ડિજિટલ સ્માર્ટ વર્ગખંડો અને મહિલા સ્વસહાય જૂથો દ્વારા ટકાઉ સ્વાવલંબન."
+                    : "Operating 1,050 solar streetlights across 40 villages, continuing active schooling partnerships, and empowering self-reliant communities."}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 4. Our Board of Trustees */}
       <OurTrustees />
 

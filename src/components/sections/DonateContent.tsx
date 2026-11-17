@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-
 import React, { useState } from "react";
 import Link from "next/link";
 import { BANKING_DETAILS, SITE_CONFIG, OFFICE_LOCATIONS } from "@/lib/constants";
@@ -12,12 +11,37 @@ import {
   PhoneCallIcon,
   MapPinIcon,
   CheckCircleIcon,
+  HeartIcon,
 } from "@/components/ui/Icons";
 import { useLanguage } from "@/context/LanguageContext";
+
+const PRESET_AMOUNTS = [500, 1000, 2500, 5000];
 
 export default function DonateContent() {
   const { isGujarati } = useLanguage();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  // Donation Amount Selection
+  const [selectedAmount, setSelectedAmount] = useState<number | "custom">(1000);
+  const [customAmount, setCustomAmount] = useState<string>("");
+
+  // Post-Donation Form State
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    pan: "",
+    utr: "",
+    transferMode: "NEFT / RTGS / IMPS",
+    date: new Date().toISOString().split("T")[0],
+    notes: "",
+    website: "", // honeypot
+  });
+
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [statusMessage, setStatusMessage] = useState<string>("");
+
+  const effectiveAmount = selectedAmount === "custom" ? Number(customAmount) || 0 : selectedAmount;
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -27,6 +51,59 @@ export default function DonateContent() {
     }, 2000);
   };
 
+  const handleScrollToSection = (targetId: string) => {
+    const el = document.getElementById(targetId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus("submitting");
+    setStatusMessage("");
+
+    try {
+      const res = await fetch("/api/donations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          amount: effectiveAmount,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setFormStatus("success");
+        setStatusMessage(
+          data.message ||
+            (isGujarati
+              ? "આભાર! આપની દાન વિગતો સફળતાપૂર્વક નોંધાઈ છે. 80G રસીદ આપના ઈમેલ પર મોકલવામાં આવશે."
+              : "Thank you! Your donation details have been submitted successfully. Your 80G certificate will be emailed after bank verification.")
+        );
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          pan: "",
+          utr: "",
+          transferMode: "NEFT / RTGS / IMPS",
+          date: new Date().toISOString().split("T")[0],
+          notes: "",
+          website: "",
+        });
+      } else {
+        setFormStatus("error");
+        setStatusMessage(data.error || "Submission failed. Please check your details and try again.");
+      }
+    } catch {
+      setFormStatus("error");
+      setStatusMessage("Network error. Please try again later or contact us directly.");
+    }
+  };
+
   return (
     <main id="main-content" className="flex-1 bg-cream">
       {/* 1. Hero Banner */}
@@ -34,11 +111,10 @@ export default function DonateContent() {
         aria-labelledby="donate-hero-heading"
         className="relative py-20 lg:py-28 bg-gradient-to-br from-forest-dark via-forest to-forest-900 text-cream overflow-hidden"
       >
-        {/* Enhanced Background Image */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
           <Image
             src="/images/community.jpg"
-            alt=""
+            alt="Swadeep Community Development"
             fill
             priority
             sizes="100vw"
@@ -59,24 +135,24 @@ export default function DonateContent() {
             id="donate-hero-heading"
             className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight"
           >
-            {isGujarati ? "સહયોગ અને દાન" : "DONATE TO THE CAUSE"}
+            {isGujarati ? "સહયોગ અને દાન" : "SUPPORT SWADEEP"}
           </h1>
 
           <p className="font-gujarati text-xl sm:text-2xl text-cream/90 font-medium">
             {isGujarati
-              ? "આપનું દાન વંચિત બાળકોના શિક્ષણ અને સમુદાયના ઉત્થાનમાં મદદરૂપ થશે"
-              : "દાન કરો — જરૂરિયાતમંદ લોકોના ઉત્થાન માટે સહયોગ"}
+              ? "આપનું યોગદાન શિક્ષણ, આરોગ્ય અને ટકાઉ વિકાસ દ્વારા સમુદાયોને સશક્ત બનાવવામાં મદદ કરશે"
+              : "Your contribution can help strengthen communities through education, health and sustainable development."}
           </p>
 
           <p className="font-body text-cream/85 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed pt-2">
             {isGujarati
-              ? "સ્વદીપ એક નોંધાયેલ બિન-નફાકારક સામાજિક સંસ્થા છે. સંસ્થાને આપવામાં આવતું તમામ દાન આવકવેરા કાયદાની કલમ 80G હેઠળ કર મુક્તિ માટે પાત્ર છે."
-              : "Swadeep is a non-profit organization and hence, any donation given to organization is liable for tax exemption under Section 80G of the Income Tax Act."}
+              ? "સ્વદીપ એક નોંધાયેલ બિન-નફાકારક સંસ્થા છે. તમામ દાન આવકવેરા કાયદાની કલમ 80G હેઠળ કર મુક્તિ માટે પાત્ર છે."
+              : "Swadeep Shikshan Vikas Sanstha is a registered non-profit organization. All donations are 100% transparent and eligible for tax exemption under Section 80G."}
           </p>
         </div>
       </section>
 
-      {/* 2. Tax Exemption & Statutory Transparency Bar */}
+      {/* 2. Statutory Compliance Bar */}
       <section className="bg-white border-b border-forest/10 py-6" aria-label="Statutory compliance and registrations">
         <div className="container-wide max-w-5xl mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-charcoal/85">
@@ -100,79 +176,181 @@ export default function DonateContent() {
         </div>
       </section>
 
-      {/* 3. Main Donation Content */}
-      <section className="section-padding py-16 lg:py-24">
-        <div className="container-wide max-w-5xl mx-auto space-y-12">
-          {/* Step-by-Step 80G Receipt Guide */}
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-forest/10 space-y-6">
-            <div className="border-b border-cream-dark pb-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-saffron block">
-                {isGujarati ? "દાન પ્રક્રિયા અને 80G રસીદ" : "DONATION PROCESS & 80G TAX CERTIFICATE"}
+      {/* 3. Donation Amount Selection Card (Prompt Step 12 Specification) */}
+      <section className="section-padding py-12 lg:py-16">
+        <div className="container-wide max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-forest/15 space-y-8">
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-saffron bg-saffron-50 px-3.5 py-1.5 rounded-full border border-saffron-200">
+                {isGujarati ? "દાન રકમ પસંદ કરો" : "CHOOSE YOUR CONTRIBUTION"}
               </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-bold text-forest-dark mt-1">
-                {isGujarati ? "દાન આપવાની સરળ પદ્ધતિ અને ટેક્સ રસીદ" : "How Your Donation & Tax Receipt Works"}
+              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-forest-dark">
+                {isGujarati ? "આપનું યોગદાન નક્કી કરો" : "Empower a Child, Family, or Village"}
               </h2>
-              <p className="font-body text-charcoal/80 text-sm sm:text-base mt-2">
+              <p className="font-body text-charcoal/75 text-sm sm:text-base">
                 {isGujarati
-                  ? "તમામ દાન કલમ 80G હેઠળ કર કપાત માટે પાત્ર છે. દાન આપી સત્તાવાર ટેક્સ પ્રમાણપત્ર મેળવવા માટે આ સરળ પગલાં અનુસરો:"
-                  : "All donations are eligible for tax deduction under Section 80G. Follow these three simple steps to complete your contribution and receive your tax certificate:"}
+                  ? "નીચે આપેલ પૂર્વ-નિર્ધારિત રકમ પસંદ કરો અથવા આપની ઈચ્છિત રકમ દાખલ કરો."
+                  : "Select a suggested amount or enter a custom amount to see bank transfer details below."}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-              {BANKING_DETAILS.receiptSteps.map((stepItem) => (
-                <div
-                  key={stepItem.step}
-                  className="p-6 rounded-2xl bg-cream-dark/50 border border-forest/10 space-y-3 relative flex flex-col justify-between"
-                >
-                  <div className="space-y-2">
-                    <span className="font-heading font-black text-2xl text-saffron block">
-                      {stepItem.step}
+            {/* Amount Selection Pills */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
+              {PRESET_AMOUNTS.map((amt) => {
+                const isSelected = selectedAmount === amt;
+                return (
+                  <button
+                    key={amt}
+                    type="button"
+                    onClick={() => {
+                      setSelectedAmount(amt);
+                      setCustomAmount("");
+                    }}
+                    className={`py-4 px-4 rounded-2xl font-heading font-extrabold text-lg sm:text-xl transition-all duration-200 border-2 flex flex-col items-center justify-center gap-1 ${
+                      isSelected
+                        ? "bg-[#174B38] text-white border-[#174B38] shadow-md scale-102"
+                        : "bg-cream/40 text-forest-dark border-forest/10 hover:border-forest/30 hover:bg-cream"
+                    }`}
+                  >
+                    <span>₹{amt.toLocaleString("en-IN")}</span>
+                    <span className="text-[10px] font-sans font-medium uppercase tracking-wider opacity-80">
+                      {amt === 500 && (isGujarati ? "બાળ પુસ્તકો" : "Learning Kit")}
+                      {amt === 1000 && (isGujarati ? "આરોગ્ય સંભાળ" : "Health Check")}
+                      {amt === 2500 && (isGujarati ? "આંગણવાડી BaLA" : "BaLA Classroom")}
+                      {amt === 5000 && (isGujarati ? "આજીવિકા સહાય" : "Livelihood Kit")}
                     </span>
-                    <h3 className="font-heading font-bold text-lg text-forest-dark">
-                      {isGujarati ? stepItem.titleGu : stepItem.title}
-                    </h3>
-                    <p className="font-body text-charcoal/80 text-sm leading-relaxed">
-                      {isGujarati ? stepItem.descriptionGu : stepItem.description}
-                    </p>
-                  </div>
+                  </button>
+                );
+              })}
+
+              {/* Custom Amount Button */}
+              <button
+                type="button"
+                onClick={() => setSelectedAmount("custom")}
+                className={`py-4 px-4 rounded-2xl font-heading font-extrabold text-lg sm:text-xl transition-all duration-200 border-2 flex flex-col items-center justify-center gap-1 col-span-2 sm:col-span-1 ${
+                  selectedAmount === "custom"
+                    ? "bg-[#174B38] text-white border-[#174B38] shadow-md scale-102"
+                    : "bg-cream/40 text-forest-dark border-forest/10 hover:border-forest/30 hover:bg-cream"
+                }`}
+              >
+                <span>{isGujarati ? "અન્ય રકમ" : "Custom"}</span>
+                <span className="text-[10px] font-sans font-medium uppercase tracking-wider opacity-80">
+                  {isGujarati ? "પોતાની રકમ" : "Enter Amount"}
+                </span>
+              </button>
+            </div>
+
+            {/* Custom Amount Input Box */}
+            {selectedAmount === "custom" && (
+              <div className="max-w-xs mx-auto text-center space-y-2 pt-2">
+                <label htmlFor="custom-amount-input" className="block text-xs font-bold text-charcoal/80 uppercase">
+                  {isGujarati ? "રૂપિયામાં રકમ દાખલ કરો (₹)" : "Enter Custom Amount (INR ₹)"}
+                </label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-forest-dark text-lg">₹</span>
+                  <input
+                    id="custom-amount-input"
+                    type="number"
+                    min="100"
+                    step="100"
+                    placeholder="2000"
+                    value={customAmount}
+                    onChange={(e) => setCustomAmount(e.target.value)}
+                    className="w-full pl-9 pr-4 py-3 rounded-xl border-2 border-forest/20 focus:border-forest focus:outline-none font-bold text-forest-dark text-lg text-center"
+                  />
                 </div>
-              ))}
+              </div>
+            )}
+
+            {/* Primary Action: DONATE NOW */}
+            <div className="text-center pt-2">
+              <button
+                type="button"
+                onClick={() => handleScrollToSection("bank-transfer-section")}
+                className="inline-flex items-center justify-center px-10 py-4 rounded-full text-base sm:text-lg font-extrabold text-white bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] hover:from-[#E06A1B] hover:to-[#C8590F] shadow-lg shadow-[#F47B2A]/30 hover:shadow-[#F47B2A]/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+              >
+                <HeartIcon className="w-5 h-5 mr-2.5 fill-current" />
+                <span>
+                  {isGujarati
+                    ? `હવે દાન કરો ${effectiveAmount ? `(₹${effectiveAmount.toLocaleString("en-IN")})` : ""} ↓`
+                    : `DONATE NOW ${effectiveAmount ? `(₹${effectiveAmount.toLocaleString("en-IN")})` : ""} ↓`}
+                </span>
+              </button>
+              <p className="text-xs text-charcoal/60 mt-2">
+                {isGujarati
+                  ? "ક્લિક કરીને નીચે આપેલ સત્તાવાર બેંક વિગતો મેળવો"
+                  : "Proceed below for official direct bank transfer & UTR submission"}
+              </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* 4. Bank Accounts Grid */}
-          <div id="banking-details" className="grid grid-cols-1 lg:grid-cols-2 gap-8 scroll-mt-28">
-            {/* Non-FCRA Local Donations (Domestic India) */}
+      {/* 4. Bank Accounts Section (Bank Transfer & FCRA) */}
+      <section id="bank-transfer-section" className="section-padding py-12 scroll-mt-24">
+        <div className="container-wide max-w-5xl mx-auto space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-forest bg-forest-50 px-3.5 py-1.5 rounded-full border border-forest-200">
+              {isGujarati ? "સત્તાવાર બેંકિંગ ખાતાની વિગતો" : "OFFICIAL BANK TRANSFER DETAILS"}
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-forest-dark">
+              {isGujarati ? "ડાયરેક્ટ બેંક ટ્રાન્સફર (NEFT / RTGS / IMPS / Wire)" : "Direct Bank Transfer"}
+            </h2>
+            <p className="font-body text-charcoal/75 text-sm sm:text-base">
+              {isGujarati
+                ? "આપના બેંક એકાઉન્ટ અથવા નેટબેંકિંગ દ્વારા સીધા સ્વદીપના સત્તાવાર ખાતામાં રકમ ટ્રાન્સફર કરો."
+                : "Transfer funds directly from your net banking or banking app into Swadeep Shikshan Vikas Sanstha's audited account."}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* DOMESTIC BANK TRANSFER */}
             <div className="bg-white rounded-3xl p-8 shadow-sm border-2 border-forest/20 flex flex-col justify-between space-y-6 relative overflow-hidden">
               <div className="space-y-5">
                 <div className="border-b border-cream-dark pb-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-forest block">
-                      {isGujarati ? "સ્થાનિક ભારતીય દાન માટે" : "FOR LOCAL DONATIONS (INDIA)"}
+                      {isGujarati ? "સ્થાનિક ભારતીય દાન" : "BANK TRANSFER (DOMESTIC)"}
                     </span>
                     <span className="text-xs font-bold bg-forest-50 text-forest px-2.5 py-1 rounded-full border border-forest-200">
                       INR • NEFT / RTGS / IMPS
                     </span>
                   </div>
                   <h3 className="font-heading text-xl font-bold text-forest-dark mt-1">
-                    {isGujarati ? "સ્થાનિક બેંક ખાતાની વિગત" : "Domestic Bank Account Details"}
+                    {isGujarati ? "સ્થાનિક બેંક ખાતાની વિગત" : "Domestic Bank Account"}
                   </h3>
                 </div>
 
                 <div className="space-y-3 font-body text-charcoal/90 text-sm sm:text-base">
+                  {/* Account Name */}
                   <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
                     <span className="text-charcoal/70">{isGujarati ? "ખાતાનું નામ:" : "Account Name:"}</span>
                     <span className="font-bold text-forest-dark sm:text-right">{BANKING_DETAILS.domestic.accountName}</span>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
-                    <span className="text-charcoal/70">{isGujarati ? "બેંકનું નામ:" : "Bank Name:"}</span>
-                    <span className="font-semibold text-forest-dark sm:text-right">{BANKING_DETAILS.domestic.bankName}</span>
+
+                  {/* Bank Name */}
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
+                    <span className="text-charcoal/70">{isGujarati ? "બેંકનું નામ:" : "Bank:"}</span>
+                    <div className="flex items-center gap-2 sm:justify-end">
+                      <span className="font-semibold text-forest-dark sm:text-right">{BANKING_DETAILS.domestic.bankName}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(BANKING_DETAILS.domestic.bankName, "bankName")}
+                        className="text-xs px-2 py-1 bg-cream-dark hover:bg-forest/10 text-forest-dark rounded font-semibold transition-colors"
+                        title="Copy bank name"
+                      >
+                        {copiedKey === "bankName" ? "✓ Copied" : "COPY"}
+                      </button>
+                    </div>
                   </div>
+
+                  {/* Branch */}
                   <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
                     <span className="text-charcoal/70">{isGujarati ? "શાખા:" : "Branch:"}</span>
                     <span className="font-semibold text-forest-dark sm:text-right">{BANKING_DETAILS.domestic.branch}</span>
                   </div>
+
+                  {/* Account Number */}
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
                     <span className="text-charcoal/70">{isGujarati ? "ખાતા નંબર:" : "Account Number:"}</span>
                     <div className="flex items-center gap-2 sm:justify-end">
@@ -180,31 +358,37 @@ export default function DonateContent() {
                       <button
                         type="button"
                         onClick={() => handleCopy(BANKING_DETAILS.domestic.accountNumber, "domesticAcc")}
-                        className="text-xs px-2 py-1 bg-cream-dark hover:bg-forest/10 text-forest-dark rounded font-semibold transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-forest"
+                        className="text-xs px-2.5 py-1 bg-[#174B38] hover:bg-[#0B3025] text-white rounded font-bold transition-colors"
                         title="Copy account number"
                       >
-                        {copiedKey === "domesticAcc" ? "✓ Copied" : "Copy"}
+                        {copiedKey === "domesticAcc" ? "✓ COPIED" : "COPY"}
                       </button>
                     </div>
                   </div>
+
+                  {/* IFSC */}
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
-                    <span className="text-charcoal/70">{isGujarati ? "IFSC કોડ:" : "IFSC Code:"}</span>
+                    <span className="text-charcoal/70">{isGujarati ? "IFSC કોડ:" : "IFSC:"}</span>
                     <div className="flex items-center gap-2 sm:justify-end">
                       <span className="font-mono font-black text-saffron-dark text-base">{BANKING_DETAILS.domestic.ifsc}</span>
                       <button
                         type="button"
                         onClick={() => handleCopy(BANKING_DETAILS.domestic.ifsc, "domesticIfsc")}
-                        className="text-xs px-2 py-1 bg-cream-dark hover:bg-saffron/10 text-saffron-dark rounded font-semibold transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-saffron"
+                        className="text-xs px-2.5 py-1 bg-[#F47B2A] hover:bg-[#E06A1B] text-white rounded font-bold transition-colors"
                         title="Copy IFSC code"
                       >
-                        {copiedKey === "domesticIfsc" ? "✓ Copied" : "Copy"}
+                        {copiedKey === "domesticIfsc" ? "✓ COPIED" : "COPY"}
                       </button>
                     </div>
                   </div>
+
+                  {/* MICR */}
                   <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
                     <span className="text-charcoal/70">MICR Code:</span>
                     <span className="font-mono font-medium text-charcoal/80 sm:text-right">{BANKING_DETAILS.domestic.micr}</span>
                   </div>
+
+                  {/* Branch Address */}
                   <div className="flex flex-col sm:flex-row sm:justify-between py-2">
                     <span className="text-charcoal/70">{isGujarati ? "શાખા સરનામું:" : "Branch Address:"}</span>
                     <span className="font-medium text-forest-dark sm:text-right text-xs sm:text-sm">{BANKING_DETAILS.domestic.address}</span>
@@ -221,36 +405,48 @@ export default function DonateContent() {
               </div>
             </div>
 
-            {/* FCRA Foreign Donations (International Remittance) */}
+            {/* FCRA / FOREIGN DONATIONS */}
             <div className="bg-white rounded-3xl p-8 shadow-sm border-2 border-forest/20 flex flex-col justify-between space-y-6 relative overflow-hidden">
               <div className="space-y-5">
                 <div className="border-b border-cream-dark pb-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-wider text-saffron block">
-                      {isGujarati ? "વિદેશી અનુદાન (FCRA)" : "FOREIGN DONATIONS / REMITTANCE"}
+                      {isGujarati ? "વિદેશી અનુદાન (FCRA)" : "FCRA / FOREIGN DONATION"}
                     </span>
                     <span className="text-xs font-bold bg-amber-50 text-amber-900 px-2.5 py-1 rounded-full border border-amber-200">
                       FCRA Authorized • Wire Transfer
                     </span>
                   </div>
                   <h3 className="font-heading text-xl font-bold text-forest-dark mt-1">
-                    {isGujarati ? "FCRA બેંક ખાતાની વિગત" : "FCRA Bank Account Details"}
+                    {isGujarati ? "FCRA બેંક ખાતાની વિગત" : "Official FCRA Information"}
                   </h3>
                 </div>
 
                 <div className="space-y-3 font-body text-charcoal/90 text-sm sm:text-base">
-                  <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
                     <span className="text-charcoal/70">{isGujarati ? "FCRA રજિ. નંબર:" : "FCRA Reg. Number:"}</span>
-                    <span className="font-mono font-black text-forest-dark sm:text-right">{BANKING_DETAILS.fcra.registrationNumber}</span>
+                    <div className="flex items-center gap-2 sm:justify-end">
+                      <span className="font-mono font-black text-forest-dark sm:text-right">{BANKING_DETAILS.fcra.registrationNumber}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(BANKING_DETAILS.fcra.registrationNumber, "fcraReg")}
+                        className="text-xs px-2 py-1 bg-cream-dark hover:bg-forest/10 text-forest-dark rounded font-semibold transition-colors"
+                      >
+                        {copiedKey === "fcraReg" ? "✓ Copied" : "COPY"}
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
-                    <span className="text-charcoal/70">{isGujarati ? "બેંકનું નામ:" : "Bank Name:"}</span>
+
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
+                    <span className="text-charcoal/70">{isGujarati ? "બેંકનું નામ:" : "Bank:"}</span>
                     <span className="font-semibold text-forest-dark sm:text-right">{BANKING_DETAILS.fcra.bankName}</span>
                   </div>
+
                   <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
                     <span className="text-charcoal/70">{isGujarati ? "શાખા:" : "Branch:"}</span>
                     <span className="font-semibold text-forest-dark sm:text-right">{BANKING_DETAILS.fcra.branch}</span>
                   </div>
+
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
                     <span className="text-charcoal/70">{isGujarati ? "ખાતા નંબર:" : "Account Number:"}</span>
                     <div className="flex items-center gap-2 sm:justify-end">
@@ -258,31 +454,41 @@ export default function DonateContent() {
                       <button
                         type="button"
                         onClick={() => handleCopy(BANKING_DETAILS.fcra.accountNumber, "fcraAcc")}
-                        className="text-xs px-2 py-1 bg-cream-dark hover:bg-forest/10 text-forest-dark rounded font-semibold transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-forest"
-                        title="Copy FCRA account number"
+                        className="text-xs px-2.5 py-1 bg-[#174B38] hover:bg-[#0B3025] text-white rounded font-bold transition-colors"
                       >
-                        {copiedKey === "fcraAcc" ? "✓ Copied" : "Copy"}
+                        {copiedKey === "fcraAcc" ? "✓ COPIED" : "COPY"}
                       </button>
                     </div>
                   </div>
+
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
-                    <span className="text-charcoal/70">SWIFT Code:</span>
+                    <span className="text-charcoal/70">{isGujarati ? "IFSC કોડ:" : "IFSC:"}</span>
                     <div className="flex items-center gap-2 sm:justify-end">
-                      <span className="font-mono font-black text-saffron-dark text-base">{BANKING_DETAILS.fcra.swift}</span>
+                      <span className="font-mono font-black text-saffron-dark text-base">{BANKING_DETAILS.fcra.ifsc}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(BANKING_DETAILS.fcra.ifsc, "fcraIfsc")}
+                        className="text-xs px-2.5 py-1 bg-[#F47B2A] hover:bg-[#E06A1B] text-white rounded font-bold transition-colors"
+                      >
+                        {copiedKey === "fcraIfsc" ? "✓ COPIED" : "COPY"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-2 border-b border-forest/5 gap-2">
+                    <span className="text-charcoal/70">SWIFT / BIC Code:</span>
+                    <div className="flex items-center gap-2 sm:justify-end">
+                      <span className="font-mono font-bold text-forest-dark sm:text-right">{BANKING_DETAILS.fcra.swift}</span>
                       <button
                         type="button"
                         onClick={() => handleCopy(BANKING_DETAILS.fcra.swift, "fcraSwift")}
-                        className="text-xs px-2 py-1 bg-cream-dark hover:bg-saffron/10 text-saffron-dark rounded font-semibold transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-saffron"
-                        title="Copy SWIFT code"
+                        className="text-xs px-2 py-1 bg-cream-dark hover:bg-forest/10 text-forest-dark rounded font-semibold transition-colors"
                       >
-                        {copiedKey === "fcraSwift" ? "✓ Copied" : "Copy"}
+                        {copiedKey === "fcraSwift" ? "✓ Copied" : "COPY"}
                       </button>
                     </div>
                   </div>
-                  <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-forest/5">
-                    <span className="text-charcoal/70">{isGujarati ? "IFSC કોડ:" : "IFSC Code:"}</span>
-                    <span className="font-mono font-medium text-charcoal/80 sm:text-right">{BANKING_DETAILS.fcra.ifsc}</span>
-                  </div>
+
                   <div className="flex flex-col sm:flex-row sm:justify-between py-2">
                     <span className="text-charcoal/70">{isGujarati ? "શાખા સરનામું:" : "Branch Address:"}</span>
                     <span className="font-medium text-forest-dark sm:text-right text-xs sm:text-sm">{BANKING_DETAILS.fcra.address}</span>
@@ -293,38 +499,273 @@ export default function DonateContent() {
               <div className="pt-3 border-t border-cream-dark">
                 <span className="text-xs text-charcoal/70 block">
                   {isGujarati
-                    ? "વિદેશી ચલણ (USD, GBP, EUR વગેરે) માં દાન સ્વીકારવા માટે ભારત સરકાર દ્વારા અધિકૃત ખાતું."
-                    : "Authorized designated bank account for foreign inward remittances in international currencies."}
+                    ? "વિદેશી મુદ્રા નિયમન અધિનિયમ (FCRA) હેઠળ ભારત સરકારના ગૃહ મંત્રાલય દ્વારા અધિકૃત."
+                    : "Authorized by Ministry of Home Affairs, Government of India under FCRA Act."}
                 </span>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Cheque / Demand Draft Notice */}
-          <div className="bg-forest-50/60 rounded-3xl p-6 sm:p-8 border border-forest/20 space-y-3">
-            <h3 className="font-heading font-bold text-lg text-forest-dark flex items-center gap-2">
-              <ReceiptTextIcon className="w-5 h-5 text-forest" />
-              <span>{isGujarati ? "ચેક અથવા ડિમાન્ડ ડ્રાફ્ટ (DD) દ્વારા દાન" : "Donation via Cheque or Demand Draft"}</span>
-            </h3>
-            <p className="font-body text-charcoal/85 text-sm sm:text-base leading-relaxed">
+      {/* 5. AFTER DONATION: SUBMIT UTR / DONATION DETAILS FORM (Prompt Step 12 Specification) */}
+      <section id="after-donation-form" className="section-padding py-16 bg-cream-dark/40 border-t border-forest/10 scroll-mt-24">
+        <div className="container-wide max-w-3xl mx-auto space-y-8">
+          <div className="text-center space-y-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-saffron bg-saffron-50 px-3.5 py-1.5 rounded-full border border-saffron-200">
+              {isGujarati ? "દાન કર્યા પછી" : "AFTER DONATION"}
+            </span>
+            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-forest-dark">
+              {isGujarati ? "દાનની વિગત અને UTR નંબર સબમિટ કરો" : "Submit UTR / Donation Details"}
+            </h2>
+            <p className="font-body text-charcoal/75 text-sm sm:text-base max-w-xl mx-auto">
               {isGujarati
-                ? "આપ 'Swadeep Shikshan Vikas Sanstha' ના નામે અમદાવાદ ખાતે ચૂકવવાપાત્ર ચેક અથવા ડીડી અમારા મુખ્ય કાર્યાલયના સરનામે મોકલી શકો છો: ૨૧, અભિનંદન પાર્ક સોસાયટી, પ્રેરણાતીર્થ દેરાસર રોડ, પ્રહલાદ નગર, અમદાવાદ, ગુજરાત ૩૮૦૦૧૫. સંપર્ક: કલ્યાણ ડાંગર (૦૯૪૨૮૩૦૯૪૦૮)."
-                : BANKING_DETAILS.chequeDetails}
+                ? "દાન પૂર્ણ કર્યા પછી આપનો UTR / સંદર્ભ નંબર અને પાન કાર્ડ વિગતો સબમિટ કરો જેથી અમે આપની 80G ટેક્સ રસીદ જારી કરી શકીએ."
+                : "After transferring funds, submit your transaction UTR reference and PAN details to receive your official Section 80G tax exemption certificate."}
             </p>
           </div>
 
-          {/* Donor Support Contact */}
-          <div className="text-center pt-4">
-            <p className="text-charcoal/70 text-sm">
-              {isGujarati ? "દાન સંબંધિત કોઈ પ્રશ્ન છે? અમારો સંપર્ક કરો: " : "Have questions about donating or need assistance? Reach out to us at: "}
-              <a href={`mailto:${BANKING_DETAILS.feedbackEmail}`} className="font-bold text-forest hover:underline">
-                {BANKING_DETAILS.feedbackEmail}
-              </a>
-              {" "}{isGujarati ? "અથવા ફોન: " : "or call "}{" "}
-              <a href={`tel:${SITE_CONFIG.phoneRaw}`} className="font-bold text-forest hover:underline">
-                {BANKING_DETAILS.donorHelpline}
-              </a>
-            </p>
+          <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-md border border-forest/15">
+            {formStatus === "success" ? (
+              <div className="py-8 text-center space-y-4">
+                <div className="w-16 h-16 rounded-full bg-forest-50 text-forest mx-auto flex items-center justify-center">
+                  <CheckCircleIcon size={36} />
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-forest-dark">
+                  {isGujarati ? "વિગતો સફળતાપૂર્વક સબમિટ થઈ!" : "Details Submitted Successfully!"}
+                </h3>
+                <p className="font-body text-charcoal/80 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+                  {statusMessage}
+                </p>
+                <div className="pt-4">
+                  <button
+                    type="button"
+                    onClick={() => setFormStatus("idle")}
+                    className="px-6 py-2.5 rounded-full text-sm font-bold text-forest border border-forest/30 hover:bg-forest/5 transition-colors"
+                  >
+                    {isGujarati ? "બીજું ટ્રાન્ઝેક્શન નોંધો" : "Submit Another Contribution"}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot anti-spam field */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  className="hidden"
+                  aria-hidden="true"
+                />
+
+                {formStatus === "error" && (
+                  <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">
+                    {statusMessage}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {/* Full Name */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "દાતાનું પૂરું નામ *" : "Donor Full Name *"}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Ramesh Patel"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "ઈમેલ સરનામું (80G રસીદ માટે) *" : "Email Address (for 80G receipt) *"}
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="donor@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                    />
+                  </div>
+
+                  {/* Mobile Phone */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "મોબાઈલ નંબર *" : "Mobile Phone Number *"}
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+91 98765 43210"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                    />
+                  </div>
+
+                  {/* PAN Card */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "પાન કાર્ડ નંબર (80G મુક્તિ માટે ફરજિયાત) *" : "PAN Number (Mandatory for 80G) *"}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      maxLength={10}
+                      placeholder="ABCDE1234F"
+                      value={formData.pan}
+                      onChange={(e) => setFormData({ ...formData, pan: e.target.value.toUpperCase() })}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none font-mono uppercase text-sm font-bold"
+                    />
+                  </div>
+
+                  {/* Amount */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "ટ્રાન્સફર કરેલી રકમ (₹) *" : "Donated Amount (INR ₹) *"}
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      min="100"
+                      value={effectiveAmount || ""}
+                      onChange={(e) => {
+                        setSelectedAmount("custom");
+                        setCustomAmount(e.target.value);
+                      }}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-bold text-forest-dark"
+                    />
+                  </div>
+
+                  {/* UTR / Transaction Reference */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "UTR / સંદર્ભ નંબર *" : "UTR / Transaction Reference No. *"}
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. 331456789012"
+                      value={formData.utr}
+                      onChange={(e) => setFormData({ ...formData, utr: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none font-mono text-sm font-bold"
+                    />
+                  </div>
+
+                  {/* Transfer Mode */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "ટ્રાન્સફર મોડ" : "Payment / Transfer Mode"}
+                    </label>
+                    <select
+                      value={formData.transferMode}
+                      onChange={(e) => setFormData({ ...formData, transferMode: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium bg-white"
+                    >
+                      <option value="NEFT / RTGS / IMPS">NEFT / RTGS / IMPS</option>
+                      <option value="UPI / Net Banking">UPI / Net Banking</option>
+                      <option value="FCRA Wire Transfer">International Wire Transfer (FCRA)</option>
+                      <option value="Cheque / DD">Bank Cheque / DD</option>
+                    </select>
+                  </div>
+
+                  {/* Date */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                      {isGujarati ? "ટ્રાન્સફર તારીખ *" : "Date of Transfer *"}
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={formData.date}
+                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                    />
+                  </div>
+                </div>
+
+                {/* Notes / Special Instructions */}
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    {isGujarati ? "કાર્યક્રમ પસંદગી અથવા વિશેષ નોંધ (વૈકલ્પિક)" : "Program Preference or Note (Optional)"}
+                  </label>
+                  <textarea
+                    rows={2}
+                    placeholder={
+                      isGujarati
+                        ? "ઉદાહરણ: બાળ શિક્ષણ, આરોગ્ય શિબિર અથવા આંગણવાડી વિકાસ માટે..."
+                        : "e.g., Preference for child education, dental health, or disaster relief..."
+                    }
+                    value={formData.notes}
+                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm"
+                  />
+                </div>
+
+                {/* Submit Details Button */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={formStatus === "submitting"}
+                    className="w-full py-4 rounded-xl text-base font-extrabold text-white bg-[#174B38] hover:bg-[#0B3025] disabled:opacity-60 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    {formStatus === "submitting" ? (
+                      <span>{isGujarati ? "સબમિટ થઈ રહ્યું છે..." : "Submitting Details..."}</span>
+                    ) : (
+                      <>
+                        <CheckCircleIcon size={18} />
+                        <span>{isGujarati ? "દાનની વિગતો સબમિટ કરો" : "SUBMIT DETAILS"}</span>
+                      </>
+                    )}
+                  </button>
+                  <p className="text-[11px] text-center text-charcoal/60 mt-2">
+                    {isGujarati
+                      ? "સબમિટ કર્યા પછી અમારી ફાયનાન્સ ટીમ બેંક સાથે વેરિફાઈ કરી આપને ઈમેલ દ્વારા 80G સર્ટિફિકેટ મોકલશે."
+                      : "Your information is secure. Our team verifies the transaction with the bank and emails your 80G certificate within 2-3 business days."}
+                  </p>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Contact for Queries */}
+      <section className="py-12 bg-white border-t border-forest/10">
+        <div className="container-wide max-w-4xl mx-auto px-4 text-center space-y-4">
+          <h3 className="font-heading font-extrabold text-xl text-forest-dark">
+            {isGujarati ? "દાન અંગે કોઈ પ્રશ્ન છે?" : "Have Questions About Donating?"}
+          </h3>
+          <p className="font-body text-charcoal/75 text-sm sm:text-base max-w-xl mx-auto">
+            {isGujarati
+              ? "દાન પદ્ધતિ, 80G રસીદ અથવા સીએસઆર ભાગીદારી માટે અમારી સાથે સીધો સંપર્ક કરો:"
+              : "For inquiries regarding receipts, 80G tax exemptions, or CSR grants, please reach out directly:"}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-6 pt-2 text-sm font-semibold">
+            <a
+              href={`tel:${SITE_CONFIG.phoneRaw}`}
+              className="inline-flex items-center gap-2 text-forest-dark hover:text-forest transition-colors"
+            >
+              <PhoneCallIcon size={16} className="text-forest" />
+              <span>{SITE_CONFIG.phone}</span>
+            </a>
+            <a
+              href={`mailto:${SITE_CONFIG.donationEmail}`}
+              className="inline-flex items-center gap-2 text-forest-dark hover:text-forest transition-colors"
+            >
+              <MailIcon size={16} className="text-saffron" />
+              <span>{SITE_CONFIG.donationEmail}</span>
+            </a>
           </div>
         </div>
       </section>

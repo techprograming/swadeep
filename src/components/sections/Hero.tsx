@@ -155,12 +155,12 @@ export default function Hero() {
                 </svg>
               </Link>
 
-              {/* Secondary Button: Support Our Mission */}
+              {/* Secondary Button: Donate Now (Prompt Step 4) */}
               <Link
                 href="/donate"
                 className="inline-flex items-center justify-center px-7 sm:px-8 py-3.5 sm:py-4 rounded-full text-sm sm:text-base font-bold text-white bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/40 hover:border-white shadow-sm hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
-                <span>{t("supportOurMission")}</span>
+                <span>{t("donateNow")}</span>
               </Link>
             </div>
 

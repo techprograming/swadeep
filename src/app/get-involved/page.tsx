@@ -157,7 +157,124 @@ export default function GetInvolvedPage() {
           </div>
         </div>
 
-        {/* 3. Inquiry Contact Box */}
+        {/* 3. Dedicated CSR Partnership Section (Prompt Step 13 Specification) */}
+        <section id="csr-partnerships" className="bg-gradient-to-br from-[#0B3025] to-[#174B38] text-white p-8 sm:p-12 md:p-14 rounded-3xl shadow-xl space-y-10 border border-white/10 scroll-mt-24">
+          <div className="max-w-3xl space-y-3">
+            <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-saffron border border-white/15">
+              {isGujarati ? "કોર્પોરેટ સામાજિક જવાબદારી" : "CORPORATE SOCIAL RESPONSIBILITY"}
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              {isGujarati ? "સ્વદીપ સાથે CSR ભાગીદારી કરો" : "PARTNER WITH SWADEEP THROUGH CSR"}
+            </h2>
+            <p className="font-body text-cream/90 text-sm sm:text-base leading-relaxed">
+              {isGujarati
+                ? "ભારતીય કંપની અધિનિયમની કલમ ૧૩૫ હેઠળ માન્ય CSR પ્રકલ્પો માટે સ્વદીપ એક વિશ્વસનીય અને પરિણામલક્ષી સંસ્થા છે. અમે પારદર્શક ઓડિટિંગ, પાયાના સ્તરે સતત નિરીક્ષણ અને વાસ્તવિક સામાજિક પરિણામો સુનિશ્ચિત કરીએ છીએ."
+                : "Swadeep Shikshan Vikas Sanstha is an experienced and audited grassroots partner for Section 135 CSR mandates. We offer turnkey program design, baseline surveys, measurable field implementation, and statutory reporting across our five focus areas:"}
+            </p>
+          </div>
+
+          {/* Five Thematic CSR Areas */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/15 space-y-2 flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-bold text-saffron uppercase">01 • Education</span>
+                <h3 className="font-heading font-bold text-lg text-white mt-1">
+                  {isGujarati ? "શિક્ષણ" : "Education"}
+                </h3>
+                <p className="text-xs text-cream/80 leading-relaxed mt-1">
+                  {isGujarati
+                    ? "આંગણવાડી BaLA રૂપાંતરણ, ડિજિટલ સ્માર્ટ ક્લાસ અને લર્નિંગ રિસોર્સ સેન્ટર (LRC)."
+                    : "BaLA anganwadi classrooms, school libraries, learning resource centres, and remedial coaching."}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/15 space-y-2 flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-bold text-saffron uppercase">02 • Health</span>
+                <h3 className="font-heading font-bold text-lg text-white mt-1">
+                  {isGujarati ? "આરોગ્ય" : "Health"}
+                </h3>
+                <p className="text-xs text-cream/80 leading-relaxed mt-1">
+                  {isGujarati
+                    ? "દંત સ્વચ્છતા (Project Arogya), બાળકોનું પોષણ અને ગ્રામીણ તબીબી શિબિરો."
+                    : "Preventive dental hygiene camps, pediatric health checks, malnutrition alleviation, and sanitation."}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/15 space-y-2 flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-bold text-saffron uppercase">03 • Livelihood</span>
+                <h3 className="font-heading font-bold text-lg text-white mt-1">
+                  {isGujarati ? "આજીવિકા" : "Livelihood"}
+                </h3>
+                <p className="text-xs text-cream/80 leading-relaxed mt-1">
+                  {isGujarati
+                    ? "દરિયાકાંઠાના માછીમારો માટે સુરક્ષા કિટ્સ, સાગરશાળા અને મહિલા સ્વસહાય જૂથો (SHGs)."
+                    : "Coastal fisheries modern equipment, Sagar Shala education, and women micro-enterprise SHGs."}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/15 space-y-2 flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-bold text-saffron uppercase">04 • Infrastructure</span>
+                <h3 className="font-heading font-bold text-lg text-white mt-1">
+                  {isGujarati ? "ગ્રામીણ માળખાગત સુવિધાઓ" : "Rural Development"}
+                </h3>
+                <p className="text-xs text-cream/80 leading-relaxed mt-1">
+                  {isGujarati
+                    ? "સોલાર સ્ટ્રીટ લાઇટ્સ (૧,૦૫૦+ સ્થાપિત), પીવાનું શુદ્ધ પાણી અને શાળા સમારકામ."
+                    : "Solar street lighting for village security, clean drinking water filtration, and school civil upgrades."}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/15 space-y-2 flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-bold text-saffron uppercase">05 • Disaster Response</span>
+                <h3 className="font-heading font-bold text-lg text-white mt-1">
+                  {isGujarati ? "આપત્તિ વ્યવસ્થાપન" : "Disaster Response"}
+                </h3>
+                <p className="text-xs text-cream/80 leading-relaxed mt-1">
+                  {isGujarati
+                    ? "હોનારત, વાવાઝોડા અને મહામારી દરમિયાન તાત્કાલિક રાહત સામગ્રી અને પુનર્વસન."
+                    : "Emergency relief mobilization, cyclone rehabilitation kits, community rescue training, and medical aid."}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* CSR Compliance Badges and CTA */}
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-white/15">
+            <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-cream/80">
+              <span className="flex items-center gap-1.5">
+                <CheckCircleIcon size={14} className="text-saffron" />
+                <span>MCA CSR-1 Registered</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircleIcon size={14} className="text-saffron" />
+                <span>Section 80G Certified</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircleIcon size={14} className="text-saffron" />
+                <span>FCRA Approved</span>
+              </span>
+            </div>
+
+            <Link
+              href="/contact?subject=CSR+Partnership#contact-form"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-bold text-white bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] hover:from-[#E06A1B] hover:to-[#C8590F] shadow-lg shadow-[#F47B2A]/30 transition-all duration-200"
+            >
+              <span>{isGujarati ? "CSR ભાગીદારી અંગે ચર્ચા કરો →" : "Explore CSR Partnership →"}</span>
+            </Link>
+          </div>
+        </section>
+
+        {/* 4. Inquiry Contact Box */}
         <section className="bg-white p-8 sm:p-12 rounded-3xl border border-forest/10 shadow-sm text-center space-y-4">
           <h3 className="font-heading text-2xl font-bold text-[#0B3025]">
             {isGujarati ? "વિગતવાર ચર્ચા માટે સીધો સંપર્ક કરો" : "Have Questions About Collaborating?"}

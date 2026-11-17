@@ -151,7 +151,7 @@ export const NAV_LINKS: readonly NavLinkItem[] = [
     href: "/about",
     dropdown: [
       { label: "Overview", labelGu: "સંસ્થા પરિચય", href: "/about", description: "History, vision, and core principles", descriptionGu: "ઇતિહાસ, દ્રષ્ટિકોણ અને મૂલ્યો" },
-      { label: "History", labelGu: "ઇતિહાસ", href: "/about#history", description: "Grassroots journey from 2005 to present", descriptionGu: "૨૦૦૫ થી અવિરત સમાજ સેવા" },
+      { label: "Our Journey", labelGu: "અમારી યાત્રા", href: "/about#our-journey", description: "Grassroots journey from 2005 to present", descriptionGu: "૨૦૦૫ થી અવિરત સમાજ સેવા" },
       { label: "Mission & Vision", labelGu: "ધ્યેય અને દ્રષ્ટિકોણ", href: "/about#vision-mission", description: "Guiding purpose & empowerment goals", descriptionGu: "વંચિતોના ઉત્થાનનો સંકલ્પ" },
       { label: "Trustees & Leadership", labelGu: "ટ્રસ્ટી મંડળ અને નેતૃત્વ", href: "/about#our-trustees", description: "Governing board & leadership", descriptionGu: "સંચાલક મંડળ અને આગેવાનો" },
       { label: "Partners", labelGu: "સહયોગીઓ", href: "/about#partners", description: "Institutional & funding collaborators", descriptionGu: "સંસ્થાકીય અને CSR સહયોગીઓ" },
@@ -188,8 +188,8 @@ export const NAV_LINKS: readonly NavLinkItem[] = [
     href: "/get-involved",
     dropdown: [
       { label: "Volunteer", labelGu: "સ્વયંસેવક બનો", href: "/get-involved#volunteer", description: "Join grassroots initiatives in Gujarat", descriptionGu: "ગુજરાતમાં ક્ષેત્રીય સેવા આપો" },
-      { label: "Partnerships", labelGu: "સંસ્થાકીય ભાગીદારી", href: "/get-involved#partnerships", description: "Corporate CSR and institutional linkages", descriptionGu: "CSR અને સંસ્થાકીય સહયોગ" },
-      { label: "Support Our Mission", labelGu: "ધ્યેયને સમર્થન આપો", href: "/get-involved#support", description: "Contribute to education, health & livelihood", descriptionGu: "શિક્ષણ અને સેવા કાર્યમાં સહભાગી બનો" },
+      { label: "CSR Partnerships", labelGu: "કોર્પોરેટ CSR ભાગીદારી", href: "/get-involved#csr-partnerships", description: "Corporate CSR and institutional linkages", descriptionGu: "CSR અને સંસ્થાકીય સહયોગ" },
+      { label: "Donate", labelGu: "દાન કરો", href: "/donate", description: "Contribute to education, health & livelihood", descriptionGu: "શિક્ષણ અને સેવા કાર્યમાં સહભાગી બનો" },
     ],
   },
   {
