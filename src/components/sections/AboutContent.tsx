@@ -10,24 +10,7 @@ import { EyeIcon, TargetIcon, AwardMedalIcon } from "@/components/ui/Icons";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function AboutContent() {
-  const [employees, setEmployees] = React.useState<any[]>([]);
 
-  React.useEffect(() => {
-    async function loadEmployees() {
-      try {
-        const res = await fetch("/api/employees");
-        if (res.ok) {
-          const data = await res.json();
-          if (data.success && Array.isArray(data.employees)) {
-            setEmployees(data.employees);
-          }
-        }
-      } catch (err) {
-        console.warn("Could not load employees:", err);
-      }
-    }
-    loadEmployees();
-  }, []);
   const { isGujarati, t } = useLanguage();
 
   const fundingPartnersTestimonials = TESTIMONIALS.filter(
@@ -521,56 +504,7 @@ export default function AboutContent() {
             </div>
           </div>
 
-          {/* Swadeep Executive & Field Operations Team */}
-          {employees.length > 0 && (
-            <div className="space-y-6 pt-4">
-              <div className="border-l-4 border-forest pl-4">
-                <h3 className="font-heading text-2xl font-bold text-forest-dark">
-                  {isGujarati ? "અમારી ક્ષેત્રીય અને વ્યવસ્થાપકીય ટીમ" : "Our Operational & Field Leadership Team"}
-                </h3>
-                <p className="font-body text-xs sm:text-sm text-charcoal/70 mt-1">
-                  {isGujarati
-                    ? "પાયાના સ્તરે સતત કાર્યરત કર્મનિષ્ઠ કાર્યકરો અને પ્રોજેક્ટ કોઓર્ડિનેટર."
-                    : "Dedicated project coordinators, social educators, and community mobilization leads."}
-                </p>
-              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {employees.map((emp) => (
-                  <div
-                    key={emp.id || emp.name}
-                    className="bg-white rounded-3xl p-6 shadow-sm border border-forest/10 hover:border-forest/30 transition-all hover:shadow-md flex flex-col justify-between"
-                  >
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="font-heading font-bold text-base text-forest-dark">
-                          {emp.name}
-                        </span>
-                        <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-forest-50 text-forest border border-forest/15">
-                          {emp.department || "Operations"}
-                        </span>
-                      </div>
-                      <div className="text-xs font-semibold text-saffron-dark">
-                        {emp.role}
-                      </div>
-                      {emp.bio && (
-                        <p className="text-xs text-charcoal/75 leading-relaxed line-clamp-3 pt-1">
-                          {emp.bio}
-                        </p>
-                      )}
-                    </div>
-
-                    {(emp.email || emp.phone) && (
-                      <div className="pt-3 mt-3 border-t border-cream-dark text-[11px] text-charcoal/60 space-y-0.5">
-                        {emp.email && <div>Email: {emp.email}</div>}
-                        {emp.phone && <div>Phone: {emp.phone}</div>}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </section>
     </main>
