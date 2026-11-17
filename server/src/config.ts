@@ -32,7 +32,13 @@ export const config = {
 
   // Admin Initial Seed Credentials
   adminDefault: {
-    username: process.env.ADMIN_USERNAME || "admin",
-    password: process.env.ADMIN_PASSWORD || "Swadeep@Admin2026!",
+    username: process.env.ADMIN_USERNAME || "swadeepngo",
+    password: process.env.ADMIN_PASSWORD || "swadeep@2005",
+  },
+
+  // Employee Portal Seed Credentials
+  employeeDefault: {
+    username: process.env.EMPLOYEE_USERNAME || "swem",
+    password: process.env.EMPLOYEE_PASSWORD || "emp@05",
   },
 };

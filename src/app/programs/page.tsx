@@ -27,13 +27,20 @@ export default function ProgramsPage() {
         aria-labelledby="programs-hero-heading"
         className="relative py-20 lg:py-28 bg-gradient-to-br from-forest-dark via-forest to-forest-900 text-cream overflow-hidden"
       >
+        {/* Enhanced Background Image */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-25">
+          <Image
+            src="/images/education.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover filter contrast-[1.08] saturate-[1.15]"
+          />
+        </div>
         <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
+          className="absolute inset-0 opacity-15 pointer-events-none bg-gradient-to-t from-forest-dark via-transparent to-forest-dark/80"
           aria-hidden="true"
-          style={{
-            backgroundImage: `radial-gradient(circle at 20px 20px, white 2px, transparent 0)`,
-            backgroundSize: "40px 40px",
-          }}
         />
 
         <div className="container-wide section-padding relative z-10 text-center max-w-4xl mx-auto space-y-4">

@@ -1,10 +1,31 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { TRUSTEES } from "@/lib/constants";
 import SectionHeading from "@/components/ui/SectionHeading";
 import AnimatedSection from "@/components/ui/AnimatedSection";
 
 export default function OurTrustees() {
+  const [trusteesList, setTrusteesList] = useState<any[]>([...TRUSTEES]);
+
+  useEffect(() => {
+    async function loadTrustees() {
+      try {
+        const res = await fetch("/api/trustees");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.trustees) && data.trustees.length > 0) {
+            setTrusteesList(data.trustees);
+          }
+        }
+      } catch (err) {
+        console.warn("[OurTrustees] Using static trustees fallback:", err);
+      }
+    }
+    loadTrustees();
+  }, []);
+
   const getInitials = (name: string) => {
     return name
       .replace(/^(Shri|Smt|Dr)\s+/i, "")
@@ -40,11 +61,11 @@ export default function OurTrustees() {
           align="center"
         />
 
-        {/* Trustees Grid - Name and Role with Full Green Image Background */}
+        {/* Trustees Grid */}
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {TRUSTEES.map((trustee) => (
+          {trusteesList.map((trustee) => (
             <AnimatedSection
-              key={trustee.name}
+              key={trustee.id || trustee.name}
               animation="slide-up"
               className="bg-white rounded-2xl p-6 shadow-sm border border-forest/10 hover:border-forest hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center group"
             >

@@ -4,12 +4,17 @@
 
 @layer base {
   html {
+    overflow-x: hidden;
+    max-width: 100vw;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
     @apply bg-cream text-charcoal font-body;
   }
 
@@ -21,18 +26,14 @@
     @apply bg-forest/20 text-forest-dark;
   }
 
-  /* Focus styles for accessibility */
+  /* Focus styles for accessibility — WCAG 2.2 AA */
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-saffron ring-0;
   }
 
-  /* Skip to main content link */
-  .skip-link {
-    @apply absolute -top-12 left-4 z-[100] bg-forest text-white px-4 py-2 rounded-b-lg font-semibold transition-transform;
-  }
-
-  .skip-link:focus {
-    @apply top-0;
+  /* Smooth anchor scroll offset for fixed navbar */
+  :target {
+    scroll-margin-top: 6rem;
   }
 }
 
@@ -52,6 +53,39 @@
   .glass-card {
     @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg;
   }
+
+  /* Page hero banner — consistent across all sub-pages */
+  .page-hero {
+    @apply relative py-20 lg:py-28 text-cream overflow-hidden;
+    background: linear-gradient(135deg, #0B2920 0%, #1B4332 40%, #0F2B1E 100%);
+  }
+
+  .page-hero::before {
+    content: "";
+    @apply absolute inset-0 opacity-10 pointer-events-none;
+    background-image: radial-gradient(circle at 20px 20px, white 1.5px, transparent 0);
+    background-size: 40px 40px;
+  }
+
+  /* Enhanced card with subtle hover lift */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+
+  /* Breadcrumb separator */
+  .breadcrumb-sep::after {
+    content: "›";
+    @apply mx-2 text-forest/40 font-bold;
+  }
+
+  /* Divider line utility */
+  .section-divider {
+    @apply border-t border-cream-dark/60 my-12 lg:my-16;
+  }
 }
 
 @layer utilities {
@@ -64,6 +98,20 @@
   .animate-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Subtle entrance for staggered children */
+  .stagger-child {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: staggerIn 0.5s ease-out forwards;
+  }
+
+  @keyframes staggerIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
@@ -89,4 +137,33 @@ input,
 select,
 textarea {
   touch-action: manipulation;
+}
+
+/* Custom scrollbar for webkit browsers */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #F5F0E8;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2D6A4F;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1B4332;
+  }
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

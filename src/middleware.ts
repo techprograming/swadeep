@@ -4,9 +4,14 @@ import type { NextRequest } from "next/server";
 // Simple in-memory rate limiter
 const rateLimit = new Map<string, { count: number; lastReset: number }>();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX = 20; // max requests per window
+const RATE_LIMIT_MAX = process.env.NODE_ENV === "development" ? 300 : 120; // Allow smooth dashboard & navigation operations
 
 function isRateLimited(ip: string): boolean {
+  // Allow localhost / internal dev loop without throttling
+  if (ip === "127.0.0.1" || ip === "::1" || ip === "unknown") {
+    return false;
+  }
+
   const now = Date.now();
   const entry = rateLimit.get(ip);
 
@@ -20,7 +25,7 @@ function isRateLimited(ip: string): boolean {
 }
 
 export function middleware(request: NextRequest) {
-  // Rate limit API routes
+  // Rate limit public API routes
   if (request.nextUrl.pathname.startsWith("/api/")) {
     const ip =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||

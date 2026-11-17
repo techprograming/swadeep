@@ -39,7 +39,7 @@ export default function ProgramDetailPage() {
       {/* 1. Header & Hero Banner */}
       <section className="bg-gradient-to-r from-[#0B3025] via-[#174B38] to-[#205943] text-white py-16 sm:py-20 relative overflow-hidden">
         {/* Subtle photo background */}
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-15">
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-30 filter contrast-[1.08] saturate-[1.15]">
           <Image
             src={program.image}
             alt=""

@@ -1,78 +1,78 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
-import { SITE_CONFIG } from "@/lib/constants";
-import {
-  FilmIcon,
-  BookOpenIcon,
-  CalendarIcon,
-  SparklesIcon,
-  ExternalLinkIcon,
-} from "@/components/ui/Icons";
+import { BookOpenIcon, ExternalLinkIcon, ShieldCheckIcon, CheckCircleIcon } from "@/components/ui/Icons";
+import ReportsSection from "@/components/sections/ReportsSection";
 
 export default function ResourcesPage() {
-  const { isGujarati, t } = useLanguage();
-
-  const newsItems = [
-    {
-      date: "October 2026",
-      dateGu: "ઓક્ટોબર ૨૦૨૬",
-      title: "Interactive Anganwadi Pedagogy & Early Writing Skills Drive",
-      titleGu: "આંગણવાડી પૂર્વ-પ્રાથમિક શિક્ષણ અને લેખન કૌશલ્ય અભિયાન",
-      tag: "Education",
-      tagGu: "શિક્ષણ",
-      desc: "Swadeep trainers conducted intensive capacity-building modules with ICDS frontline workers focusing on motor skills and joyful rhymes.",
-      descGu: "આંગણવાડી બહેનો સાથે બાળગીતો અને લેખન કૌશલ્ય અંગે સઘન તાલીમ શિબિરોનું આયોજન.",
-    },
-    {
-      date: "September 2026",
-      dateGu: "સપ્ટેમ્બર ૨૦૨૬",
-      title: "Preventive Dental Health & Hygiene Camps in Coastal Amreli",
-      titleGu: "અમરેલી સાગરકાંઠા વિસ્તારમાં દાંત આરોગ્ય તપાસ શિબિર",
-      tag: "Health",
-      tagGu: "આરોગ્ય",
-      desc: "Over 500 children and community members received specialized dental cavity screening and free dental care kits.",
-      descGu: "૫૦૦થી વધુ બાળકો અને ગ્રામજનોની દાંત તપાસ અને ઓરલ કેર કિટ સહાય.",
-    },
-    {
-      date: "Honour & Milestone",
-      dateGu: "સન્માન",
-      title: "Recognition: CSR Conclave 2019 Award Winner",
-      titleGu: "સન્માન: CSR કોન્ક્લેવ ૨૦૧૯ એવોર્ડ",
-      tag: "Recognition",
-      tagGu: "સન્માન",
-      desc: "Swadeep was honoured with the prestigious CSR Conclave Award for community-centric interventions in fisheries and child education.",
-      descGu: "માછીમાર ઉત્થાન અને બાળ શિક્ષણમાં વિશિષ્ટ યોગદાન બદલ પ્રતિષ્ઠિત CSR કોન્ક્લેવ એવોર્ડ એનાયત.",
-    },
-  ];
+  const { isGujarati } = useLanguage();
 
   const publications = [
     {
-      title: "Foundational Literacy & Joyful Learning Handbook",
-      titleGu: "પાયાનું શિક્ષણ અને આનંદદાયક બાળગીતો માર્ગદર્શિકા",
-      type: "Field Pedagogy Guide",
-      typeGu: "શૈક્ષણિક સાહિત્ય",
-      pages: "ICDS Module",
-      pagesGu: "આંગણવાડી તાલીમ",
+      id: "pub-1",
+      title: "Dental Health Teaching Learning Material (TLM) Book",
+      titleGu: "ડેન્ટલ હેલ્થ શિક્ષણ-શિક્ષણ સામગ્રી (TLM) પુસ્તિકા",
+      category: "Pedagogy & Healthcare",
+      categoryGu: "શિક્ષણ અને આરોગ્ય",
+      size: "1.31 MB",
+      fileUrl: "/publications/DH-TLM-book-English.pdf",
+      description:
+        "Comprehensive English teaching-learning manual designed for educators, teachers, and health mobilizers to deliver interactive dental hygiene pedagogy.",
+      descriptionGu:
+        "શિક્ષકો અને ક્ષેત્રીય આરોગ્ય કાર્યકરો માટે દાંતની સ્વચ્છતા અને શિક્ષણ પદ્ધતિ અંગેની વ્યાપક માર્ગદર્શિકા પુસ્તિકા.",
     },
     {
-      title: "Marine Fishermen Safety Protocols & Information Handbook",
-      titleGu: "માછીમાર દરિયાઈ સુરક્ષા અને માહિતી પુસ્તિકા",
-      type: "Fisheries Resource",
-      typeGu: "માછીમાર માર્ગદર્શિકા",
-      pages: "Sagarbandhu Project",
-      pagesGu: "સાગરબંધુ પ્રોજેક્ટ",
+      id: "pub-2",
+      title: "Story Book: Arti & The Tooth Fairy",
+      titleGu: "વાર્તા પુસ્તક: આરતી અને દાંતની પરી",
+      category: "Child Health & Storytelling",
+      categoryGu: "બાળ આરોગ્ય અને બાળવાર્તા",
+      size: "12.76 MB",
+      fileUrl: "/publications/Story-Book-Arti-Tooth-Fairy.pdf",
+      description:
+        "Colorful illustrated children’s storybook encouraging joyful dental hygiene habits, regular brushing techniques, and cavity prevention among primary students.",
+      descriptionGu:
+        "પ્રાથમિક શાળા અને આંગણવાડી બાળકોમાં દાંતની સ્વચ્છતા, યોગ્ય બ્રશિંગ અને કાળજી અંગેની રંગબેરંગી ચિત્રવાર્તા પુસ્તિકા.",
     },
     {
-      title: "Preventive Dental Hygiene Manual for Rural Educators",
-      titleGu: "ગ્રામીણ આરોગ્ય અને દાંતની સંભાળ પુસ્તિકા",
-      type: "Oral Health Manual",
-      typeGu: "આરોગ્ય માર્ગદર્શિકા",
-      pages: "Community Health",
-      pagesGu: "સમુદાય આરોગ્ય",
+      id: "pub-3",
+      title: "Maa No Prem Children’s Rhymes & Poem Book",
+      titleGu: "મા નો પ્રેમ — બાળગીતો અને કવિતા સંગ્રહ",
+      category: "Early Childhood Literature",
+      categoryGu: "બાળ સાહિત્ય અને બાળગીતો",
+      size: "1.67 MB",
+      fileUrl: "/publications/Ma-no-Prem-Poem-book-asha.pdf",
+      description:
+        "Illustrated Gujarati rhymes and emotional verses celebrating motherly affection, family values, and early childhood learning in rural Gujarat.",
+      descriptionGu:
+        "માતૃપ્રેમ, કૌટુંબિક સંસ્કાર અને પૂર્વ-પ્રાથમિક બાળ શિક્ષણને પ્રોત્સાહિત કરતી સચિત્ર ગુજરાતી કવિતાઓ અને બાળગીતોનો સંગ્રહ.",
+    },
+    {
+      id: "pub-4",
+      title: "Maa No Prem Poem Collection (Special Edition)",
+      titleGu: "મા નો પ્રેમ કાવ્ય સંગ્રહ (વિશેષ આવૃત્તિ)",
+      category: "Poetry & Literature",
+      categoryGu: "કાવ્ય સાહિત્ય",
+      size: "0.09 MB",
+      fileUrl: "/publications/Ma-no-Prem-Poem-book-asha-makvana.pdf",
+      description:
+        "Dedicated poetic verses and educational reflections authored by grassroots contributor Asha Makvana supporting village learning.",
+      descriptionGu:
+        "ક્ષેત્રીય સાથી આશા મકવાણા દ્વારા રચિત પ્રેરક કાવ્યો અને શિક્ષણલક્ષી પંક્તિઓનો વિશેષ સંગ્રહ.",
+    },
+    {
+      id: "pub-5",
+      title: "Swadeep Organizational Manual & Operational Guidelines",
+      titleGu: "સ્વદીપ સંસ્થાકીય માર્ગદર્શિકા અને સંચાલન નિયમાવલી",
+      category: "Governance & SOPs",
+      categoryGu: "સંચાલન અને નીતિનિયમો",
+      size: "0.67 MB",
+      fileUrl: "/publications/organizational-manual-swadeep-18.04.23.pdf",
+      description:
+        "Official institutional standard operating procedures, personnel policies, field management frameworks, and transparency protocols.",
+      descriptionGu:
+        "સંસ્થાની સ્ટાન્ડર્ડ ઓપરેટિંગ પ્રોસિજર્સ (SOPs), કર્મચારી નીતિઓ, ક્ષેત્રીય પ્રોટોકોલ અને વહીવટી પારદર્શિતા માર્ગદર્શિકા.",
     },
   ];
 
@@ -82,175 +82,171 @@ export default function ResourcesPage() {
       <section className="bg-gradient-to-r from-[#0B3025] via-[#174B38] to-[#205943] text-white py-16 sm:py-20 relative overflow-hidden">
         <div className="container-wide section-padding relative z-10 max-w-6xl mx-auto space-y-4">
           <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 border border-white/20 text-[#F47B2A]">
-            {isGujarati ? "સંસાધન કેન્દ્ર" : "RESOURCES & MEDIA"}
+            {isGujarati ? "સંસાધન અને દસ્તાવેજ કેન્દ્ર" : "RESOURCES & DOCUMENTATION"}
           </span>
           <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
-            {isGujarati ? "સંસાધનો, ગેલેરી અને સમાચાર" : "Knowledge, Media & Updates"}
+            {isGujarati ? "સત્તાવાર અહેવાલો, પ્રકાશનો અને બ્રોશર" : "Official Reports, Publications & Brochure"}
           </h1>
           <p className="font-body text-base sm:text-lg text-white/90 max-w-2xl leading-relaxed">
             {isGujarati
-              ? "સ્વદીપના ક્ષેત્રીય દસ્તાવેજો, ફોટો ગેલેરી, યુટ્યુબ વીડિયો, ક્ષેત્રીય સમાચાર અને શૈક્ષણિક સાહિત્યનો સંગ્રહ."
-              : "Explore Swadeep's field documentation, photography, YouTube video library, community bulletins, and publication materials."}
+              ? "સ્વદીપના વાર્ષિક અહેવાલો, ઓડિટ હિસાબ, શૈક્ષણિક સાહિત્ય, બાળવાર્તાઓ અને સંસ્થાનું સત્તાવાર બ્રોશર."
+              : "Access official statutory annual reports, financial audits, field pedagogical handbooks, children's storybooks, and our official organization brochure."}
           </p>
+
+          {/* Quick Action Link for Brochure */}
+          <div className="pt-3 flex flex-wrap items-center gap-3">
+            <a
+              href="/brochure/swadeep-brochure.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
+            >
+              <BookOpenIcon className="w-4 h-4" />
+              <span>{isGujarati ? "સંસ્થાનું બ્રોશર જુઓ (PDF)" : "View Official Brochure (PDF)"}</span>
+              <ExternalLinkIcon size={14} />
+            </a>
+            <a
+              href="#publications"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-semibold transition-all"
+            >
+              <span>{isGujarati ? "પ્રકાશનો (Publications) ↓" : "Publications ↓"}</span>
+            </a>
+            <a
+              href="#reports"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs sm:text-sm font-semibold transition-all"
+            >
+              <span>{isGujarati ? "અહેવાલો (Reports) ↓" : "Reports ↓"}</span>
+            </a>
+          </div>
         </div>
       </section>
 
       <div className="container-wide section-padding max-w-6xl mx-auto py-12 sm:py-16 space-y-16">
-        {/* 2. Media Hub Quick Links */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Photo Gallery Card */}
-          <Link
-            href="/gallery"
-            className="group block bg-white rounded-3xl p-8 border border-forest/10 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="relative h-48 rounded-2xl overflow-hidden mb-6 bg-forest-900/10">
-              <Image
-                src="/images/projects-hero.jpg"
-                alt="Photo Gallery"
-                fill
-                sizes="(max-width: 768px) 100vw, 500px"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-white font-bold text-sm bg-[#F47B2A] px-3 py-1 rounded-full">
-                {isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}
+        {/* 2. Official Brochure Feature Card */}
+        <section id="brochure" className="scroll-mt-24">
+          <div className="bg-gradient-to-br from-[#0B3025] to-[#174B38] text-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-lg border border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 text-saffron border border-white/15">
+                <CheckCircleIcon className="w-3.5 h-3.5 text-saffron" />
+                <span>{isGujarati ? "સત્તાવાર પરિચય પુસ્તિકા" : "OFFICIAL ORGANIZATIONAL BROCHURE"}</span>
               </div>
-            </div>
-            <h2 className="font-heading text-xl sm:text-2xl font-bold text-[#0B3025] group-hover:text-[#F47B2A] transition-colors">
-              {isGujarati ? "ક્ષેત્રીય ફોટો ગેલેરી જુઓ" : "Explore Field Photography"}
-            </h2>
-            <p className="font-body text-sm text-charcoal/70 mt-2 leading-relaxed">
-              {isGujarati
-                ? "શિક્ષણ, આરોગ્ય, આજીવિકા અને રાહત કાર્યના જીવંત ફોટોગ્રાફ્સનું વર્ગીકરણ."
-                : "Browse authentic grassroots photography across our five focus areas, sorted by thematic category."}
-            </p>
-            <div className="pt-4 flex items-center text-xs font-bold text-[#F47B2A]">
-              <span>{t("viewAll")}</span>
-              <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </div>
-          </Link>
-
-          {/* Video Library Card */}
-          <Link
-            href="/videos"
-            className="group block bg-white rounded-3xl p-8 border border-forest/10 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="relative h-48 rounded-2xl overflow-hidden mb-6 bg-forest-900/10">
-              <Image
-                src="https://img.youtube.com/vi/RwLPnssozZk/hqdefault.jpg"
-                alt="Video Library"
-                fill
-                sizes="(max-width: 768px) 100vw, 500px"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-4 left-4 text-white font-bold text-sm bg-red-600 px-3 py-1 rounded-full flex items-center gap-1.5">
-                <FilmIcon size={14} />
-                <span>{isGujarati ? "સત્તાવાર વીડિયો" : "Official Videos"}</span>
-              </div>
-            </div>
-            <h2 className="font-heading text-xl sm:text-2xl font-bold text-[#0B3025] group-hover:text-[#F47B2A] transition-colors">
-              {isGujarati ? "યુટ્યુબ વીડિયો સંગ્રહ જુઓ" : "Official Video Library"}
-            </h2>
-            <p className="font-body text-sm text-charcoal/70 mt-2 leading-relaxed">
-              {isGujarati
-                ? "આંગણવાડી બાળગીતો, પોષણ જાગૃતિ, પ્રવૃત્તિ આધારિત શિક્ષણ અને નૈતિક વાર્તાઓ."
-                : "Watch verified classroom rhymes, Anganwadi capacity building sessions, and nutritional awareness videos."}
-            </p>
-            <div className="pt-4 flex items-center text-xs font-bold text-[#F47B2A]">
-              <span>{t("viewAll")}</span>
-              <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </div>
-          </Link>
-        </section>
-
-        {/* 3. News and Community Updates */}
-        <section id="news" className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-forest/10 pb-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
-                {isGujarati ? "તાજેતરના સમાચારો" : "LATEST ANNOUNCEMENTS"}
-              </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-                {isGujarati ? "સમાચાર અને ક્ષેત્રીય અપડેટ્સ" : "News & Community Updates"}
+              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-white">
+                {isGujarati
+                  ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા અધિકૃત બ્રોશર"
+                  : "Swadeep Shikshan Vikas Sanstha Overview Brochure"}
               </h2>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {newsItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-6 rounded-3xl border border-forest/10 shadow-sm space-y-3 flex flex-col justify-between"
-              >
-                <div className="space-y-2.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#174B38] bg-forest-50 px-2.5 py-0.5 rounded-full border border-forest/15">
-                      {isGujarati ? item.tagGu : item.tag}
-                    </span>
-                    <span className="text-xs text-charcoal/60 font-medium">
-                      {isGujarati ? item.dateGu : item.date}
-                    </span>
-                  </div>
-                  <h3 className="font-heading font-bold text-base text-[#0B3025]">
-                    {isGujarati ? item.titleGu : item.title}
-                  </h3>
-                  <p className="font-body text-xs sm:text-sm text-charcoal/75 leading-relaxed">
-                    {isGujarati ? item.descGu : item.desc}
-                  </p>
-                </div>
+              <p className="font-body text-xs sm:text-sm text-cream/90 leading-relaxed">
+                {isGujarati
+                  ? "સંસ્થાના ધ્યેય, કાર્યક્ષેત્રો, શિક્ષણ, આરોગ્ય અને આજીવિકા પ્રોજેક્ટ્સ તથા સંસ્થાકીય વિગતો દર્શાવતું સત્તાવાર બ્રોશર પીડીએફ ફોર્મેટમાં ઉપલબ્ધ છે."
+                  : "Comprehensive introduction to Swadeep's vision, history, programmatic footprint in education, health, coastal fisheries, and grassroots community empowerment across Gujarat."}
+              </p>
+              <div className="flex items-center gap-4 text-xs text-cream/70 font-mono pt-1">
+                <span>Format: PDF</span>
+                <span>•</span>
+                <span>Size: 2.74 MB</span>
+                <span>•</span>
+                <span className="text-saffron font-semibold">{isGujarati ? "પ્રમાણિત દસ્તાવેજ" : "Verified Official"}</span>
               </div>
-            ))}
+            </div>
+
+            <div className="shrink-0 flex flex-col sm:flex-row md:flex-col gap-3">
+              <a
+                href="/brochure/swadeep-brochure.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-sm font-bold shadow-md hover:shadow-xl transition-all cursor-pointer text-center"
+              >
+                <BookOpenIcon className="w-4 h-4" />
+                <span>{isGujarati ? "બ્રોશર પીડીએફ જુઓ / ડાઉનલોડ ↗" : "Open / Download Brochure ↗"}</span>
+              </a>
+            </div>
           </div>
         </section>
 
-        {/* 4. Publications & Field Materials */}
-        <section id="publications" className="bg-white p-8 sm:p-10 rounded-3xl border border-forest/10 shadow-sm space-y-6">
-          <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
-              {isGujarati ? "પ્રકાશનો અને સાહિત્ય" : "PUBLICATIONS"}
-            </span>
-            <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-              {isGujarati ? "શૈક્ષણિક અને ક્ષેત્રીય માર્ગદર્શિકાઓ" : "Field Manuals & Training Guides"}
-            </h2>
-            <p className="font-body text-xs sm:text-sm text-charcoal/70 mt-1">
-              {isGujarati
-                ? "સંસ્થા દ્વારા ક્ષેત્રમાં વપરાતી તાલીમ પુસ્તિકાઓ અને સંસાધન સાહિત્ય."
-                : "Handbooks developed for community workers, teachers, and field mobilizers."}
-            </p>
+        {/* 3. Publications & Educational Handbooks Section */}
+        <section id="publications" className="space-y-6 scroll-mt-24" aria-label="Official Publications">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-forest/10 pb-6">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-forest-50 text-forest border border-forest/15">
+                <BookOpenIcon className="w-3.5 h-3.5 text-forest" />
+                <span>{isGujarati ? "પ્રકાશનો અને સાહિત્ય" : "FIELD PUBLICATIONS & LEARNING KITS"}</span>
+              </div>
+              <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0B3025]">
+                {isGujarati ? "શૈક્ષણિક પ્રકાશનો અને માર્ગદર્શિકાઓ" : "Publications & Learning Materials"}
+              </h2>
+              <p className="font-body text-xs sm:text-sm text-charcoal/75 max-w-2xl">
+                {isGujarati
+                  ? "શિક્ષકો, આંગણવાડી બહેનો અને બાળકો માટે સંસ્થા દ્વારા વિકસાવવામાં આવેલ શૈક્ષણિક પુસ્તિકાઓ અને બાળ સાહિત્ય."
+                  : "Field-tested teaching learning materials (TLM), children's illustrated storybooks, poem books, and organizational guidelines."}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 text-xs font-medium text-charcoal/70 bg-white px-4 py-2 rounded-2xl border border-forest/10 shadow-xs shrink-0">
+              <CheckCircleIcon className="w-4 h-4 text-forest" />
+              <span>{isGujarati ? "કુલ પ્રકાશનો: " : "Publications: "}</span>
+              <strong className="text-forest font-bold font-mono">{publications.length} Unique</strong>
+            </div>
           </div>
 
-          <div className="divide-y divide-forest/10">
-            {publications.map((pub, idx) => (
-              <div key={idx} className="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                <div className="flex items-start space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-forest-50 text-[#174B38] flex items-center justify-center shrink-0 mt-0.5">
-                    <BookOpenIcon size={20} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {publications.map((pub) => (
+              <div
+                key={pub.id}
+                className="bg-white rounded-2xl p-6 border border-forest/10 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group hover:-translate-y-1 duration-200"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-forest-50 text-forest border border-forest/15">
+                      {isGujarati ? pub.categoryGu : pub.category}
+                    </span>
+                    <span className="text-xs font-mono font-bold text-saffron bg-saffron/10 px-2 py-0.5 rounded-full">
+                      {pub.size}
+                    </span>
                   </div>
+
                   <div>
-                    <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B3025]">
+                    <h3 className="font-heading font-bold text-forest-dark text-base sm:text-lg group-hover:text-forest transition-colors leading-snug">
                       {isGujarati ? pub.titleGu : pub.title}
-                    </h4>
-                    <p className="text-xs text-charcoal/60 mt-0.5">
-                      {isGujarati ? pub.typeGu : pub.type} • {isGujarati ? pub.pagesGu : pub.pages}
+                    </h3>
+                    <p className="font-gujarati text-xs text-charcoal/60 mt-0.5">
+                      {isGujarati ? pub.title : pub.titleGu}
                     </p>
                   </div>
+
+                  <p className="font-body text-xs text-charcoal/70 leading-relaxed">
+                    {isGujarati ? pub.descriptionGu : pub.description}
+                  </p>
                 </div>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center text-xs font-bold text-[#174B38] hover:text-[#F47B2A] bg-cream px-3 py-1.5 rounded-full border border-forest/15 transition-colors"
-                >
-                  <span>{isGujarati ? "વિગત માટે સંપર્ક કરો" : "Request Material"}</span>
-                  <ExternalLinkIcon size={12} className="ml-1" />
-                </Link>
+
+                <div className="pt-4 mt-5 border-t border-forest/5 flex items-center justify-between">
+                  <a
+                    href={pub.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-forest hover:text-saffron transition-colors"
+                  >
+                    <BookOpenIcon className="w-3.5 h-3.5" />
+                    <span>{isGujarati ? "પુસ્તિકા વાંચો / PDF ↗" : "Read / Download PDF ↗"}</span>
+                  </a>
+                  <span className="text-[10px] text-forest/70 font-semibold bg-forest/5 px-2 py-0.5 rounded-full">
+                    Official
+                  </span>
+                </div>
               </div>
             ))}
           </div>
         </section>
+
+        {/* 4. Official Reports Section */}
+        <ReportsSection
+          id="reports"
+          title={isGujarati ? "સત્તાવાર વાર્ષિક અને ઓડિટ અહેવાલો" : "Official Reports & Statutory Accounts"}
+          subtitle={
+            isGujarati
+              ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થાના તમામ ૩૨ વાર્ષિક અહેવાલો, ઓડિટ અહેવાલો અને FCRA હિસાબો."
+              : "Complete statutory documentation featuring all 32 Annual Reports, Audit Reports, and FCRA Accounts."
+          }
+        />
       </div>
     </main>
   );

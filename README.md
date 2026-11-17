@@ -118,8 +118,7 @@ npm run build
 
 Navigate to `/admin` on your local server:
 - **URL**: `http://localhost:3000/admin`
-- **Default Username**: `admin`
-- **Default Password**: `Swadeep@Admin2026!`
+- **Credentials**: See `.env.example` for default admin username and password. Copy to `.env.local` and customize before use.
 
 ---
 

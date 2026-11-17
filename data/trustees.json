@@ -1,0 +1,67 @@
+[
+  {
+    "id": "tr-1",
+    "name": "Patubhai Ahir",
+    "nameGu": "પટુભાઈ આહીર",
+    "role": "Chairman",
+    "roleGu": "પ્રમુખ (ચેરમેન)",
+    "category": "Chairman",
+    "description": "Chairman of Swadeep Shikshan Vikas Sanstha, guiding organization governance and community welfare.",
+    "highlight": true
+  },
+  {
+    "id": "tr-2",
+    "name": "Kalyanbhai V. Dangar",
+    "nameGu": "કલ્યાણભાઈ વી. ડાંગર",
+    "role": "Chief Executive Officer",
+    "roleGu": "મુખ્ય કાર્યકારી અધિકારી (CEO)",
+    "category": "CEO",
+    "description": "Chief Executive Officer and driving force behind Swadeep since 2005, leading strategic partnerships and field execution.",
+    "highlight": true
+  },
+  {
+    "id": "tr-3",
+    "name": "Divaliben Solnki",
+    "nameGu": "દિવાળીબેન સોલંકી",
+    "role": "Trustee",
+    "roleGu": "ટ્રસ્ટી",
+    "category": "Trustee",
+    "description": "Trustee supporting community initiatives and women empowerment."
+  },
+  {
+    "id": "tr-4",
+    "name": "Pathik V Patel",
+    "nameGu": "પથિક વી. પટેલ",
+    "role": "Trustee",
+    "roleGu": "ટ્રસ્ટી",
+    "category": "Trustee",
+    "description": "Trustee contributing to institutional governance and organizational development."
+  },
+  {
+    "id": "tr-5",
+    "name": "Jasvantbhai M. Chauhan",
+    "nameGu": "જસવંતભાઈ એમ. ચૌહાણ",
+    "role": "Trustee",
+    "roleGu": "ટ્રસ્ટી",
+    "category": "Trustee",
+    "description": "Trustee advising on educational programs and rural school community linkages."
+  },
+  {
+    "id": "tr-6",
+    "name": "Shailesh Khamal",
+    "nameGu": "શૈલેષ ખમાલ",
+    "role": "Trustee",
+    "roleGu": "ટ્રસ્ટી",
+    "category": "Trustee",
+    "description": "Trustee assisting with community mobilization and youth training initiatives."
+  },
+  {
+    "id": "tr-7",
+    "name": "Vinodbhai Solanki",
+    "nameGu": "વિનોદભાઈ સોલંકી",
+    "role": "Trustee",
+    "roleGu": "ટ્રસ્ટી",
+    "category": "Trustee",
+    "description": "Trustee overseeing field interventions, livelihood programs, and grassroots disaster response."
+  }
+]

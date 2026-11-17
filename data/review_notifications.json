@@ -1,0 +1,34 @@
+[
+  {
+    "id": "notif-1794813646336",
+    "recipient": "swadeepsvs@gmail.com",
+    "subject": "New Public Review: Ramesh Bhai Patel (5 ★)",
+    "sent_at": "2026-11-16T07:20:46.336Z",
+    "review": {
+      "id": "rev-1794813646332-58gpa",
+      "name": "Ramesh Bhai Patel",
+      "email": "ramesh.patel@example.com",
+      "role": "Community Elder &amp; Supporter",
+      "category": "Community Member",
+      "rating": 5,
+      "quote": "Swadeep Shikshan Vikas Sanstha has brought transformative educational and livelihood opportunities to our region. Their dedicated team is truly inspirational."
+    },
+    "status": "recorded"
+  },
+  {
+    "id": "notif-1794813587365",
+    "recipient": "swadeepsvs@gmail.com",
+    "subject": "New Public Review: Ramesh Bhai Patel (5 ★)",
+    "sent_at": "2026-11-16T07:19:47.365Z",
+    "review": {
+      "id": "rev-1794813587362-ukq89",
+      "name": "Ramesh Bhai Patel",
+      "email": "ramesh.patel@example.com",
+      "role": "Community Elder &amp; Supporter",
+      "category": "Community Member",
+      "rating": 5,
+      "quote": "Swadeep Shikshan Vikas Sanstha has brought transformative educational and livelihood opportunities to our region. Their dedicated team is truly inspirational."
+    },
+    "status": "recorded"
+  }
+]

@@ -1,0 +1,894 @@
+export type GalleryCategory =
+  | "All"
+  | "Education"
+  | "Health"
+  | "Livelihood"
+  | "Infrastructure"
+  | "Media"
+  | "Relief"
+  | "Community";
+
+export interface GalleryItem {
+  id: number;
+  title: string;
+  titleGu: string;
+  category: "Education" | "Health" | "Livelihood" | "Infrastructure" | "Relief" | "Media" | "Community";
+  location: string;
+  date: string;
+  image: string;
+  description: string;
+}
+
+export const CATEGORIES: GalleryCategory[] = [
+  "All",
+  "Education",
+  "Health",
+  "Livelihood",
+  "Infrastructure",
+  "Media",
+  "Relief",
+  "Community",
+];
+
+export const GALLERY_ITEMS: GalleryItem[] = [
+  {
+    "id": 1,
+    "title": " Field Initiative",
+    "titleGu": "સમુદાય સહયોગ અને ક્ષેત્રીય પ્રવૃત્તિ",
+    "category": "Community",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/466662985_9406865389340993_2185090257753639784_n.jpg",
+    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 2,
+    "title": " Field Initiative",
+    "titleGu": "સમુદાય સહયોગ અને ક્ષેત્રીય પ્રવૃત્તિ",
+    "category": "Community",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/466678542_9406865382674327_1595720136936869927_n.jpg",
+    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 3,
+    "title": " Field Initiative",
+    "titleGu": "સમુદાય સહયોગ અને ક્ષેત્રીય પ્રવૃત્તિ",
+    "category": "Community",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/475792725_1034820738680952_9169000876501581246_n.jpg",
+    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 4,
+    "title": " Field Initiative",
+    "titleGu": "સમુદાય સહયોગ અને ક્ષેત્રીય પ્રવૃત્તિ",
+    "category": "Community",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/476239017_1038367758326250_9107735841149966113_n.jpg",
+    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 5,
+    "title": "Disaster",
+    "titleGu": "આપત્તિ વ્યવસ્થાપન અને રાહત સહાય",
+    "category": "Relief",
+    "location": "Disaster & Cyclone Relief Belt",
+    "date": "Field Documentation",
+    "image": "/img/Disater/Disaster.jpg",
+    "description": "Official on-ground field photograph representing relief interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 6,
+    "title": "Education 1",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-1-700x525.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 7,
+    "title": "Education 10",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-10-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 8,
+    "title": "Education 11",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-11-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 9,
+    "title": "Education 12",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-12-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 10,
+    "title": "Education 13",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-13-400x300.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 11,
+    "title": "Education 14",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-14-400x300.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 12,
+    "title": "Education 15",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-15-400x300.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 13,
+    "title": "Education 16",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-16-400x240.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 14,
+    "title": "Education 2",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-2-430x573.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 15,
+    "title": "Education 3",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-3-700x525.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 16,
+    "title": "Education 4",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-4-700x466.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 17,
+    "title": "Education 5",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-5-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 18,
+    "title": "Education 6",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-6-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 19,
+    "title": "Education 7",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-7-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 20,
+    "title": "Education 8",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-8-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 21,
+    "title": "Education 9",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-9-400x267.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 22,
+    "title": "Pre Primary Education 1",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Pre-Primary-Education-1-400x300.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 23,
+    "title": "Pre Primary Education 2",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Pre-Primary-Education-2-400x300.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 24,
+    "title": "Pre Primary Education 3",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Pre-Primary-Education-3-400x300.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 25,
+    "title": "Pre Primary Education 4",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Pre-Primary-Education-4-430x573.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 26,
+    "title": "Pre Primary Education 5",
+    "titleGu": "શિક્ષણ અને બાળ વિકાસ પ્રકલ્પ",
+    "category": "Education",
+    "location": "ICDS & Primary Schools, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Pre-Primary-Education-5-430x573.jpg",
+    "description": "Official on-ground field photograph representing education interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 27,
+    "title": "Health Programs 1",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-1-400x300.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 28,
+    "title": "Health Programs 10",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-10-400x300.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 29,
+    "title": "Health Programs 11",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-11-400x300.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 30,
+    "title": "Health Programs 2",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-2-400x300.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 31,
+    "title": "Health Programs 3",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-3-400x267.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 32,
+    "title": "Health Programs 4",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-4-400x267.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 33,
+    "title": "Health Programs 5",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-5-400x267.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 34,
+    "title": "Health Programs 6",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-6-400x267.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 35,
+    "title": "Health Programs 7",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-7-400x267.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 36,
+    "title": "Health Programs 8",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-8-400x267.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 37,
+    "title": "Health Programs 9",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-9-400x300.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 38,
+    "title": "Fishries 1",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-1-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 39,
+    "title": "Fishries 1",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-1-400x3001.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 40,
+    "title": "Fishries 10",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-10-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 41,
+    "title": "Fishries 11",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-11-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 42,
+    "title": "Fishries 12",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-12-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 43,
+    "title": "Fishries 13",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-13-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 44,
+    "title": "Fishries 2",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-2-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 45,
+    "title": "Fishries 3",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-3-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 46,
+    "title": "Fishries 4",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-4-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 47,
+    "title": "Fishries 5",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-5-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 48,
+    "title": "Fishries 6",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-6-400x184.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 49,
+    "title": "Fishries 7",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-7-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 50,
+    "title": "Fishries 8",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-8-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 51,
+    "title": "Fishries 9",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-9-400x300.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 52,
+    "title": "a2c52c34 db95 4c37 a7d7 7e45bc9f9b8e",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/a2c52c34-db95-4c37-a7d7-7e45bc9f9b8e-430x763.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 53,
+    "title": "Corona Awareness Camp Mask Distribution.2",
+    "titleGu": "આપત્તિ વ્યવસ્થાપન અને રાહત સહાય",
+    "category": "Relief",
+    "location": "Disaster & Cyclone Relief Belt",
+    "date": "Field Documentation",
+    "image": "/img/Media/Corona-Awareness-Camp-_-Mask-Distribution.2-369x800.jpg",
+    "description": "Official on-ground field photograph representing relief interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 54,
+    "title": "d9b87a72 8f91 4957 985d 12b2dd95d3ea",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/d9b87a72-8f91-4957-985d-12b2dd95d3ea-430x764.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 55,
+    "title": "Educational Kit Distribution Sagarshala",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/Educational-Kit-Distribution-Sagarshala-400x265.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 56,
+    "title": "Eye Check up Camp",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/Eye-Check-up-Camp-369x800.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 57,
+    "title": "Govt. Awareness Camp",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/Govt.-Awareness-Camp-430x739.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 58,
+    "title": "Health Checkup Camp",
+    "titleGu": "આરોગ્ય, તબીબી તપાસ અને નિદાન શિબિર",
+    "category": "Health",
+    "location": "Health Outreach Camps, Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/Health-Checkup-Camp-369x800.jpg",
+    "description": "Official on-ground field photograph representing health interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 59,
+    "title": "IMG 20171124 WA0015",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG-20171124-WA0015-386x300.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 60,
+    "title": "IMG 20171125 WA0000",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG-20171125-WA0000-430x461.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 61,
+    "title": "IMG 20171206 WA0069",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG-20171206-WA0069-400x300.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 62,
+    "title": "IMG 20171206 WA0070",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG-20171206-WA0070-430x573.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 63,
+    "title": "IMG 20171206 WA0071",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG-20171206-WA0071-430x573.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 64,
+    "title": "IMG 20171206 WA0072",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG-20171206-WA0072-430x573.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 65,
+    "title": "IMG 20171206 WA0073",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG-20171206-WA0073-430x573.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 66,
+    "title": "IMG 20180105 115720",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG_20180105_115720-430x573.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 67,
+    "title": "IMG 20180105 115730",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/IMG_20180105_115730-400x300.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 68,
+    "title": "Insulation Box Distribution",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Media/Insulation-Box-Distribution-369x800.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 69,
+    "title": "Insulation Box Distribution",
+    "titleGu": "માછીમાર આજીવિકા અને સમુદાય વિકાસ",
+    "category": "Livelihood",
+    "location": "Coastal Amreli & Bhavnagar",
+    "date": "Field Documentation",
+    "image": "/img/Media/Insulation-Box-Distribution-369x8001.jpg",
+    "description": "Official on-ground field photograph representing livelihood interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 70,
+    "title": "Sagarshala Education Kit Distribution",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/Sagarshala-Education-Kit-Distribution-369x800.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 71,
+    "title": "WhatsApp Image 2021 01 02 at 8.59.20 PM",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/WhatsApp-Image-2021-01-02-at-8.59.20-PM-400x265.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 72,
+    "title": "WhatsApp Image 2021 01 15 at 10.11.30 PM",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/WhatsApp-Image-2021-01-15-at-10.11.30-PM-400x240.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 73,
+    "title": "WhatsApp Image 2021 02 06 at 10.25.22 AM",
+    "titleGu": "સમુદાય જાગૃતિ શિબિર અને સાધનો વિતરણ",
+    "category": "Media",
+    "location": "Rural Gujarat",
+    "date": "Field Documentation",
+    "image": "/img/Media/WhatsApp-Image-2021-02-06-at-10.25.22-AM-400x163.jpg",
+    "description": "Official on-ground field photograph representing media interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 74,
+    "title": "Infrastructure 1",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-1-380x800.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 75,
+    "title": "Infrastructure 1",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-1-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 76,
+    "title": "Infrastructure 10",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-10-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 77,
+    "title": "Infrastructure 11",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-11-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 78,
+    "title": "Infrastructure 12",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-12-400x300.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 79,
+    "title": "Infrastructure 2",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-2-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 80,
+    "title": "Infrastructure 3",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-3-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 81,
+    "title": "Infrastructure 4",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-4-430x645.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 82,
+    "title": "Infrastructure 5",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-5-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 83,
+    "title": "Infrastructure 6",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-6-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 84,
+    "title": "Infrastructure 7",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-7-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 85,
+    "title": "Infrastructure 8",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-8-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  },
+  {
+    "id": 86,
+    "title": "Infrastructure 9",
+    "titleGu": "ગ્રામીણ માળખાકીય સુવિધાઓ અને બાલા આંગણવાડી",
+    "category": "Infrastructure",
+    "location": "Rural Anganwadis & Centres",
+    "date": "Field Documentation",
+    "image": "/img/Rural Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-9-400x267.jpg",
+    "description": "Official on-ground field photograph representing infrastructure interventions by Swadeep Shikshan Vikas Sanstha."
+  }
+];

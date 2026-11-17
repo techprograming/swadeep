@@ -143,19 +143,6 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           <div className="h-1 w-2 rounded-full bg-saffron-300" />
         </div>
       )}
-
-      {/* Subtitle */}
-      {subtitle && (
-        <p
-          className={cn(
-            "font-body text-charcoal/80 text-base sm:text-lg leading-relaxed mt-1",
-            isCenter ? "max-w-2xl mx-auto" : "max-w-2xl",
-            subtitleClassName
-          )}
-        >
-          {subtitle}
-        </p>
-      )}
     </div>
   );
 };

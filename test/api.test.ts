@@ -104,4 +104,20 @@ describe("Swadeep Shikshan Vikas Sanstha — Test Suite", () => {
       assert.strictEqual(found?.name, "Test Donor");
     });
   });
+  describe("Reviews & Feedback Verification", () => {
+    test("Reviews sanitize user content against HTML injection", () => {
+      const raw = "<script>alert('xss')</script>Amazing community work by Swadeep!";
+      const sanitized = sanitizeInput(raw);
+      assert.strictEqual(sanitized.includes("<script>"), false);
+      assert.strictEqual(sanitized.includes("Amazing community work"), true);
+    });
+
+    test("Reviews rating is bounded between 1 and 5", () => {
+      const clampRating = (val: number) => Math.min(5, Math.max(1, Math.round(val)));
+      assert.strictEqual(clampRating(7), 5);
+      assert.strictEqual(clampRating(-2), 1);
+      assert.strictEqual(clampRating(4.8), 5);
+      assert.strictEqual(clampRating(3), 3);
+    });
+  });
 });

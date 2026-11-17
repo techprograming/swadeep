@@ -6,15 +6,22 @@ import healthRoutes from "./routes/health";
 import authRoutes from "./routes/auth";
 import contactRoutes from "./routes/contact";
 import impactRoutes from "./routes/impact";
+import reviewsRoutes from "./routes/reviews";
 
 const app = express();
 
 // Security and Request Parsing
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || "http://localhost:3000,http://localhost:5000").split(",").map(s => s.trim());
+
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow localhost dev servers and server-to-server calls
-      callback(null, true);
+      // Allow server-to-server calls (no origin) and allowlisted origins
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
     },
     credentials: true,
   })
@@ -36,6 +43,7 @@ app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/impact-metrics", impactRoutes);
+app.use("/api/reviews", reviewsRoutes);
 
 // Root informational endpoint
 app.get("/", (req: Request, res: Response) => {

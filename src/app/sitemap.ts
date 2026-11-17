@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/about",
     "/programs",
-    "/impact",
+    "/resources",
     "/gallery",
     "/videos",
     "/donate",
@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}${route}`,
     lastModified,
     changeFrequency:
-      route === "" || route === "/programs" || route === "/impact"
+      route === "" || route === "/programs" || route === "/resources"
         ? ("weekly" as const)
         : ("monthly" as const),
     priority:

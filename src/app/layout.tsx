@@ -89,6 +89,7 @@ export default function RootLayout({
     sameAs: [
       SITE_CONFIG.social.facebook,
       SITE_CONFIG.social.youtube,
+      SITE_CONFIG.social.instagram,
     ],
   };
 
@@ -103,15 +104,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-cream text-charcoal font-body antialiased flex flex-col">
+      <body className="min-h-screen bg-cream text-charcoal font-body antialiased flex flex-col overflow-x-hidden w-full max-w-full">
         <Providers>
-          {/* Accessible skip link for keyboard users */}
-          <a
-            href="#main-content"
-            className="skip-link sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-forest focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-saffron"
-          >
-            Skip to main content
-          </a>
 
           {/* Global Navigation Bar */}
           <Navbar />
