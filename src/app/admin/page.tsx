@@ -185,6 +185,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     loadAllData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const showFeedback = (type: "success" | "error", text: string) => {
@@ -743,7 +744,7 @@ export default function AdminPage() {
                       Trustees &amp; Board Governance
                     </h3>
                     <p className="text-xs text-charcoal/60">
-                      Manage trustees and executive leadership shown in the "Our Trustees" section on the website.
+                      Manage trustees and executive leadership shown in the &ldquo;Our Trustees&rdquo; section on the website.
                     </p>
                   </div>
                   <button
@@ -1267,6 +1268,7 @@ export default function AdminPage() {
                           <div className="flex items-start justify-between gap-3">
                             <div className="flex items-start gap-3">
                               {rev.image ? (
+                                /* eslint-disable-next-line @next/next/no-img-element */
                                 <img
                                   src={rev.image}
                                   alt={rev.name}

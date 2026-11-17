@@ -870,7 +870,7 @@ export default function EmployeesPage() {
                 <div className="space-y-3">
                   {logs.length === 0 ? (
                     <div className="bg-white p-8 rounded-3xl border border-forest/10 text-center text-xs text-charcoal/50">
-                      No field logs submitted yet. Click "+ Log Today's Work" to add one.
+                      No field logs submitted yet. Click &ldquo;+ Log Today&apos;s Work&rdquo; to add one.
                     </div>
                   ) : (
                     logs.map((log) => (
