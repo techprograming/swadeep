@@ -33,9 +33,6 @@ export default function AboutContent() {
   const fundingPartnersTestimonials = TESTIMONIALS.filter(
     (item) => item.category === "Funding Partners"
   );
-  const staffTestimonials = TESTIMONIALS.filter(
-    (item) => item.category === "Swadeep Staff"
-  );
 
   return (
     <main id="main-content" className="flex-1 bg-cream">
@@ -574,26 +571,6 @@ export default function AboutContent() {
               </div>
             </div>
           )}
-
-          {/* Swadeep Staff Quotes */}
-          <div className="space-y-6">
-            <h3 className="font-heading text-2xl font-bold text-forest-dark border-l-4 border-forest pl-4">
-              {isGujarati ? "સ્વદીપ કાર્યકર ટીમ (Swadeep Staff)" : "Swadeep Staff"}
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {staffTestimonials.map((tItem, idx) => (
-                <div key={idx} className="bg-white rounded-3xl p-8 shadow-sm border border-forest/10 space-y-4 flex flex-col justify-between">
-                  <p className="font-body text-charcoal/85 text-base italic leading-relaxed">
-                    &ldquo;{tItem.quote}&rdquo;
-                  </p>
-                  <div className="pt-3 border-t border-cream-dark">
-                    <div className="font-heading font-bold text-lg text-forest-dark">{tItem.name}</div>
-                    <div className="text-sm text-charcoal/70">{tItem.role}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
     </main>

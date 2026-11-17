@@ -334,46 +334,6 @@ export default function Testimonials() {
             </div>
           </div>
         </div>
-
-        {/* Dedicated Staff Voices section matching official design */}
-        <div className="mt-12 space-y-6">
-          <div className="flex items-center gap-2.5">
-            <div className="w-1.5 h-6 bg-[#0B3025] rounded-full" />
-            <h3 className="font-heading text-xl sm:text-2xl font-bold text-forest-dark">
-              {isGujarati ? "સ્વદીપ સ્ટાફ (Swadeep Staff)" : "Swadeep Staff"}
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {reviewsList
-              .filter(
-                (r) =>
-                  r.category === "Swadeep Staff" ||
-                  r.role?.toLowerCase().includes("staff") ||
-                  r.name.includes("Dishaben") ||
-                  r.name.includes("Vinod")
-              )
-              .map((staffReview, idx) => (
-                <div
-                  key={staffReview.id || idx}
-                  className="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-forest/10 flex flex-col justify-between space-y-5 hover:shadow-md transition-all duration-200"
-                >
-                  <p className="font-body text-charcoal/85 text-xs sm:text-sm lg:text-[15px] italic leading-relaxed">
-                    &ldquo;{staffReview.quote}&rdquo;
-                  </p>
-
-                  <div className="pt-4 border-t border-gray-100">
-                    <h4 className="font-heading font-extrabold text-base text-forest-dark">
-                      {staffReview.name}
-                    </h4>
-                    <p className="font-body text-xs text-charcoal/65 mt-0.5">
-                      {staffReview.role}
-                    </p>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
       </div>
 
       {/* Review Submission Modal Dialog */}

@@ -613,20 +613,6 @@ export const TESTIMONIALS = [
     category: "Government Partner",
     image: "/images/reviews/dnh-logo.png",
   },
-  {
-    quote:
-      "I’ve worked at Swadeep for almost 5 years and the experience has been full of joy and satisfaction. It hits you differently when you contribute something to the under privileged people, especially their gratitude towards you makes you more humble and after some time you realize that you have become a part of that community. This feeling made me learn more and more and is always facilitated by Swadeep. The staff training, workshops, exposure and many more helped me to shape myself as a better individual and professional.",
-    name: "Dishaben Dave",
-    role: "Program Coordinator, Swadeep Shikshan Vikas Sanstha",
-    category: "Swadeep Staff",
-  },
-  {
-    quote:
-      "My journey at Swadeep was full of learning as I came in touch with the projects from different areas like Education, Livelihood and Women Empowerment. The joy of working with team Swadeep is something I can cherish the whole life. The opportunities to network, independence of work and right to visualize the assigned project are the things I like the most about Swadeep.",
-    name: "Vinodbhai Solanki",
-    role: "Field Team Leader, Swadeep Shikshan Vikas Sanstha",
-    category: "Swadeep Staff",
-  },
 ] as const;
 
 export const BANKING_DETAILS = {
