@@ -485,53 +485,7 @@ export default function GalleryPage() {
         </div>
       </section>
 
-      {/* ── 4. FEATURED STORY ────────────────────────────────────────────── */}
-      {selectedCategory === "All" && (() => {
-        const featured = GALLERY_ITEMS.find((i) => i.featured);
-        if (!featured) return null;
-        return (
-          <section className="py-8 bg-[#FAFAF7]">
-            <div className="container-wide section-padding">
-              <div className="rounded-3xl overflow-hidden bg-white shadow-lg border border-gray-100 grid lg:grid-cols-2 gap-0">
-                <div className="relative min-h-[280px] lg:min-h-[400px]">
-                  <Image
-                    src={featured.image}
-                    alt={featured.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/10" />
-                </div>
-                <div className="flex flex-col justify-center p-8 lg:p-12 space-y-4">
-                  <span className="inline-block text-[#F47B2A] text-xs font-bold uppercase tracking-widest">
-                    ✦ {isGujarati ? "ફીચર્ડ ફોટો" : "Featured Photograph"}
-                  </span>
-                  <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025] leading-snug">
-                    {isGujarati ? featured.titleGu : featured.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed text-sm">{featured.description}</p>
-                  <div className="flex flex-wrap gap-3 text-sm text-gray-500">
-                    <span className="flex items-center gap-1.5"><PinIcon className="w-4 h-4 text-[#F47B2A]" />{featured.location}</span>
-                    <span className="bg-[#0B3025]/10 text-[#0B3025] px-3 py-1 rounded-full font-semibold text-xs">
-                      {CATEGORY_LABELS[featured.category as GalleryCategory]?.en}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setActiveItem(featured)}
-                    className="mt-2 inline-flex items-center gap-2 bg-[#0B3025] hover:bg-[#174B38] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors self-start focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-                  >
-                    View Photo →
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* ── 5. MASONRY / BENTO GRID ──────────────────────────────────────── */}
+{/* ── 5. MASONRY / BENTO GRID ──────────────────────────────────────── */}
       <section className="py-8 bg-[#FAFAF7]" aria-label="Photo gallery grid">
         <div className="container-wide section-padding">
           {displayedItems.length === 0 ? (
