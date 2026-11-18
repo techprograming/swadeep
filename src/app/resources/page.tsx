@@ -7,6 +7,8 @@ import ReportsSection from "@/components/sections/ReportsSection";
 
 export default function ResourcesPage() {
   const { isGujarati } = useLanguage();
+  const [activePubCategory, setActivePubCategory] = React.useState<string>("All");
+  const [pubSearchQuery, setPubSearchQuery] = React.useState<string>("");
 
   const publications = [
     {
@@ -188,8 +190,69 @@ export default function ResourcesPage() {
             </div>
           </div>
 
+          {/* Filter & Search Bar for Publications */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+              {["All", "Pedagogy & Healthcare", "Child Health & Storytelling", "Early Childhood Literature", "Governance & SOPs"].map((cat) => {
+                const isActive = activePubCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setActivePubCategory(cat)}
+                    className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all focus:outline-none focus:ring-2 focus:ring-[#F47B2A] ${
+                      isActive
+                        ? "bg-[#0B3025] text-white shadow-xs"
+                        : "bg-white text-charcoal/80 border border-forest/15 hover:border-forest/40"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="relative sm:w-64">
+              <input
+                type="text"
+                value={pubSearchQuery}
+                onChange={(e) => setPubSearchQuery(e.target.value)}
+                placeholder={isGujarati ? "પુસ્તિકા શોધો..." : "Search publications..."}
+                className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-white border border-forest/15 focus:outline-none focus:ring-2 focus:ring-forest text-charcoal"
+              />
+              <svg
+                className="w-3.5 h-3.5 text-charcoal/40 absolute left-2.5 top-1/2 -translate-y-1/2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              {pubSearchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setPubSearchQuery("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-charcoal/50 hover:text-charcoal"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {publications.map((pub) => (
+            {publications
+              .filter((pub) => {
+                const matchesCat = activePubCategory === "All" || pub.category === activePubCategory;
+                const q = pubSearchQuery.toLowerCase().trim();
+                const matchesSearch =
+                  !q ||
+                  pub.title.toLowerCase().includes(q) ||
+                  pub.titleGu.toLowerCase().includes(q) ||
+                  pub.description.toLowerCase().includes(q);
+                return matchesCat && matchesSearch;
+              })
+              .map((pub) => (
               <div
                 key={pub.id}
                 className="bg-white rounded-2xl p-6 border border-forest/10 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group hover:-translate-y-1 duration-200"

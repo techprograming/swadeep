@@ -52,7 +52,7 @@ export default function FeaturedVideos() {
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
           <Link
             href="/videos"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-forest-800 hover:bg-forest-900 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-forest-800 hover:bg-forest-900 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A] focus-visible:ring-offset-2"
           >
             <FilmIcon size={18} className="text-saffron-400 group-hover:scale-110 transition-transform" />
             <span>Explore All Videos & Gallery</span>
@@ -62,7 +62,7 @@ export default function FeaturedVideos() {
             href={YOUTUBE_CHANNEL.subscribeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
           >
             <YoutubeIcon size={18} className="group-hover:scale-110 transition-transform" />
             <span>Subscribe on YouTube ({YOUTUBE_CHANNEL.handle})</span>

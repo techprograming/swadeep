@@ -61,6 +61,11 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: SITE_CONFIG.url,
+    languages: {
+      "en-IN": SITE_CONFIG.url,
+      "gu-IN": SITE_CONFIG.url,
+      "x-default": SITE_CONFIG.url,
+    },
   },
   robots: {
     index: true,
@@ -163,6 +168,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col font-body bg-cream text-charcoal antialiased">
+        {/* WCAG 2.2 AA Accessible Skip Link */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-5 focus:py-2.5 focus:bg-[#F47B2A] focus:text-white focus:rounded-xl focus:shadow-2xl focus:font-extrabold focus:outline-none focus:ring-2 focus:ring-white transition-all duration-150"
+        >
+          Skip to main content
+        </a>
         <Providers>
           <Navbar />
           {children}

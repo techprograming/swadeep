@@ -309,7 +309,54 @@ export default function ProgramDetailPage() {
           </section>
         )}
 
-        {/* Section F: Action & Collaboration Banner */}
+        {/* Section F: Inter-Program Navigation Bar */}
+        <section aria-label="Explore other programs" className="pt-8 border-t border-forest/15 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
+              {isGujarati ? "અન્ય કાર્યક્રમો જુઓ" : "EXPLORE ALL 5 PROGRAMS"}
+            </span>
+            <Link
+              href="/programs"
+              className="text-xs font-bold text-forest hover:text-[#F47B2A] transition-colors"
+            >
+              {isGujarati ? "બધા પાંચેય કાર્યક્રમો પરિચય →" : "View All Five Programs Overview →"}
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {[
+              { slug: "education", title: "Education", titleGu: "શિક્ષણ" },
+              { slug: "health", title: "Health", titleGu: "આરોગ્ય" },
+              { slug: "livelihood", title: "Livelihood", titleGu: "આજીવિકા" },
+              { slug: "infrastructure", title: "Rural Infrastructure", titleGu: "ગ્રામ વિકાસ" },
+              { slug: "disaster", title: "Disaster Management", titleGu: "આપત્તિ વ્યવસ્થાપન" },
+            ].map((p) => {
+              const isCurrent = p.slug === normalizedSlug;
+              return (
+                <Link
+                  key={p.slug}
+                  href={`/programs/${p.slug}`}
+                  className={`p-3.5 rounded-2xl text-center border transition-all duration-200 block ${
+                    isCurrent
+                      ? "bg-[#0B3025] text-white border-[#0B3025] shadow-md font-bold"
+                      : "bg-white text-forest-dark border-forest/15 hover:border-forest hover:bg-forest-50/50 font-semibold"
+                  }`}
+                >
+                  <span className="block text-xs font-bold leading-tight">
+                    {isGujarati ? p.titleGu : p.title}
+                  </span>
+                  {isCurrent && (
+                    <span className="text-[10px] text-[#F47B2A] block mt-0.5 font-bold">
+                      {isGujarati ? "હાલમાં જોઈ રહ્યા છો" : "Current"}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Section G: Action & Collaboration Banner */}
         <section className="rounded-3xl bg-gradient-to-r from-[#0B3025] to-[#174B38] text-white p-8 sm:p-12 text-center space-y-6 shadow-xl">
           <div className="max-w-2xl mx-auto space-y-3">
             <h3 className="font-heading text-2xl sm:text-3xl font-black">

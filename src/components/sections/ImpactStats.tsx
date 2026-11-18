@@ -127,7 +127,9 @@ export default function ImpactStats() {
             {categories.map((cat) => (
               <button
                 key={cat.key}
+                id={`tab-${cat.key}`}
                 role="tab"
+                aria-controls="panel-achievements"
                 aria-selected={activeTab === cat.key}
                 onClick={() => setActiveTab(cat.key)}
                 className={`whitespace-nowrap px-3 py-1.5 xs:px-3.5 xs:py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-saffron shrink-0 ${
@@ -143,7 +145,12 @@ export default function ImpactStats() {
         </div>
 
         {/* Achievements Counter Grid */}
-        <div className="bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-3 xs:p-4 sm:p-7 md:p-8 lg:p-10 border border-white/15 shadow-2xl">
+        <div
+          id="panel-achievements"
+          role="tabpanel"
+          aria-labelledby={`tab-${activeTab}`}
+          className="bg-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-3 xs:p-4 sm:p-7 md:p-8 lg:p-10 border border-white/15 shadow-2xl"
+        >
           <div className="text-center mb-4 xs:mb-5 sm:mb-8">
             <h3 className="font-heading text-base xs:text-lg sm:text-2xl md:text-3xl font-extrabold text-saffron-light">
               {isGujarati ? currentCategory.titleGu : currentCategory.title}

@@ -455,105 +455,112 @@ export default function DonateContent() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   {/* Full Name */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-name" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "દાતાનું પૂરું નામ *" : "Donor Full Name *"}
                     </label>
                     <input
+                      id="donor-name"
                       type="text"
                       required
                       placeholder="e.g. Ramesh Patel"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none text-sm font-medium transition-colors"
                     />
                   </div>
 
                   {/* Email */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-email" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "ઈમેલ સરનામું (80G રસીદ માટે) *" : "Email Address (for 80G receipt) *"}
                     </label>
                     <input
+                      id="donor-email"
                       type="email"
                       required
                       placeholder="donor@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none text-sm font-medium transition-colors"
                     />
                   </div>
 
                   {/* Mobile Phone */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-phone" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "મોબાઈલ નંબર *" : "Mobile Phone Number *"}
                     </label>
                     <input
+                      id="donor-phone"
                       type="tel"
                       required
                       placeholder="+91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none text-sm font-medium transition-colors"
                     />
                   </div>
 
                   {/* PAN Card */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-pan" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "પાન કાર્ડ નંબર (80G મુક્તિ માટે ફરજિયાત) *" : "PAN Number (Mandatory for 80G) *"}
                     </label>
                     <input
+                      id="donor-pan"
                       type="text"
                       required
                       maxLength={10}
                       placeholder="ABCDE1234F"
                       value={formData.pan}
                       onChange={(e) => setFormData({ ...formData, pan: e.target.value.toUpperCase() })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none font-mono uppercase text-sm font-bold"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none font-mono uppercase text-sm font-bold transition-colors"
                     />
                   </div>
 
                   {/* Amount */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-amount" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "ટ્રાન્સફર કરેલી રકમ (₹) *" : "Donated Amount (INR ₹) *"}
                     </label>
                     <input
+                      id="donor-amount"
                       type="number"
                       required
                       min="1"
                       placeholder="e.g. 5000"
                       value={formData.amount}
                       onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-bold text-forest-dark"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none text-sm font-bold text-forest-dark transition-colors"
                     />
                   </div>
 
                   {/* UTR / Transaction Reference */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-utr" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "UTR / સંદર્ભ નંબર *" : "UTR / Transaction Reference No. *"}
                     </label>
                     <input
+                      id="donor-utr"
                       type="text"
                       required
                       placeholder="e.g. 331456789012"
                       value={formData.utr}
                       onChange={(e) => setFormData({ ...formData, utr: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none font-mono text-sm font-bold"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none font-mono text-sm font-bold transition-colors"
                     />
                   </div>
 
                   {/* Transfer Mode */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-mode" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "ટ્રાન્સફર મોડ" : "Payment / Transfer Mode"}
                     </label>
                     <select
+                      id="donor-mode"
                       value={formData.transferMode}
                       onChange={(e) => setFormData({ ...formData, transferMode: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium bg-white"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none text-sm font-medium bg-white transition-colors"
                     >
                       <option value="NEFT / RTGS / IMPS">NEFT / RTGS / IMPS</option>
                       <option value="UPI / Net Banking">UPI / Net Banking</option>
@@ -564,25 +571,27 @@ export default function DonateContent() {
 
                   {/* Date */}
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                    <label htmlFor="donor-date" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                       {isGujarati ? "ટ્રાન્સફર તારીખ *" : "Date of Transfer *"}
                     </label>
                     <input
+                      id="donor-date"
                       type="date"
                       required
                       value={formData.date}
                       onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-medium"
+                      className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none text-sm font-medium transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Notes / Special Instructions */}
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
+                  <label htmlFor="donor-notes" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
                     {isGujarati ? "કાર્યક્રમ પસંદગી અથવા વિશેષ નોંધ (વૈકલ્પિક)" : "Program Preference or Note (Optional)"}
                   </label>
                   <textarea
+                    id="donor-notes"
                     rows={2}
                     placeholder={
                       isGujarati
@@ -591,7 +600,7 @@ export default function DonateContent() {
                     }
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-2 focus:ring-forest/20 focus:outline-none text-sm transition-colors"
                   />
                 </div>
 

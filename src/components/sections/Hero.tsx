@@ -72,7 +72,7 @@ export default function Hero() {
             <div
               key={img.src}
               className={cn(
-                "absolute inset-0 transform-gpu transition-all duration-1000 ease-in-out will-change-transform",
+                "absolute inset-0 transform-gpu transition-all duration-1000 ease-in-out will-change-transform motion-reduce:transition-none motion-reduce:transform-none",
                 isActive
                   ? "opacity-100 scale-100"
                   : "opacity-0 scale-105 pointer-events-none"
@@ -173,12 +173,13 @@ export default function Hero() {
                     type="button"
                     onClick={() => setCurrentSlide(idx)}
                     className={cn(
-                      "h-2 rounded-full transition-all duration-300 focus:outline-none",
+                      "h-2 rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]",
                       idx === currentSlide
                         ? "w-6 bg-[#F47B2A]"
                         : "w-2 bg-white/50 hover:bg-white/90"
                     )}
                     aria-label={`Go to slide ${idx + 1}`}
+                    aria-current={idx === currentSlide ? "true" : undefined}
                   />
                 ))}
 

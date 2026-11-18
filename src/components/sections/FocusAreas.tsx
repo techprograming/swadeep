@@ -149,7 +149,7 @@ export default function FocusAreas() {
                 <div className="pt-4 border-t border-forest/10 flex items-center justify-between">
                   <Link
                     href={`/programs/${education.id}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-forest hover:bg-forest-light transition-all shadow-md hover:shadow-lg group-hover:scale-102"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-forest hover:bg-forest-light transition-all shadow-md hover:shadow-lg group-hover:scale-102 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest"
                   >
                     <span>{isGujarati ? "શિક્ષણ કાર્યક્રમ જુઓ" : "Explore Education Program"}</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -225,7 +225,7 @@ export default function FocusAreas() {
                 <div className="p-5 pt-0">
                   <Link
                     href={`/programs/${area.id}`}
-                    className="w-full inline-flex items-center justify-between text-xs font-bold text-forest group-hover:text-[#F47B2A] py-2 border-t border-forest/10 transition-colors"
+                    className="w-full inline-flex items-center justify-between text-xs font-bold text-forest group-hover:text-[#F47B2A] py-2 border-t border-forest/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-forest rounded-lg px-1"
                   >
                     <span>{isGujarati ? "વિગતવાર વાંચો" : "Explore Program"}</span>
                     <span className="text-base font-bold transition-transform group-hover:translate-x-1">→</span>
