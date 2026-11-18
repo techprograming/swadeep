@@ -67,7 +67,23 @@ interface Report {
   status?: string;
 }
 
-type AdminTab = "inquiries" | "trustees" | "partners" | "reports" | "reviews" | "metrics" | "system";
+interface Donation {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  pan: string;
+  amount: number;
+  utr: string;
+  transferMode: string;
+  date: string;
+  notes?: string;
+  status: string;
+  submittedAt: string;
+  updatedAt?: string;
+}
+
+type AdminTab = "inquiries" | "donations" | "trustees" | "partners" | "reports" | "reviews" | "metrics" | "system";
 
 export default function AdminPage() {
   const [token, setToken] = useState<string | null>(null);
@@ -86,6 +102,12 @@ export default function AdminPage() {
   const [inquirySearch, setInquirySearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [isLoadingInquiries, setIsLoadingInquiries] = useState(false);
+
+  // Donations state
+  const [donations, setDonations] = useState<Donation[]>([]);
+  const [selectedDonation, setSelectedDonation] = useState<Donation | null>(null);
+  const [donationSearch, setDonationSearch] = useState("");
+  const [donationStatusFilter, setDonationStatusFilter] = useState("all");
 
   // Dynamic Entities state
   const [trustees, setTrustees] = useState<Trustee[]>([]);
@@ -142,8 +164,9 @@ export default function AdminPage() {
     if (!token) return;
     setIsLoadingInquiries(true);
     try {
-      const [inqRes, metRes, revRes, truRes, partRes, repRes] = await Promise.all([
+      const [inqRes, donRes, metRes, revRes, truRes, partRes, repRes] = await Promise.all([
         fetch("/api/admin/inquiries", { headers: { Authorization: `Bearer ${token}` } }),
+        fetch("/api/donations"),
         fetch("/api/admin/metrics"),
         fetch("/api/reviews"),
         fetch("/api/trustees"),
@@ -155,6 +178,10 @@ export default function AdminPage() {
         const inqData = await inqRes.json();
         setInquiries(inqData.inquiries || []);
         setIsDbConnected(inqData.isConnected ?? false);
+      }
+      if (donRes && donRes.ok) {
+        const donData = await donRes.json();
+        setDonations(donData.donations || []);
       }
       if (metRes.ok) {
         const metData = await metRes.json();
@@ -415,6 +442,44 @@ export default function AdminPage() {
     }
   };
 
+  const handleUpdateDonationStatus = async (id: string, status: string) => {
+    try {
+      const res = await fetch("/api/donations", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setDonations((prev) =>
+          prev.map((d) => (d.id === id ? { ...d, status } : d))
+        );
+        if (selectedDonation && selectedDonation.id === id) {
+          setSelectedDonation({ ...selectedDonation, status });
+        }
+        showFeedback("success", `Donation status updated to "${status}".`);
+      } else {
+        showFeedback("error", data.error || "Failed to update donation status.");
+      }
+    } catch {
+      showFeedback("error", "Network error updating donation.");
+    }
+  };
+
+  const filteredDonations = donations.filter((don) => {
+    const q = donationSearch.toLowerCase().trim();
+    const matchesSearch =
+      !q ||
+      don.name.toLowerCase().includes(q) ||
+      don.email.toLowerCase().includes(q) ||
+      don.utr.toLowerCase().includes(q) ||
+      don.pan.toLowerCase().includes(q) ||
+      (don.phone && don.phone.toLowerCase().includes(q));
+    const matchesStatus =
+      donationStatusFilter === "all" ? true : don.status === donationStatusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
   const filteredInquiries = inquiries.filter((inq) => {
     const matchesSearch =
       inq.name.toLowerCase().includes(inquirySearch.toLowerCase()) ||
@@ -550,6 +615,16 @@ export default function AdminPage() {
                 }`}
               >
                 Inquiries ({inquiries.length})
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveTab("donations")}
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
+                  activeTab === "donations" ? "bg-[#0B3025] text-white shadow-sm" : "bg-white text-charcoal/80 hover:bg-forest-50"
+                }`}
+              >
+                Donations &amp; 80G ({donations.length})
               </button>
 
               <button
@@ -735,7 +810,246 @@ export default function AdminPage() {
               </div>
             )}
 
-            {/* TAB: Trustees Management */}
+            {/* TAB: Donations & 80G Submissions Manager */}
+            {activeTab === "donations" && (
+              <div className="space-y-4">
+                {/* Donations Header & Stats */}
+                <div className="bg-white p-6 rounded-3xl border border-forest/10 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-heading font-bold text-lg text-[#0B3025]">
+                      Donations &amp; 80G Receipt Submissions
+                    </h3>
+                    <p className="text-xs text-charcoal/60 mt-0.5">
+                      Direct bank transfer references, donor PANs, and 80G certificate tracking. Submissions are instantly notified to <strong className="text-forest font-bold">swadeepsvs@gmail.com</strong>.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <div className="px-3.5 py-1.5 rounded-2xl bg-forest-50 border border-forest/15 text-center">
+                      <span className="block text-[10px] uppercase font-bold text-forest/70">Total Raised</span>
+                      <span className="font-heading font-black text-sm text-forest-dark">
+                        ₹{donations.reduce((sum, d) => sum + (Number(d.amount) || 0), 0).toLocaleString("en-IN")}
+                      </span>
+                    </div>
+                    <div className="px-3.5 py-1.5 rounded-2xl bg-amber-50 border border-amber-200 text-center">
+                      <span className="block text-[10px] uppercase font-bold text-amber-700">Records</span>
+                      <span className="font-heading font-black text-sm text-amber-900">{donations.length}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search & Status Filters */}
+                <div className="bg-white p-4 rounded-3xl border border-forest/10 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="relative w-full sm:w-80">
+                    <input
+                      type="text"
+                      value={donationSearch}
+                      onChange={(e) => setDonationSearch(e.target.value)}
+                      placeholder="Search by Donor, UTR, PAN, or Phone..."
+                      className="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-cream/30 border border-forest/15 focus:outline-none focus:ring-2 focus:ring-forest text-charcoal"
+                    />
+                    <SearchIcon size={14} className="text-charcoal/40 absolute left-3 top-1/2 -translate-y-1/2" />
+                    {donationSearch && (
+                      <button
+                        onClick={() => setDonationSearch("")}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-charcoal/40 hover:text-charcoal"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="flex items-center space-x-2 w-full sm:w-auto">
+                    <span className="text-xs text-charcoal/60 font-medium">Status:</span>
+                    <select
+                      value={donationStatusFilter}
+                      onChange={(e) => setDonationStatusFilter(e.target.value)}
+                      className="px-3 py-1.5 text-xs rounded-xl bg-cream/30 border border-forest/15 text-charcoal font-medium focus:outline-none focus:ring-2 focus:ring-forest"
+                    >
+                      <option value="all">All Donations ({donations.length})</option>
+                      <option value="pending_verification">Pending Verification</option>
+                      <option value="verified">Verified Bank Transfer</option>
+                      <option value="80G_receipt_dispatched">80G Dispatched</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Content View */}
+                {filteredDonations.length === 0 ? (
+                  <div className="p-12 text-center bg-white rounded-3xl border border-forest/10 space-y-2">
+                    <p className="font-heading font-bold text-base text-[#0B3025]">
+                      {donations.length === 0 ? "No Donation Submissions Recorded Yet" : "No Donations Matching Filter"}
+                    </p>
+                    <p className="text-xs text-charcoal/60 max-w-md mx-auto">
+                      {donations.length === 0
+                        ? "When users transfer funds and submit their UTR reference on the /donate page, details will appear here immediately and an alert will be sent to swadeepsvs@gmail.com."
+                        : "Try adjusting your search query or status filter."}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                    {/* Left: Donation Records List */}
+                    <div className="lg:col-span-6 space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
+                      {filteredDonations.map((don) => (
+                        <div
+                          key={don.id}
+                          onClick={() => setSelectedDonation(don)}
+                          className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                            selectedDonation?.id === don.id
+                              ? "bg-white border-[#F47B2A] shadow-md ring-1 ring-[#F47B2A]/30"
+                              : "bg-white border-forest/10 hover:border-forest/30 shadow-xs"
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-heading font-bold text-sm text-[#0B3025]">{don.name}</h4>
+                                <span
+                                  className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full ${
+                                    don.status === "verified"
+                                      ? "bg-green-100 text-green-800"
+                                      : don.status === "80G_receipt_dispatched"
+                                      ? "bg-blue-100 text-blue-800"
+                                      : "bg-amber-100 text-amber-800"
+                                  }`}
+                                >
+                                  {don.status.replace(/_/g, " ")}
+                                </span>
+                              </div>
+                              <p className="text-xs text-charcoal/60 mt-0.5">
+                                UTR: <span className="font-mono font-bold text-[#0B3025]">{don.utr}</span>
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <span className="font-heading font-black text-sm text-forest-dark block">
+                                ₹{Number(don.amount).toLocaleString("en-IN")}
+                              </span>
+                              <span className="text-[10px] text-charcoal/50">{don.date}</span>
+                            </div>
+                          </div>
+                          <div className="mt-2.5 pt-2 border-t border-forest/5 flex items-center justify-between text-[11px] text-charcoal/60">
+                            <span>PAN: <strong className="font-mono text-[#0B3025]">{don.pan}</strong></span>
+                            <span>{don.transferMode}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Right: Selected Donation Inspection Detail Card */}
+                    <div className="lg:col-span-6 sticky top-28">
+                      {selectedDonation ? (
+                        <div className="bg-white p-6 rounded-3xl border border-forest/15 shadow-md space-y-4">
+                          <div className="flex items-start justify-between border-b border-forest/10 pb-4">
+                            <div>
+                              <span className="text-[10px] uppercase font-bold tracking-wider text-[#F47B2A]">
+                                Donation Record
+                              </span>
+                              <h3 className="font-heading font-bold text-xl text-[#0B3025] mt-0.5">
+                                {selectedDonation.name}
+                              </h3>
+                              <p className="text-xs text-charcoal/50 mt-0.5">
+                                Submitted on: {new Date(selectedDonation.submittedAt || selectedDonation.date).toLocaleString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <span className="text-xs text-charcoal/50 block">Amount Contributed</span>
+                              <span className="font-heading font-black text-2xl text-forest-dark">
+                                ₹{Number(selectedDonation.amount).toLocaleString("en-IN")}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Key Fields Grid */}
+                          <div className="grid grid-cols-2 gap-3 text-xs">
+                            <div className="p-3 bg-cream/40 rounded-xl border border-forest/5">
+                              <span className="text-charcoal/60 block text-[10px] uppercase font-bold">UTR Reference</span>
+                              <span className="font-mono font-bold text-forest-dark text-sm break-all">{selectedDonation.utr}</span>
+                            </div>
+                            <div className="p-3 bg-cream/40 rounded-xl border border-forest/5">
+                              <span className="text-charcoal/60 block text-[10px] uppercase font-bold">PAN Card (80G)</span>
+                              <span className="font-mono font-bold text-[#F47B2A] text-sm">{selectedDonation.pan}</span>
+                            </div>
+                            <div className="p-3 bg-cream/40 rounded-xl border border-forest/5">
+                              <span className="text-charcoal/60 block text-[10px] uppercase font-bold">Email Address</span>
+                              <a href={`mailto:${selectedDonation.email}`} className="font-medium text-forest hover:underline break-all">
+                                {selectedDonation.email}
+                              </a>
+                            </div>
+                            <div className="p-3 bg-cream/40 rounded-xl border border-forest/5">
+                              <span className="text-charcoal/60 block text-[10px] uppercase font-bold">Contact Phone</span>
+                              <a href={`tel:${selectedDonation.phone}`} className="font-medium text-forest hover:underline">
+                                {selectedDonation.phone}
+                              </a>
+                            </div>
+                          </div>
+
+                          <div className="p-3 bg-cream/40 rounded-xl border border-forest/5 text-xs space-y-1">
+                            <div className="flex justify-between">
+                              <span className="text-charcoal/60 font-semibold">Payment Mode:</span>
+                              <span className="font-medium text-charcoal/80">{selectedDonation.transferMode}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-charcoal/60 font-semibold">Transfer Date:</span>
+                              <span className="font-medium text-charcoal/80">{selectedDonation.date}</span>
+                            </div>
+                            {selectedDonation.notes && (
+                              <div className="pt-1 border-t border-forest/5">
+                                <span className="text-charcoal/60 font-semibold block">Donor Note:</span>
+                                <p className="text-charcoal/80 italic mt-0.5">{selectedDonation.notes}</p>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Verification Actions */}
+                          <div className="pt-2 border-t border-forest/10 space-y-2">
+                            <span className="text-xs font-bold text-[#0B3025] block">Update Verification Status:</span>
+                            <div className="flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={() => handleUpdateDonationStatus(selectedDonation.id, "verified")}
+                                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                                  selectedDonation.status === "verified"
+                                    ? "bg-green-700 text-white shadow-xs"
+                                    : "bg-green-50 text-green-800 hover:bg-green-100 border border-green-200"
+                                }`}
+                              >
+                                ✓ Verified with Bank
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleUpdateDonationStatus(selectedDonation.id, "80G_receipt_dispatched")}
+                                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                                  selectedDonation.status === "80G_receipt_dispatched"
+                                    ? "bg-blue-700 text-white shadow-xs"
+                                    : "bg-blue-50 text-blue-800 hover:bg-blue-100 border border-blue-200"
+                                }`}
+                              >
+                                ✉ 80G Certificate Dispatched
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleUpdateDonationStatus(selectedDonation.id, "pending_verification")}
+                                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                                  selectedDonation.status === "pending_verification"
+                                    ? "bg-amber-700 text-white shadow-xs"
+                                    : "bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200"
+                                }`}
+                              >
+                                ⟳ Pending
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="bg-white p-12 rounded-3xl border border-dashed border-forest/20 text-center text-xs text-charcoal/50">
+                          Select a donation record to view full transaction details, PAN, and update 80G dispatch status.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {activeTab === "trustees" && (
               <div className="space-y-4">
                 <div className="bg-white p-6 rounded-3xl border border-forest/10 shadow-xs flex items-center justify-between">

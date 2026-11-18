@@ -2,6 +2,28 @@ import { NextResponse } from "next/server";
 import { isValidEmail, sanitizeInput } from "@/lib/utils";
 import fs from "fs";
 import path from "path";
+import { sendAdminNotification } from "@/lib/emailNotifier";
+
+const DATA_FILE_PATH = path.join(process.cwd(), "data", "donations.json");
+
+function getStoredDonations(): any[] {
+  try {
+    if (!fs.existsSync(DATA_FILE_PATH)) return [];
+    const fileContent = fs.readFileSync(DATA_FILE_PATH, "utf8");
+    return JSON.parse(fileContent) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveStoredDonations(donations: any[]) {
+  try {
+    fs.mkdirSync(path.dirname(DATA_FILE_PATH), { recursive: true });
+    fs.writeFileSync(DATA_FILE_PATH, JSON.stringify(donations, null, 2), "utf8");
+  } catch (err) {
+    console.error("[Donations API] Error saving file:", err);
+  }
+}
 
 interface DonationRequestBody {
   name?: unknown;
@@ -132,20 +154,34 @@ export async function POST(request: Request) {
 
     // Save record to data/donations.json
     try {
-      const dataFilePath = path.join(process.cwd(), "data", "donations.json");
-      let existingDonations: any[] = [];
-      if (fs.existsSync(dataFilePath)) {
-        const fileContent = fs.readFileSync(dataFilePath, "utf8");
-        try {
-          existingDonations = JSON.parse(fileContent);
-        } catch {
-          existingDonations = [];
-        }
-      }
+      const existingDonations = getStoredDonations();
       existingDonations.unshift(donationRecord);
-      fs.writeFileSync(dataFilePath, JSON.stringify(existingDonations, null, 2), "utf8");
+      saveStoredDonations(existingDonations);
     } catch (fsErr) {
       console.error("[Donations API] Error saving to file:", fsErr);
+    }
+
+    // Send email notification to swadeepsvs@gmail.com
+    try {
+      await sendAdminNotification({
+        type: "Donation / UTR Submission",
+        subject: `₹${donationRecord.amount.toLocaleString("en-IN")} from ${donationRecord.name} (UTR: ${donationRecord.utr})`,
+        data: {
+          donorName: donationRecord.name,
+          email: donationRecord.email,
+          phone: donationRecord.phone,
+          panCard: donationRecord.pan,
+          amountInr: `₹${donationRecord.amount.toLocaleString("en-IN")}`,
+          utrReference: donationRecord.utr,
+          transferMode: donationRecord.transferMode,
+          transferDate: donationRecord.date,
+          donorNotes: donationRecord.notes || "None provided",
+          status: "Pending Bank Verification & 80G Dispatch",
+          submittedAt: donationRecord.submittedAt,
+        },
+      });
+    } catch (notifErr) {
+      console.error("[Donations API] Error sending notification:", notifErr);
     }
 
     return NextResponse.json(
@@ -162,6 +198,34 @@ export async function POST(request: Request) {
       { success: false, error: "Internal server error. Please try again later or contact us directly." },
       { status: 500 }
     );
+  }
+}
+
+export async function GET() {
+  const donations = getStoredDonations();
+  return NextResponse.json({
+    success: true,
+    donations,
+  });
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const { id, status, notes } = await request.json();
+    const donations = getStoredDonations();
+    const item = donations.find((d) => d.id === id);
+    if (!item) {
+      return NextResponse.json({ success: false, error: "Donation record not found." }, { status: 404 });
+    }
+
+    if (typeof status === "string") item.status = status;
+    if (typeof notes === "string") item.notes = notes;
+    item.updatedAt = new Date().toISOString();
+
+    saveStoredDonations(donations);
+    return NextResponse.json({ success: true, donation: item });
+  } catch (err) {
+    return NextResponse.json({ success: false, error: "Failed to update donation record." }, { status: 500 });
   }
 }
 

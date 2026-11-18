@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { sanitizeInput } from "@/lib/utils";
+import { sendAdminNotification } from "@/lib/emailNotifier";
 
 const DATA_FILE = path.join(process.cwd(), "data", "field_logs.json");
 
@@ -56,6 +57,24 @@ export async function POST(request: Request) {
     const list = getLogs();
     list.unshift(newLog);
     saveLogs(list);
+
+    // Notify swadeepsvs@gmail.com
+    try {
+      await sendAdminNotification({
+        type: "Employee Field Log",
+        subject: `${newLog.staffName} — ${newLog.activityType} (${newLog.village})`,
+        data: {
+          staffName: newLog.staffName,
+          locationVillage: newLog.village,
+          activityType: newLog.activityType,
+          beneficiariesReached: newLog.beneficiaries,
+          date: newLog.date,
+          fieldNotes: newLog.notes || "None provided",
+        },
+      });
+    } catch (notifErr) {
+      console.error("[Field Logs API] Error sending notification:", notifErr);
+    }
 
     return NextResponse.json({
       success: true,

@@ -3,6 +3,32 @@ import { isValidEmail, sanitizeInput } from "@/lib/utils";
 import { pool, testConnection, inMemoryFallback } from "../../../../server/src/db";
 import jwt from "jsonwebtoken";
 import { config } from "../../../../server/src/config";
+import { sendAdminNotification } from "@/lib/emailNotifier";
+import fs from "fs";
+import path from "path";
+
+const INQUIRIES_FILE = path.join(process.cwd(), "data", "inquiries.json");
+
+function getInquiriesFromFile(): any[] {
+  try {
+    if (!fs.existsSync(INQUIRIES_FILE)) return [];
+    const content = fs.readFileSync(INQUIRIES_FILE, "utf8");
+    return JSON.parse(content) || [];
+  } catch {
+    return [];
+  }
+}
+
+function saveInquiryToFile(inquiry: any) {
+  try {
+    fs.mkdirSync(path.dirname(INQUIRIES_FILE), { recursive: true });
+    const existing = getInquiriesFromFile();
+    existing.unshift(inquiry);
+    fs.writeFileSync(INQUIRIES_FILE, JSON.stringify(existing, null, 2), "utf8");
+  } catch (err) {
+    console.error("[Contact API] Error saving inquiry to file:", err);
+  }
+}
 
 interface ContactRequestBody {
   name?: unknown;
@@ -138,7 +164,7 @@ export async function POST(request: Request) {
           ]
         );
       } else {
-        inMemoryFallback.inquiries.unshift({
+        const fallbackInquiry = {
           id: inMemoryFallback.inquiries.length + 1,
           name: sanitizedData.name,
           email: sanitizedData.email,
@@ -148,10 +174,41 @@ export async function POST(request: Request) {
           status: "new",
           is_read: false,
           created_at: sanitizedData.receivedAt,
-        });
+        };
+        inMemoryFallback.inquiries.unshift(fallbackInquiry);
+        saveInquiryToFile(fallbackInquiry);
       }
     } catch (dbErr) {
       console.warn("[Contact Route DB Save Warning]", dbErr);
+      saveInquiryToFile({
+        id: Date.now(),
+        name: sanitizedData.name,
+        email: sanitizedData.email,
+        phone: sanitizedData.phone || null,
+        subject: sanitizedData.subject,
+        message: sanitizedData.message,
+        status: "new",
+        is_read: false,
+        created_at: sanitizedData.receivedAt,
+      });
+    }
+
+    // Dispatch email notification to swadeepsvs@gmail.com
+    try {
+      await sendAdminNotification({
+        type: "Contact Inquiry",
+        subject: `${sanitizedData.name} — ${sanitizedData.subject}`,
+        data: {
+          name: sanitizedData.name,
+          email: sanitizedData.email,
+          phone: sanitizedData.phone || "Not provided",
+          subject: sanitizedData.subject,
+          message: sanitizedData.message,
+          submittedAt: sanitizedData.receivedAt,
+        },
+      });
+    } catch (notifErr) {
+      console.error("[Contact API] Error sending admin notification:", notifErr);
     }
 
     return NextResponse.json(
@@ -211,9 +268,15 @@ export async function GET(request: Request) {
         inquiries: res.rows,
       });
     } else {
+      const fileInquiries = getInquiriesFromFile();
+      const existingIds = new Set(fileInquiries.map((i) => i.id));
+      const merged = [
+        ...fileInquiries,
+        ...inMemoryFallback.inquiries.filter((i) => !existingIds.has(i.id)),
+      ];
       return NextResponse.json({
         success: true,
-        inquiries: inMemoryFallback.inquiries,
+        inquiries: merged,
       });
     }
   } catch (error) {
