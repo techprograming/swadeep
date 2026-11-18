@@ -15,15 +15,10 @@ import {
 } from "@/components/ui/Icons";
 import { useLanguage } from "@/context/LanguageContext";
 
-const PRESET_AMOUNTS = [500, 1000, 2500, 5000];
-
 export default function DonateContent() {
   const { isGujarati } = useLanguage();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  // Donation Amount Selection
-  const [selectedAmount, setSelectedAmount] = useState<number | "custom">(1000);
-  const [customAmount, setCustomAmount] = useState<string>("");
 
   // Post-Donation Form State
   const [formData, setFormData] = useState({
@@ -31,6 +26,7 @@ export default function DonateContent() {
     email: "",
     phone: "",
     pan: "",
+    amount: "",
     utr: "",
     transferMode: "NEFT / RTGS / IMPS",
     date: new Date().toISOString().split("T")[0],
@@ -40,8 +36,6 @@ export default function DonateContent() {
 
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState<string>("");
-
-  const effectiveAmount = selectedAmount === "custom" ? Number(customAmount) || 0 : selectedAmount;
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -69,7 +63,7 @@ export default function DonateContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          amount: effectiveAmount,
+          amount: Number(formData.amount) || 0,
         }),
       });
 
@@ -88,6 +82,7 @@ export default function DonateContent() {
           email: "",
           phone: "",
           pan: "",
+          amount: "",
           utr: "",
           transferMode: "NEFT / RTGS / IMPS",
           date: new Date().toISOString().split("T")[0],
@@ -171,116 +166,6 @@ export default function DonateContent() {
             <div className="flex items-center space-x-2">
               <span className="w-2.5 h-2.5 rounded-full bg-forest" />
               <span>Trust Reg: <strong className="font-mono text-forest-dark">{BANKING_DETAILS.trustRegistrationNo}</strong></span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Donation Amount Selection Card (Prompt Step 12 Specification) */}
-      <section className="section-padding py-12 lg:py-16">
-        <div className="container-wide max-w-4xl mx-auto">
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-lg border border-forest/15 space-y-8">
-            <div className="text-center max-w-2xl mx-auto space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-saffron bg-saffron-50 px-3.5 py-1.5 rounded-full border border-saffron-200">
-                {isGujarati ? "દાન રકમ પસંદ કરો" : "CHOOSE YOUR CONTRIBUTION"}
-              </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-forest-dark">
-                {isGujarati ? "આપનું યોગદાન નક્કી કરો" : "Empower a Child, Family, or Village"}
-              </h2>
-              <p className="font-body text-charcoal/75 text-sm sm:text-base">
-                {isGujarati
-                  ? "નીચે આપેલ પૂર્વ-નિર્ધારિત રકમ પસંદ કરો અથવા આપની ઈચ્છિત રકમ દાખલ કરો."
-                  : "Select a suggested amount or enter a custom amount to see bank transfer details below."}
-              </p>
-            </div>
-
-            {/* Amount Selection Pills */}
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
-              {PRESET_AMOUNTS.map((amt) => {
-                const isSelected = selectedAmount === amt;
-                return (
-                  <button
-                    key={amt}
-                    type="button"
-                    onClick={() => {
-                      setSelectedAmount(amt);
-                      setCustomAmount("");
-                    }}
-                    className={`py-4 px-4 rounded-2xl font-heading font-extrabold text-lg sm:text-xl transition-all duration-200 border-2 flex flex-col items-center justify-center gap-1 ${
-                      isSelected
-                        ? "bg-[#174B38] text-white border-[#174B38] shadow-md scale-102"
-                        : "bg-cream/40 text-forest-dark border-forest/10 hover:border-forest/30 hover:bg-cream"
-                    }`}
-                  >
-                    <span>₹{amt.toLocaleString("en-IN")}</span>
-                    <span className="text-[10px] font-sans font-medium uppercase tracking-wider opacity-80">
-                      {amt === 500 && (isGujarati ? "બાળ પુસ્તકો" : "Learning Kit")}
-                      {amt === 1000 && (isGujarati ? "આરોગ્ય સંભાળ" : "Health Check")}
-                      {amt === 2500 && (isGujarati ? "આંગણવાડી BaLA" : "BaLA Classroom")}
-                      {amt === 5000 && (isGujarati ? "આજીવિકા સહાય" : "Livelihood Kit")}
-                    </span>
-                  </button>
-                );
-              })}
-
-              {/* Custom Amount Button */}
-              <button
-                type="button"
-                onClick={() => setSelectedAmount("custom")}
-                className={`py-4 px-4 rounded-2xl font-heading font-extrabold text-lg sm:text-xl transition-all duration-200 border-2 flex flex-col items-center justify-center gap-1 col-span-2 sm:col-span-1 ${
-                  selectedAmount === "custom"
-                    ? "bg-[#174B38] text-white border-[#174B38] shadow-md scale-102"
-                    : "bg-cream/40 text-forest-dark border-forest/10 hover:border-forest/30 hover:bg-cream"
-                }`}
-              >
-                <span>{isGujarati ? "અન્ય રકમ" : "Custom"}</span>
-                <span className="text-[10px] font-sans font-medium uppercase tracking-wider opacity-80">
-                  {isGujarati ? "પોતાની રકમ" : "Enter Amount"}
-                </span>
-              </button>
-            </div>
-
-            {/* Custom Amount Input Box */}
-            {selectedAmount === "custom" && (
-              <div className="max-w-xs mx-auto text-center space-y-2 pt-2">
-                <label htmlFor="custom-amount-input" className="block text-xs font-bold text-charcoal/80 uppercase">
-                  {isGujarati ? "રૂપિયામાં રકમ દાખલ કરો (₹)" : "Enter Custom Amount (INR ₹)"}
-                </label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-forest-dark text-lg">₹</span>
-                  <input
-                    id="custom-amount-input"
-                    type="number"
-                    min="100"
-                    step="100"
-                    placeholder="2000"
-                    value={customAmount}
-                    onChange={(e) => setCustomAmount(e.target.value)}
-                    className="w-full pl-9 pr-4 py-3 rounded-xl border-2 border-forest/20 focus:border-forest focus:outline-none font-bold text-forest-dark text-lg text-center"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Primary Action: DONATE NOW */}
-            <div className="text-center pt-2">
-              <button
-                type="button"
-                onClick={() => handleScrollToSection("bank-transfer-section")}
-                className="inline-flex items-center justify-center px-10 py-4 rounded-full text-base sm:text-lg font-extrabold text-white bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] hover:from-[#E06A1B] hover:to-[#C8590F] shadow-lg shadow-[#F47B2A]/30 hover:shadow-[#F47B2A]/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
-              >
-                <HeartIcon className="w-5 h-5 mr-2.5 fill-current" />
-                <span>
-                  {isGujarati
-                    ? `હવે દાન કરો ${effectiveAmount ? `(₹${effectiveAmount.toLocaleString("en-IN")})` : ""} ↓`
-                    : `DONATE NOW ${effectiveAmount ? `(₹${effectiveAmount.toLocaleString("en-IN")})` : ""} ↓`}
-                </span>
-              </button>
-              <p className="text-xs text-charcoal/60 mt-2">
-                {isGujarati
-                  ? "ક્લિક કરીને નીચે આપેલ સત્તાવાર બેંક વિગતો મેળવો"
-                  : "Proceed below for official direct bank transfer & UTR submission"}
-              </p>
             </div>
           </div>
         </div>
@@ -637,12 +522,10 @@ export default function DonateContent() {
                     <input
                       type="number"
                       required
-                      min="100"
-                      value={effectiveAmount || ""}
-                      onChange={(e) => {
-                        setSelectedAmount("custom");
-                        setCustomAmount(e.target.value);
-                      }}
+                      min="1"
+                      placeholder="e.g. 5000"
+                      value={formData.amount}
+                      onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl border border-forest/20 focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none text-sm font-bold text-forest-dark"
                     />
                   </div>
