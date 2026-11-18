@@ -199,8 +199,12 @@ export default function Footer() {
               80G Exemption
             </Link>
             <span className="text-cream/40">•</span>
-            <Link href="/resources#reports" className="hover:text-[#F47B2A] transition-colors">
+            <Link href="/resources" className="hover:text-[#F47B2A] transition-colors">
               Official Reports
+            </Link>
+            <span className="text-cream/40">•</span>
+            <Link href="/publications" className="hover:text-[#F47B2A] transition-colors">
+              Publications
             </Link>
             <span className="text-cream/40">•</span>
             <Link href="/admin" className="hover:text-[#F47B2A] transition-colors opacity-60 hover:opacity-100">

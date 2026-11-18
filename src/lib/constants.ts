@@ -177,8 +177,8 @@ export const NAV_LINKS: readonly NavLinkItem[] = [
     dropdown: [
       { label: "Gallery", labelGu: "ફોટો ગેલેરી", href: "/gallery", description: "All field photographs & project glimpses", descriptionGu: "ક્ષેત્રીય તસવીરો અને કાર્યક્રમો" },
       { label: "Videos", labelGu: "વીડિયો સંગ્રહ", href: "/videos", description: "Official channel video documentation", descriptionGu: "સત્તાવાર યુટ્યુબ ચેનલના પ્રેરક વીડિયો" },
-      { label: "Report", labelGu: "અહેવાલો", href: "/resources#reports", description: "Annual, Audit & FCRA Reports", descriptionGu: "વાર્ષિક, ઓડિટ અને એફસીઆરએ અહેવાલો" },
-      { label: "Publications", labelGu: "પ્રકાશનો", href: "/resources#publications", description: "Learning manuals, storybooks & guidelines", descriptionGu: "શૈક્ષણિક પુસ્તિકાઓ અને સાહિત્ય" },
+      { label: "Reports & Governance", labelGu: "અહેવાલો અને હિસાબ", href: "/resources", description: "Annual, Audit & FCRA Reports", descriptionGu: "વાર્ષિક, ઓડિટ અને એફસીઆરએ અહેવાલો" },
+      { label: "Publications", labelGu: "પ્રકાશનો", href: "/publications", description: "Learning manuals, storybooks & guidelines", descriptionGu: "શૈક્ષણિક પુસ્તિકાઓ અને સાહિત્ય" },
       { label: "Brochure", labelGu: "બ્રોશર (PDF)", href: "/brochure/swadeep-brochure.pdf", description: "Official Organization Overview Brochure", descriptionGu: "સંસ્થા પરિચય પુસ્તિકા (PDF)" },
     ],
   },
