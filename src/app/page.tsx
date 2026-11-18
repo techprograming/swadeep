@@ -5,8 +5,8 @@ import FocusAreas from "@/components/sections/FocusAreas";
 import ImpactStats from "@/components/sections/ImpactStats";
 import FeaturedVideos from "@/components/sections/FeaturedVideos";
 import Partners from "@/components/sections/Partners";
-import Testimonials from "@/components/sections/Testimonials";
 import OurTrustees from "@/components/sections/OurTrustees";
+import Testimonials from "@/components/sections/Testimonials";
 import CallToAction from "@/components/sections/CallToAction";
 
 export default function HomePage() {
@@ -17,9 +17,9 @@ export default function HomePage() {
       <FocusAreas />
       <ImpactStats />
       <Partners />
-      <Testimonials />
-      <FeaturedVideos />
       <OurTrustees />
+      <FeaturedVideos />
+      <Testimonials />
       <CallToAction />
     </main>
   );
