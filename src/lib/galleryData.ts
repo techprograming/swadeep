@@ -1,6 +1,6 @@
 // AUTO-GENERATED gallery data — DO NOT edit manually
 // Source: public/img/ folder structure
-// Categories: Education, Health, Livelihood, Infrastructure, Relief, Community
+// Categories: Education, Health, Livelihood, Infrastructure, Relief, Media
 
 export type GalleryCategory =
   | "All"
@@ -9,13 +9,13 @@ export type GalleryCategory =
   | "Livelihood"
   | "Infrastructure"
   | "Relief"
-  | "Community";
+  | "Media";
 
 export interface GalleryItem {
   id: number;
   title: string;
   titleGu: string;
-  category: "Education" | "Health" | "Livelihood" | "Infrastructure" | "Relief" | "Community";
+  category: "Education" | "Health" | "Livelihood" | "Infrastructure" | "Relief" | "Media";
   location: string;
   date: string;
   image: string;
@@ -30,7 +30,7 @@ export const CATEGORIES: GalleryCategory[] = [
   "Livelihood",
   "Infrastructure",
   "Relief",
-  "Community",
+  "Media",
 ];
 
 export const CATEGORY_LABELS: Record<GalleryCategory, { en: string; gu: string }> = {
@@ -40,52 +40,52 @@ export const CATEGORY_LABELS: Record<GalleryCategory, { en: string; gu: string }
   Livelihood: { en: "Livelihood", gu: "આજીવિકા" },
   Infrastructure: { en: "Rural Development", gu: "ગ્રામ વિકાસ" },
   Relief: { en: "Disaster Relief", gu: "આપત્તિ રાહત" },
-  Community: { en: "Community", gu: "સમુદાય" },
+  Media: { en: "Media", gu: "મીડિયા" },
 };
 
 export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 1,
-    "title": "Field Initiative",
-    "titleGu": "ક્ષેત્રીય પ્રવૃત્તિ",
-    "category": "Community",
+    "title": "Education Initiative",
+    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    "category": "Education",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
     "image": "/img/466662985_9406865389340993_2185090257753639784_n.jpg",
-    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha.",
+    "description": "Swadeep's education programs reach children across 200+ villages in Gujarat, supporting primary schooling, pre-primary ICDS centres, and scholarship initiatives.",
     "featured": true
   },
   {
     "id": 2,
-    "title": "Field Initiative",
-    "titleGu": "ક્ષેત્રીય પ્રવૃત્તિ",
-    "category": "Community",
+    "title": "Education Initiative",
+    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    "category": "Education",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
     "image": "/img/466678542_9406865382674327_1595720136936869927_n.jpg",
-    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha.",
+    "description": "Swadeep's education programs reach children across 200+ villages in Gujarat, supporting primary schooling, pre-primary ICDS centres, and scholarship initiatives.",
     "featured": false
   },
   {
     "id": 3,
-    "title": "Field Initiative",
-    "titleGu": "ક્ષેત્રીય પ્રવૃત્તિ",
-    "category": "Community",
+    "title": "Education Initiative",
+    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    "category": "Education",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
     "image": "/img/475792725_1034820738680952_9169000876501581246_n.jpg",
-    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha.",
+    "description": "Swadeep's education programs reach children across 200+ villages in Gujarat, supporting primary schooling, pre-primary ICDS centres, and scholarship initiatives.",
     "featured": false
   },
   {
     "id": 4,
-    "title": "Field Initiative",
-    "titleGu": "ક્ષેત્રીય પ્રવૃત્તિ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
     "image": "/img/476239017_1038367758326250_9107735841149966113_n.jpg",
-    "description": "Official on-ground field photograph representing community interventions by Swadeep Shikshan Vikas Sanstha.",
+    "description": "Field documentation and media coverage representing grassroots development programs by Swadeep Shikshan Vikas Sanstha.",
     "featured": false
   },
   {
@@ -97,7 +97,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     "date": "Field Documentation",
     "image": "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-1-700x525.jpg",
     "description": "Swadeep's education programs reach children across 200+ villages in Gujarat, supporting primary schooling, pre-primary ICDS centres, and scholarship initiatives.",
-    "featured": true
+    "featured": false
   },
   {
     "id": 6,
@@ -750,244 +750,244 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     "id": 65,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/a2c52c34-db95-4c37-a7d7-7e45bc9f9b8e-430x763.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 66,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Corona-Awareness-Camp-_-Mask-Distribution.2-369x800.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 67,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/d9b87a72-8f91-4957-985d-12b2dd95d3ea-430x764.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 68,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Educational-Kit-Distribution-Sagarshala-400x265.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 69,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Eye-Check-up-Camp-369x800.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 70,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Govt.-Awareness-Camp-430x739.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 71,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Health-Checkup-Camp-369x800.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 72,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG-20171124-WA0015-386x300.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 73,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG-20171125-WA0000-430x461.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 74,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG-20171206-WA0069-400x300.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 75,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG-20171206-WA0070-430x573.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 76,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG-20171206-WA0071-430x573.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 77,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG-20171206-WA0072-430x573.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 78,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG-20171206-WA0073-430x573.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 79,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG_20180105_115720-430x573.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 80,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/IMG_20180105_115730-400x300.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 81,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Insulation-Box-Distribution-369x800.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 82,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Insulation-Box-Distribution-369x8001.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 83,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/Sagarshala-Education-Kit-Distribution-369x800.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 84,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/WhatsApp-Image-2021-01-02-at-8.59.20-PM-400x265.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 85,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/WhatsApp-Image-2021-01-15-at-10.11.30-PM-400x240.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   },
   {
     "id": 86,
-    "title": "Community Event",
-    "titleGu": "સમુદાય કાર્યક્રમ",
-    "category": "Community",
+    "title": "Media Coverage",
+    "titleGu": "મીડિયા અને પ્રેસ",
+    "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
     "image": "/img/Media/WhatsApp-Image-2021-02-06-at-10.25.22-AM-400x163.jpg",
-    "description": "Field documentation of Swadeep's community programs including awareness camps, kit distributions, and mobilization activities.",
+    "description": "Press coverage, awareness camps, and field documentation representing Swadeep Shikshan Vikas Sanstha's grassroots development work.",
     "featured": false
   }
 ];
