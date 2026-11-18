@@ -83,7 +83,7 @@ interface Donation {
   updatedAt?: string;
 }
 
-type AdminTab = "inquiries" | "donations" | "trustees" | "partners" | "reports" | "reviews" | "metrics" | "system";
+type AdminTab = "inquiries" | "donations" | "email" | "trustees" | "partners" | "reports" | "reviews" | "metrics" | "system";
 
 export default function AdminPage() {
   const [token, setToken] = useState<string | null>(null);
@@ -95,6 +95,14 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  // Email alerts & SMTP configuration state
+  const [emailConfig, setEmailConfig] = useState<any>(null);
+  const [smtpPassInput, setSmtpPassInput] = useState("");
+  const [web3formsInput, setWeb3formsInput] = useState("");
+  const [isTestingEmail, setIsTestingEmail] = useState(false);
+  const [isSavingEmail, setIsSavingEmail] = useState(false);
+  const [emailTestResult, setEmailTestResult] = useState<{ success: boolean; message: string } | null>(null);
 
   // Inquiries state
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
@@ -203,10 +211,106 @@ export default function AdminPage() {
         const repData = await repRes.json();
         setReports(repData.reports || []);
       }
+
+      // Load email settings
+      try {
+        const mailRes = await fetch("/api/admin/email-settings", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (mailRes.ok) {
+          const mailData = await mailRes.json();
+          setEmailConfig(mailData);
+        }
+      } catch (mErr) {
+        console.error("Failed to load email config", mErr);
+      }
     } catch (err) {
       console.error("Failed to load admin data", err);
     } finally {
       setIsLoadingInquiries(false);
+    }
+  };
+
+  const loadEmailSettings = async () => {
+    if (!token) return;
+    try {
+      const res = await fetch("/api/admin/email-settings", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setEmailConfig(data);
+      }
+    } catch (err) {
+      console.error("Failed to load email settings", err);
+    }
+  };
+
+  const handleSaveEmailSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSavingEmail(true);
+    setEmailTestResult(null);
+    try {
+      const res = await fetch("/api/admin/email-settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          smtpPass: smtpPassInput.trim(),
+          web3formsKey: web3formsInput.trim(),
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        showFeedback("success", "Email notification settings saved!");
+        loadEmailSettings();
+      } else {
+        showFeedback("error", data.error || "Failed to save settings.");
+      }
+    } catch {
+      showFeedback("error", "Network error while saving settings.");
+    } finally {
+      setIsSavingEmail(false);
+    }
+  };
+
+  const handleTestEmail = async () => {
+    setIsTestingEmail(true);
+    setEmailTestResult(null);
+    try {
+      const res = await fetch("/api/admin/email-settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          action: "test",
+          smtpPass: smtpPassInput.trim() || undefined,
+          web3formsKey: web3formsInput.trim() || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setEmailTestResult({ success: true, message: data.message });
+        showFeedback("success", "Test email delivered to swadeepsvs@gmail.com!");
+        loadEmailSettings();
+      } else {
+        setEmailTestResult({
+          success: false,
+          message: data.error || "Delivery failed. Please check your App Password.",
+        });
+        showFeedback("error", data.error || "Failed to deliver test email.");
+      }
+    } catch {
+      setEmailTestResult({
+        success: false,
+        message: "Network error connecting to email dispatch endpoint.",
+      });
+    } finally {
+      setIsTestingEmail(false);
     }
   };
 
@@ -605,6 +709,29 @@ export default function AdminPage() {
         ) : (
           /* Authenticated Dashboard View */
           <div className="space-y-6">
+            {/* Setup Notice Banner if email is not yet configured */}
+            {emailConfig && !emailConfig.isConfigured && activeTab !== "email" && (
+              <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-amber-900">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping shrink-0" />
+                  <span>
+                    <strong>Email Delivery Setup Required:</strong> To receive form submissions in{" "}
+                    <strong>swadeepsvs@gmail.com</strong>, your 16-character Google App Password is required so Google allows outbound emails.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTab("email");
+                    loadEmailSettings();
+                  }}
+                  className="px-4 py-1.5 rounded-full bg-amber-800 text-white font-bold text-xs hover:bg-amber-900 transition-all shrink-0 self-start sm:self-auto"
+                >
+                  Configure Email Delivery →
+                </button>
+              </div>
+            )}
+
             {/* Tabs Navigation */}
             <div className="flex flex-wrap items-center gap-2 border-b border-forest/10 pb-3">
               <button
@@ -625,6 +752,24 @@ export default function AdminPage() {
                 }`}
               >
                 Donations &amp; 80G ({donations.length})
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab("email");
+                  loadEmailSettings();
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  activeTab === "email" ? "bg-[#0B3025] text-white shadow-sm" : "bg-white text-charcoal/80 hover:bg-forest-50"
+                }`}
+              >
+                <span>Email Alerts (swadeepsvs@gmail.com)</span>
+                <span
+                  className={`w-2 h-2 rounded-full ${
+                    emailConfig?.isConfigured ? "bg-emerald-500" : "bg-amber-500 animate-pulse"
+                  }`}
+                />
               </button>
 
               <button
@@ -1047,6 +1192,266 @@ export default function AdminPage() {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* TAB: Email Alerts & SMTP Integration */}
+            {activeTab === "email" && (
+              <div className="space-y-6">
+                {/* Header Card */}
+                <div className="bg-white p-6 rounded-3xl border border-forest/10 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-heading font-bold text-lg text-[#0B3025] flex items-center gap-2">
+                      <span>Email Delivery to swadeepsvs@gmail.com</span>
+                      <span
+                        className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                          emailConfig?.isConfigured
+                            ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                            : "bg-amber-100 text-amber-800 border border-amber-300"
+                        }`}
+                      >
+                        {emailConfig?.isConfigured ? "● Active & Connected" : "● Setup Required"}
+                      </span>
+                    </h3>
+                    <p className="text-xs text-charcoal/65 mt-1">
+                      Website submissions (Contact, Donations / UTR, Reviews, Field Logs) are configured to email directly to{" "}
+                      <strong>swadeepsvs@gmail.com</strong>.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleTestEmail}
+                    disabled={isTestingEmail}
+                    className="px-5 py-2.5 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto disabled:opacity-50"
+                  >
+                    {isTestingEmail ? (
+                      <>
+                        <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Sending Test Email...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>✉ Send Test Email Now</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Test Result Message */}
+                {emailTestResult && (
+                  <div
+                    className={`p-4 rounded-2xl text-xs font-medium border leading-relaxed ${
+                      emailTestResult.success
+                        ? "bg-emerald-50 text-emerald-900 border-emerald-200"
+                        : "bg-rose-50 text-rose-900 border-rose-200"
+                    }`}
+                  >
+                    <strong>{emailTestResult.success ? "✓ Delivery Confirmed:" : "⚠ Delivery Issue:"}</strong>{" "}
+                    {emailTestResult.message}
+                  </div>
+                )}
+
+                {/* Configuration Cards Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                  {/* Card 1: Google App Password Setup Form */}
+                  <div className="bg-white p-6 sm:p-7 rounded-3xl border border-forest/10 shadow-xs space-y-5">
+                    <div>
+                      <h4 className="font-heading font-bold text-base text-[#0B3025]">
+                        Option 1: Gmail App Password (Recommended)
+                      </h4>
+                      <p className="text-xs text-charcoal/70 mt-1">
+                        Gmail blocks automated emails unless you create a secure 16-character <strong>App Password</strong> in your Google Account.
+                      </p>
+                    </div>
+
+                    {/* Step-by-Step Instructions */}
+                    <div className="p-4 rounded-2xl bg-cream/50 border border-forest/10 space-y-2 text-xs text-charcoal/80">
+                      <p className="font-bold text-[#0B3025]">Quick 1-Minute Setup:</p>
+                      <ol className="list-decimal pl-4 space-y-1.5 leading-relaxed text-[11px]">
+                        <li>
+                          Sign in to{" "}
+                          <a
+                            href="https://myaccount.google.com/apppasswords"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#F47B2A] font-bold underline"
+                          >
+                            Google App Passwords (click here)
+                          </a>{" "}
+                          with <strong>swadeepsvs@gmail.com</strong>.
+                        </li>
+                        <li>
+                          Ensure <strong>2-Step Verification</strong> is enabled on your Google account.
+                        </li>
+                        <li>
+                          In the App name box, type <strong>Swadeep Website</strong> and click <strong>Create</strong>.
+                        </li>
+                        <li>
+                          Google will display a 16-character code (e.g. <code className="bg-amber-100 px-1 rounded">abcd efgh ijkl mnop</code>).
+                        </li>
+                        <li>Paste that code below and click <strong>Save &amp; Test</strong>.</li>
+                      </ol>
+                    </div>
+
+                    <form onSubmit={handleSaveEmailSettings} className="space-y-4">
+                      <div>
+                        <label className="block text-xs font-bold text-[#0B3025] mb-1">
+                          Google App Password (16 letters)
+                        </label>
+                        <input
+                          type="password"
+                          value={smtpPassInput}
+                          onChange={(e) => setSmtpPassInput(e.target.value)}
+                          placeholder={emailConfig?.hasSmtpPass ? "•••••••••••••••• (Saved in system)" : "Enter 16-character App Password"}
+                          className="w-full px-4 py-3 rounded-2xl bg-cream/30 border border-forest/20 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="submit"
+                          disabled={isSavingEmail}
+                          className="px-5 py-2.5 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs disabled:opacity-50"
+                        >
+                          {isSavingEmail ? "Saving..." : "Save Password"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleTestEmail}
+                          disabled={isTestingEmail}
+                          className="px-5 py-2.5 rounded-full bg-saffron hover:bg-saffron-600 text-white text-xs font-bold transition-all shadow-xs disabled:opacity-50"
+                        >
+                          Save &amp; Send Test Email
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+
+                  {/* Card 2: Web3Forms Alternative + Vercel Deployment Guide */}
+                  <div className="space-y-6">
+                    <div className="bg-white p-6 sm:p-7 rounded-3xl border border-forest/10 shadow-xs space-y-4">
+                      <h4 className="font-heading font-bold text-base text-[#0B3025]">
+                        Option 2: Free Web3Forms Key (No Password Required)
+                      </h4>
+                      <p className="text-xs text-charcoal/70 leading-relaxed">
+                        If you don&apos;t want to create an App Password, you can get an instant free API key at{" "}
+                        <a
+                          href="https://web3forms.com"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#F47B2A] font-bold underline"
+                        >
+                          web3forms.com
+                        </a>{" "}
+                        using <strong>swadeepsvs@gmail.com</strong>.
+                      </p>
+
+                      <div className="space-y-3">
+                        <input
+                          type="text"
+                          value={web3formsInput}
+                          onChange={(e) => setWeb3formsInput(e.target.value)}
+                          placeholder={emailConfig?.hasWeb3Forms ? "Web3Forms key is configured" : "Paste Web3Forms Access Key"}
+                          className="w-full px-4 py-3 rounded-2xl bg-cream/30 border border-forest/20 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                        />
+                        <button
+                          type="button"
+                          onClick={handleSaveEmailSettings}
+                          className="px-4 py-2 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all"
+                        >
+                          Save Access Key
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="bg-white p-6 sm:p-7 rounded-3xl border border-forest/10 shadow-xs space-y-3">
+                      <h4 className="font-heading font-bold text-sm text-[#0B3025]">
+                        Vercel Production Deployment Environment
+                      </h4>
+                      <p className="text-xs text-charcoal/70 leading-relaxed">
+                        When deployed on Vercel, also add these variables to your Vercel Project Settings &rarr; Environment Variables:
+                      </p>
+                      <div className="p-3 rounded-xl bg-forest-900 text-cream font-mono text-[11px] space-y-1">
+                        <div>SMTP_HOST = smtp.gmail.com</div>
+                        <div>SMTP_PORT = 465</div>
+                        <div>SMTP_USER = swadeepsvs@gmail.com</div>
+                        <div>SMTP_PASS = your_16_char_app_password</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Submissions Dispatch Log */}
+                <div className="bg-white p-6 rounded-3xl border border-forest/10 shadow-xs space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-heading font-bold text-base text-[#0B3025]">
+                        Recent Form Submissions &amp; Dispatch Log
+                      </h4>
+                      <p className="text-xs text-charcoal/60">
+                        Every submission from Contact, Donation UTR, and Reviews is permanently recorded here.
+                      </p>
+                    </div>
+                    <span className="text-xs font-bold text-charcoal/50">
+                      Total Logged: {emailConfig?.totalLogged ?? 0}
+                    </span>
+                  </div>
+
+                  {emailConfig?.recentNotifications && emailConfig.recentNotifications.length > 0 ? (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse">
+                        <thead>
+                          <tr className="border-b border-forest/10 text-charcoal/60 font-bold">
+                            <th className="py-2.5 px-3">Type</th>
+                            <th className="py-2.5 px-3">Subject / Details</th>
+                            <th className="py-2.5 px-3">Recipient</th>
+                            <th className="py-2.5 px-3">Date</th>
+                            <th className="py-2.5 px-3">Delivery Status</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-forest/5">
+                          {emailConfig.recentNotifications.map((notif: any) => (
+                            <tr key={notif.id} className="hover:bg-cream/30">
+                              <td className="py-3 px-3 font-bold text-[#0B3025]">{notif.type}</td>
+                              <td className="py-3 px-3 max-w-xs truncate text-charcoal/80 font-medium">
+                                {notif.subject}
+                              </td>
+                              <td className="py-3 px-3 font-mono text-charcoal/70">{notif.recipient}</td>
+                              <td className="py-3 px-3 text-charcoal/60 whitespace-nowrap">
+                                {new Date(notif.timestamp).toLocaleString("en-IN", {
+                                  dateStyle: "short",
+                                  timeStyle: "short",
+                                })}
+                              </td>
+                              <td className="py-3 px-3 whitespace-nowrap">
+                                <span
+                                  className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                                    notif.status === "delivered"
+                                      ? "bg-green-100 text-green-800"
+                                      : notif.status === "smtp_delivery_failed"
+                                      ? "bg-red-100 text-red-800"
+                                      : "bg-amber-100 text-amber-800"
+                                  }`}
+                                >
+                                  {notif.status === "delivered"
+                                    ? "Delivered to Gmail"
+                                    : notif.status === "smtp_delivery_failed"
+                                    ? "Failed (Check App Password)"
+                                    : "Recorded (App Password Needed)"}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ) : (
+                    <div className="py-8 text-center text-xs text-charcoal/50">
+                      No notifications recorded yet. Submissions will appear here in real time.
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
