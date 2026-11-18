@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Privacy Policy & Data Protection | Swadeep Shikshan Vikas Sanstha",
   description:
     "Learn about how Swadeep Shikshan Vikas Sanstha protects your personal data, handles donation records, and maintains transparency.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPolicyPage() {

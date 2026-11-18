@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "What We Do | Swadeep Shikshan Vikas Sanstha",
   description:
     "At Swadeep, we concentrate our efforts on deprived communities by working on thematic areas of Development: Education, Health, Livelihood, Rural Infrastructure Development, and Disaster Management.",
+  alternates: {
+    canonical: "/programs",
+  },
 };
 
 export default function ProgramsPage() {
