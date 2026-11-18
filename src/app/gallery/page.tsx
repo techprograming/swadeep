@@ -1,27 +1,339 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { MapPinIcon, CalendarIcon, SearchIcon, YoutubeIcon } from "@/components/ui/Icons";
 
 import {
   GALLERY_ITEMS,
   CATEGORIES,
+  CATEGORY_LABELS,
   GalleryCategory,
   GalleryItem,
 } from "@/lib/galleryData";
 
+// ─── Icons ────────────────────────────────────────────────────────────────────
+function ChevronLeft({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+    </svg>
+  );
+}
+function ChevronRight({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+    </svg>
+  );
+}
+function XIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  );
+}
+function PinIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+  );
+}
+function PlayIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+// ─── Impact stats ──────────────────────────────────────────────────────────────
+const IMPACT_STATS = [
+  { value: "60,000+", label: "Children Reached", labelGu: "બાળકો સ્પર્શ્યા" },
+  { value: "200+",    label: "Villages Covered", labelGu: "ગામો આવ્યા" },
+  { value: "500+",    label: "Fishermen Supported", labelGu: "માછીમારો" },
+  { value: "20+",     label: "Years of Impact", labelGu: "વર્ષ સેવા" },
+];
+
+// ─── Program sections ─────────────────────────────────────────────────────────
+const PROGRAM_SECTIONS = [
+  {
+    category: "Education" as GalleryCategory,
+    title: "Education",
+    titleGu: "શિક્ষણ",
+    desc: "Empowering children and communities through quality education across 200+ villages.",
+    link: "/programs/education",
+  },
+  {
+    category: "Health" as GalleryCategory,
+    title: "Health",
+    titleGu: "આરોગ્ય",
+    desc: "Health camps, eye care, dental drives, and community wellness reaching thousands.",
+    link: "/programs/health",
+  },
+  {
+    category: "Livelihood" as GalleryCategory,
+    title: "Livelihood",
+    titleGu: "આજીવિકા",
+    desc: "Supporting coastal fishing communities with tools, training, and sustainable resources.",
+    link: "/programs/livelihood",
+  },
+  {
+    category: "Infrastructure" as GalleryCategory,
+    title: "Rural Development",
+    titleGu: "ગ્રામ વિકાસ",
+    desc: "Solar street lights, rural infrastructure, and community development across 40 villages.",
+    link: "/programs/infrastructure",
+  },
+  {
+    category: "Relief" as GalleryCategory,
+    title: "Disaster Response",
+    titleGu: "આપત્તિ રાહત",
+    desc: "Emergency relief operations helping communities recover from floods, cyclones, and crises.",
+    link: "/programs/disaster",
+  },
+];
+
+const PAGE_SIZE = 18;
+
+// ─── Lightbox ─────────────────────────────────────────────────────────────────
+function Lightbox({
+  item,
+  items,
+  onClose,
+  onPrev,
+  onNext,
+}: {
+  item: GalleryItem;
+  items: GalleryItem[];
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const currentIndex = items.findIndex((i) => i.id === item.id);
+
+  // Focus trap + keyboard
+  useEffect(() => {
+    closeRef.current?.focus();
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") onNext();
+      if (e.key === "ArrowLeft") onPrev();
+      // Basic focus trap
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+          e.preventDefault();
+          (e.shiftKey ? last : first).focus();
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose, onNext, onPrev]);
+
+  // Touch swipe
+  const touchStartX = useRef<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) diff > 0 ? onNext() : onPrev();
+    touchStartX.current = null;
+  };
+
+  const categoryLabel = CATEGORY_LABELS[item.category as GalleryCategory]?.en ?? item.category;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="lightbox-title"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div
+        ref={dialogRef}
+        className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col lg:flex-row"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Image panel */}
+        <div className="relative w-full lg:w-3/5 aspect-[4/3] lg:aspect-auto lg:min-h-[480px] bg-black flex-shrink-0">
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 60vw"
+            priority
+          />
+          {/* Close */}
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            aria-label="Close photo viewer"
+          >
+            <XIcon className="w-5 h-5" />
+          </button>
+          {/* Category pill */}
+          <span className="absolute top-3 left-3 z-10 bg-[#0B3025]/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-white">
+            {categoryLabel}
+          </span>
+          {/* Prev arrow */}
+          <button
+            type="button"
+            onClick={onPrev}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            aria-label="Previous photo"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          {/* Next arrow */}
+          <button
+            type="button"
+            onClick={onNext}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            aria-label="Next photo"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+          {/* Counter */}
+          <div className="absolute bottom-3 left-3 z-10 bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-lg text-white text-xs font-medium">
+            {currentIndex + 1} / {items.length}
+          </div>
+        </div>
+
+        {/* Info panel */}
+        <div className="flex flex-col p-6 lg:p-8 gap-4 overflow-y-auto lg:w-2/5">
+          <div>
+            <span className="text-[#F47B2A] text-xs font-bold uppercase tracking-wider font-gujarati block mb-1">
+              {item.titleGu}
+            </span>
+            <h3 id="lightbox-title" className="font-heading font-extrabold text-xl text-[#0B3025] leading-snug">
+              {item.title}
+            </h3>
+          </div>
+          <p className="font-body text-gray-600 text-sm leading-relaxed flex-1">
+            {item.description}
+          </p>
+          <div className="pt-4 border-t border-gray-100 space-y-2 text-sm text-gray-500">
+            <div className="flex items-center gap-2">
+              <PinIcon className="w-4 h-4 text-[#F47B2A] shrink-0" />
+              <span>{item.location}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-4 h-4 text-[#F47B2A] shrink-0 text-center text-xs">📅</span>
+              <span>{item.date}</span>
+            </div>
+          </div>
+          <div className="flex gap-3 pt-2">
+            <button
+              type="button"
+              onClick={onPrev}
+              className="flex-1 py-2 rounded-xl border border-gray-200 hover:bg-[#0B3025] hover:text-white hover:border-[#0B3025] font-semibold text-sm transition-colors flex items-center justify-center gap-1 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            >
+              <ChevronLeft className="w-4 h-4" /> Prev
+            </button>
+            <button
+              type="button"
+              onClick={onNext}
+              className="flex-1 py-2 rounded-xl bg-[#0B3025] text-white hover:bg-[#174B38] font-semibold text-sm transition-colors flex items-center justify-center gap-1 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            >
+              Next <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Gallery Card ──────────────────────────────────────────────────────────────
+function GalleryCard({
+  item,
+  size,
+  onClick,
+}: {
+  item: GalleryItem;
+  size: "large" | "medium" | "small";
+  onClick: () => void;
+}) {
+  const categoryLabel = CATEGORY_LABELS[item.category as GalleryCategory]?.en ?? item.category;
+  const aspectClass = size === "large" ? "aspect-[4/3]" : size === "medium" ? "aspect-[3/2]" : "aspect-square";
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group relative w-full ${aspectClass} overflow-hidden rounded-2xl bg-gray-100 block cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#F47B2A] focus:ring-offset-2`}
+      aria-label={`View photo: ${item.title}`}
+    >
+      <Image
+        src={item.image}
+        alt={item.title}
+        fill
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        loading="lazy"
+      />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Category pill */}
+      <span className="absolute top-3 left-3 bg-[#0B3025]/80 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
+        {categoryLabel}
+      </span>
+      {/* Info on hover */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+        <p className="font-heading font-bold text-white text-sm leading-snug line-clamp-2">{item.title}</p>
+        <span className="text-white/70 text-[11px] mt-1 flex items-center gap-1">
+          <PinIcon className="w-3 h-3" /> {item.location}
+        </span>
+      </div>
+      {/* View indicator */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+          </svg>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+// ─── Main Page ─────────────────────────────────────────────────────────────────
 export default function GalleryPage() {
   const { isGujarati } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<GalleryCategory>("All");
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
-  const [displayLimit, setDisplayLimit] = useState<number>(24);
+  const [displayLimit, setDisplayLimit] = useState(PAGE_SIZE);
+  const filterBarRef = useRef<HTMLDivElement>(null);
 
+  // Reset limit when category changes
   useEffect(() => {
-    setDisplayLimit(24);
+    setDisplayLimit(PAGE_SIZE);
   }, [selectedCategory]);
+
+  // Lock body scroll when lightbox open
+  useEffect(() => {
+    document.body.style.overflow = activeItem ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [activeItem]);
 
   const filteredItems =
     selectedCategory === "All"
@@ -29,431 +341,371 @@ export default function GalleryPage() {
       : GALLERY_ITEMS.filter((item) => item.category === selectedCategory);
 
   const displayedItems = filteredItems.slice(0, displayLimit);
+  const hasMore = displayLimit < filteredItems.length;
+
+  const currentIndex = activeItem ? filteredItems.findIndex((i) => i.id === activeItem.id) : -1;
 
   const handleNext = useCallback(() => {
     if (!activeItem) return;
-    const currentIndex = filteredItems.findIndex((item) => item.id === activeItem.id);
-    const nextIndex = (currentIndex + 1) % filteredItems.length;
-    setActiveItem(filteredItems[nextIndex]);
+    const idx = filteredItems.findIndex((i) => i.id === activeItem.id);
+    setActiveItem(filteredItems[(idx + 1) % filteredItems.length]);
   }, [activeItem, filteredItems]);
 
   const handlePrev = useCallback(() => {
     if (!activeItem) return;
-    const currentIndex = filteredItems.findIndex((item) => item.id === activeItem.id);
-    const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length;
-    setActiveItem(filteredItems[prevIndex]);
+    const idx = filteredItems.findIndex((i) => i.id === activeItem.id);
+    setActiveItem(filteredItems[(idx - 1 + filteredItems.length) % filteredItems.length]);
   }, [activeItem, filteredItems]);
 
-  // Lightbox keyboard navigation (Escape, ArrowLeft, ArrowRight)
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (!activeItem) return;
-
-      if (e.key === "Escape") {
-        setActiveItem(null);
-      } else if (e.key === "ArrowRight") {
-        handleNext();
-      } else if (e.key === "ArrowLeft") {
-        handlePrev();
-      }
-    },
-    [activeItem, handleNext, handlePrev]
-  );
-
-  useEffect(() => {
-    if (activeItem) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [activeItem, handleKeyDown]);
+  // Scroll to gallery grid
+  const scrollToGallery = () => {
+    document.getElementById("gallery-grid")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <main id="main-content" className="flex-1 bg-cream">
-      {/* 1. Hero Banner */}
+    <main id="main-content" className="flex-1 bg-[#FAFAF7]">
+
+      {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
       <section
         aria-labelledby="gallery-hero-heading"
-        className="relative py-20 lg:py-28 bg-gradient-to-br from-[#061F17] via-[#0B3025] to-[#041610] text-cream overflow-hidden"
+        className="relative min-h-[480px] lg:min-h-[600px] flex items-center justify-center overflow-hidden bg-[#061F17]"
       >
-        <div
-          className="absolute inset-0 opacity-10 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            backgroundImage: `radial-gradient(circle at 20px 20px, white 2px, transparent 0)`,
-            backgroundSize: "40px 40px",
-          }}
-        />
-        <div
-          className="absolute -top-32 -right-32 w-96 h-96 bg-[#F47B2A]/20 rounded-full blur-3xl pointer-events-none"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute bottom-0 left-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"
-          aria-hidden="true"
-        />
+        {/* Background photo */}
+        <div className="absolute inset-0">
+          <Image
+            src="/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-1-700x525.jpg"
+            alt="Swadeep field work in education"
+            fill
+            className="object-cover opacity-40"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#061F17]/60 via-[#0B3025]/50 to-[#061F17]/80" />
+        </div>
 
-        <div className="container-wide section-padding relative z-10 text-center max-w-4xl mx-auto space-y-6">
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-[#F47B2A] border border-white/15">
+        {/* Decorative dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.06] pointer-events-none"
+          aria-hidden="true"
+          style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "32px 32px" }}
+        />
+        {/* Glow */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#F47B2A]/15 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+
+        {/* Content */}
+        <div className="relative z-10 text-center px-4 py-20 max-w-4xl mx-auto space-y-6">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-[#F47B2A] border border-white/15">
             <span>Swadeep Shikshan Vikas Sanstha</span>
           </div>
-
-          <h1
-            id="gallery-hero-heading"
-            className="font-heading text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight"
-          >
-            {isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}
+          <h1 id="gallery-hero-heading" className="font-heading text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight">
+            {isGujarati ? "ફોટો ગેલેરી" : "Gallery"}
           </h1>
-
-          <p className="font-gujarati text-lg sm:text-2xl text-cream/90 font-medium">
-            {isGujarati
-              ? "૨૦૦૫ થી અવિરત ગ્રામીણ ઉત્થાનની પ્રમાણિત ઝલક"
-              : "Authentic glimpses of two decades of grassroots transformation"}
+          <p className="text-xl sm:text-2xl font-semibold text-white/90 font-heading">
+            {isGujarati ? "ક્ષેત્ર કાર્ય — જીવંત સ્મૃતિઓ" : "Our Work in Action"}
           </p>
-
-          <p className="font-body text-cream/80 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-cream/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-body">
             {isGujarati
-              ? "ગુજરાતના ૨૦૦+ ગામોમાં શિક્ષણ, આરોગ્ય, આજીવિકા અને સમુદાય સશક્તિકરણની પ્રત્યક્ષ તસવીરો."
-              : "Every photograph represents genuine lives touched, schools transformed, and sustainable livelihoods built across Gujarat."}
+              ? "ગ્રામ ઉત્થાન, શિક્ષણ, આરોગ્ય, આજીવિકા અને આપત્તિ ના ક્ષેત્રોમાં Swadeep ના કાર્યની અસ્સલ ઝલક."
+              : "Explore authentic moments from Swadeep\u2019s community work across education, health, livelihoods, rural development and disaster response."}
           </p>
+          <button
+            type="button"
+            onClick={scrollToGallery}
+            className="inline-flex items-center gap-2 bg-[#F47B2A] hover:bg-[#e36a1a] text-white font-bold px-8 py-3.5 rounded-full text-base transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F47B2A] focus:ring-offset-2 focus:ring-offset-[#061F17]"
+          >
+            Explore Our Work ↓
+          </button>
+        </div>
+      </section>
 
-          {/* Quick Stats Ribbon */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs text-cream/80">
-            <span className="px-3 py-1 rounded-full bg-white/10 border border-white/15">
-              200+ Villages Documented
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/10 border border-white/15">
-              60,000+ Beneficiaries
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/10 border border-white/15">
-              20+ Years of Dedication
-            </span>
-          </div>
-
-          <div className="pt-2 flex items-center justify-center gap-3">
-            <Link
-              href="/videos"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-semibold shadow-md hover:shadow-lg transition-all"
-            >
-              <YoutubeIcon size={16} />
-              <span>Watch Video Documentation (@swadeepindia2543)</span>
-            </Link>
+      {/* ── 2. IMPACT STATS BAR ──────────────────────────────────────────── */}
+      <section className="bg-[#0B3025] py-10" aria-label="Impact statistics">
+        <div className="container-wide section-padding">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+            {IMPACT_STATS.map((s) => (
+              <div key={s.label} className="space-y-1">
+                <div className="font-heading text-3xl sm:text-4xl font-extrabold text-[#F47B2A]">{s.value}</div>
+                <div className="text-cream/90 text-sm font-semibold uppercase tracking-wide">
+                  {isGujarati ? s.labelGu : s.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 2. Filter Bar & Gallery Grid */}
-      <section className="section-padding py-12 lg:py-20">
-        <div className="container-wide max-w-7xl mx-auto">
-          {/* Category Filter Pills */}
+      {/* ── 3. CATEGORY FILTERS ──────────────────────────────────────────── */}
+      <section id="gallery-grid" className="pt-14 pb-6 bg-[#FAFAF7]">
+        <div className="container-wide section-padding">
+          <div className="text-center mb-8 space-y-2">
+            <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest">
+              {isGujarati ? "ફોટો ગ્રંથ" : "Photo Archive"}
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-[#0B3025]">
+              {isGujarati ? "ચિત્ર ગ્રંથ" : "Browse by Program"}
+            </h2>
+            <p className="text-gray-600 max-w-xl mx-auto text-sm">
+              {isGujarati
+                ? "86 ખરી ક્ષેત્ર તસ્વીરો — 5 કાર્યક્ષેત્રો"
+                : "86 authentic field photographs across 5 program areas — click to explore."}
+            </p>
+          </div>
+
+          {/* Filter bar */}
           <div
-            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 lg:mb-14"
-            role="toolbar"
-            aria-label="Filter gallery by category"
+            ref={filterBarRef}
+            role="group"
+            aria-label="Filter gallery by program category"
+            className="flex gap-2 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory justify-start sm:justify-center flex-nowrap"
           >
             {CATEGORIES.map((cat) => {
-              const isSelected = selectedCategory === cat;
-              const count =
-                cat === "All"
-                  ? GALLERY_ITEMS.length
-                  : GALLERY_ITEMS.filter((it) => it.category === cat).length;
-
+              const label = CATEGORY_LABELS[cat];
+              const isActive = selectedCategory === cat;
+              const count = cat === "All" ? GALLERY_ITEMS.length : GALLERY_ITEMS.filter((i) => i.category === cat).length;
               return (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-bold tracking-wide transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A] ${
-                    isSelected
-                      ? "bg-[#0B3025] text-white shadow-md scale-105"
-                      : "bg-white text-charcoal/80 hover:bg-forest-50 hover:text-[#0B3025] border border-charcoal/10"
+                  aria-pressed={isActive}
+                  className={`snap-start shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-[#F47B2A] focus:ring-offset-1 whitespace-nowrap flex items-center gap-1.5 ${
+                    isActive
+                      ? "bg-[#0B3025] text-white shadow-md"
+                      : "bg-white text-gray-700 border border-gray-200 hover:border-[#0B3025] hover:text-[#0B3025]"
                   }`}
-                  aria-pressed={isSelected}
                 >
-                  <span>{cat}</span>
-                  <span className={`ml-1.5 text-[11px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-white/20 text-white" : "bg-gray-100 text-charcoal/60"}`}>
+                  {isGujarati ? label.gu : label.en}
+                  <span className={`text-xs rounded-full px-1.5 py-0.5 font-bold ${isActive ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"}`}>
                     {count}
                   </span>
                 </button>
               );
             })}
           </div>
+        </div>
+      </section>
 
-          {/* Minimalist Professional Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {displayedItems.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => setActiveItem(item)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setActiveItem(item);
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-label={`View photo: ${item.title}`}
-                className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-xs hover:shadow-xl border border-forest/10 hover:border-[#F47B2A]/40 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A] flex flex-col justify-between hover:-translate-y-1.5"
-              >
-                {/* Photo Container */}
-                <div className="relative w-full h-64 sm:h-72 overflow-hidden bg-forest-900">
+      {/* ── 4. FEATURED STORY ────────────────────────────────────────────── */}
+      {selectedCategory === "All" && (() => {
+        const featured = GALLERY_ITEMS.find((i) => i.featured);
+        if (!featured) return null;
+        return (
+          <section className="py-8 bg-[#FAFAF7]">
+            <div className="container-wide section-padding">
+              <div className="rounded-3xl overflow-hidden bg-white shadow-lg border border-gray-100 grid lg:grid-cols-2 gap-0">
+                <div className="relative min-h-[280px] lg:min-h-[400px]">
                   <Image
-                    src={item.image}
-                    alt={item.title}
+                    src={featured.image}
+                    alt={featured.title}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
-
-                  {/* Top Category Badge */}
-                  <div className="absolute top-3.5 left-3.5 z-10">
-                    <span className="bg-[#0B3025]/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-white border border-white/20 shadow-xs">
-                      {item.category}
-                    </span>
-                  </div>
-
-                  {/* Bottom Meta */}
-                  <div className="absolute bottom-3.5 left-3.5 right-3.5 z-10 flex items-center justify-between text-[11px] text-white">
-                    <span className="truncate max-w-[65%] font-medium inline-flex items-center gap-1">
-                      <MapPinIcon className="w-3.5 h-3.5 shrink-0 text-[#F47B2A]" />
-                      <span className="truncate">{item.location}</span>
-                    </span>
-                    <span className="bg-black/50 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[10.5px]">
-                      {item.date}
-                    </span>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/10" />
                 </div>
-
-                {/* Card Caption Body */}
-                <div className="p-5 sm:p-6 space-y-2.5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="font-gujarati text-xs text-[#F47B2A] font-semibold block">
-                      {item.titleGu}
+                <div className="flex flex-col justify-center p-8 lg:p-12 space-y-4">
+                  <span className="inline-block text-[#F47B2A] text-xs font-bold uppercase tracking-widest">
+                    ✦ {isGujarati ? "ફીચર્ડ ફોટો" : "Featured Photograph"}
+                  </span>
+                  <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025] leading-snug">
+                    {isGujarati ? featured.titleGu : featured.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">{featured.description}</p>
+                  <div className="flex flex-wrap gap-3 text-sm text-gray-500">
+                    <span className="flex items-center gap-1.5"><PinIcon className="w-4 h-4 text-[#F47B2A]" />{featured.location}</span>
+                    <span className="bg-[#0B3025]/10 text-[#0B3025] px-3 py-1 rounded-full font-semibold text-xs">
+                      {CATEGORY_LABELS[featured.category as GalleryCategory]?.en}
                     </span>
-                    <h3 className="font-heading font-bold text-base sm:text-lg text-forest-dark group-hover:text-forest transition-colors line-clamp-2 mt-0.5 leading-snug">
-                      {item.title}
-                    </h3>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveItem(featured)}
+                    className="mt-2 inline-flex items-center gap-2 bg-[#0B3025] hover:bg-[#174B38] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors self-start focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                  >
+                    View Photo →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
-                  <p className="font-body text-xs sm:text-sm text-charcoal/70 line-clamp-2 leading-relaxed">
-                    {item.description}
-                  </p>
-
-                  <div className="pt-3 border-t border-cream-dark flex items-center justify-between text-xs font-bold text-[#F47B2A] group-hover:text-[#E06A1B]">
-                    <span>{isGujarati ? "મોટી તસવીર જુઓ" : "View Photo & Details"}</span>
-                    <svg
-                      className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+      {/* ── 5. MASONRY / BENTO GRID ──────────────────────────────────────── */}
+      <section className="py-8 bg-[#FAFAF7]" aria-label="Photo gallery grid">
+        <div className="container-wide section-padding">
+          {displayedItems.length === 0 ? (
+            <div className="text-center py-24 text-gray-400">
+              <div className="text-5xl mb-4">📷</div>
+              <p className="font-heading font-bold text-xl">{isGujarati ? "કોઈ ફોટો નથી" : "No photos in this category"}</p>
+            </div>
+          ) : (
+            <>
+              {/* Bento grid — CSS columns for masonry effect */}
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+                {displayedItems.map((item, index) => {
+                  // Vary sizes: every 7th is large, every 3rd is medium, rest small
+                  const size = index % 7 === 0 ? "large" : index % 3 === 0 ? "medium" : "small";
+                  return (
+                    <div key={item.id} className="break-inside-avoid">
+                      <GalleryCard
+                        item={item}
+                        size={size}
+                        onClick={() => setActiveItem(item)}
                       />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Load More */}
+              {hasMore && (
+                <div className="text-center mt-12">
+                  <p className="text-gray-400 text-sm mb-4">
+                    Showing {displayedItems.length} of {filteredItems.length} photos
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setDisplayLimit((prev) => prev + PAGE_SIZE)}
+                    className="inline-flex items-center gap-2 bg-white border border-[#0B3025] text-[#0B3025] hover:bg-[#0B3025] hover:text-white font-bold px-8 py-3.5 rounded-full text-sm transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                  >
+                    {isGujarati ? "વધુ ફોટો જુઓ" : "Load More Photos"}
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
-                  </div>
+                  </button>
                 </div>
-              </div>
-            ))}
-          </div>
+              )}
 
-          {/* Load More Button */}
-          {displayLimit < filteredItems.length && (
-            <div className="text-center pt-10">
-              <button
-                type="button"
-                onClick={() => setDisplayLimit((prev) => prev + 24)}
-                className="px-8 py-3 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer inline-flex items-center gap-2"
-              >
-                <span>{isGujarati ? "વધુ તસવીરો જુઓ" : "Load More Photos"}</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-white/20 text-white font-mono">
-                  +{Math.min(24, filteredItems.length - displayLimit)} ({filteredItems.length - displayLimit} remaining)
-                </span>
-              </button>
-            </div>
-          )}
-
-          {/* Empty state if filtered item count is zero */}
-          {filteredItems.length === 0 && (
-            <div className="text-center py-16 bg-white rounded-3xl border border-forest/10 p-8">
-              <div className="w-12 h-12 mx-auto rounded-full bg-forest-50 text-forest flex items-center justify-center mb-3">
-                <SearchIcon className="w-6 h-6 text-forest" />
-              </div>
-              <h3 className="font-heading text-xl font-bold text-forest">
-                No items found in this category
-              </h3>
-              <p className="text-sm text-charcoal/70 mt-1">
-                Please select another filter or choose &quot;All&quot;.
-              </p>
-            </div>
+              {!hasMore && filteredItems.length > 0 && (
+                <p className="text-center text-gray-400 text-sm mt-10">
+                  All {filteredItems.length} photos shown
+                </p>
+              )}
+            </>
           )}
         </div>
       </section>
 
-      {/* 3. Lightbox Modal */}
-      {activeItem && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="lightbox-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 lg:p-8 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
-          onClick={() => setActiveItem(null)}
-        >
-          {/* Modal Container */}
-          <div
-            className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-3xl w-full border border-white/20 relative animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Image with Controls */}
-            <div className="relative w-full h-64 sm:h-96 bg-black shrink-0 group">
-              <Image
-                src={activeItem.image}
-                alt={activeItem.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 800px"
-                className="object-cover"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+      {/* ── 6. PROGRAM SECTIONS ──────────────────────────────────────────── */}
+      <section className="py-16 bg-white" aria-labelledby="program-sections-heading">
+        <div className="container-wide section-padding">
+          <div className="text-center mb-12 space-y-2">
+            <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest">
+              {isGujarati ? "કાર્યક્ષેત્ર" : "By Program"}
+            </span>
+            <h2 id="program-sections-heading" className="font-heading text-3xl font-extrabold text-[#0B3025]">
+              {isGujarati ? "પ્રોગ્રામ પ્રમાણે ફોટો" : "Explore by Program Area"}
+            </h2>
+          </div>
 
-              {/* Previous Button Overlay */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePrev();
-                }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-[#0B3025] text-white flex items-center justify-center transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-                aria-label="Previous photograph"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              {/* Next Button Overlay */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleNext();
-                }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-[#0B3025] text-white flex items-center justify-center transition-all shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-                aria-label="Next photograph"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              {/* Close Button */}
-              <button
-                type="button"
-                onClick={() => setActiveItem(null)}
-                className="absolute top-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-                aria-label="Close dialog"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-
-              {/* Category Pill */}
-              <div className="absolute top-3.5 left-3.5 z-10">
-                <span className="bg-[#0B3025]/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white border border-white/30">
-                  {activeItem.category}
-                </span>
-              </div>
-
-              {/* Location & Date Footer */}
-              <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between text-xs text-white bg-black/50 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-white/15">
-                <span className="font-medium inline-flex items-center gap-1.5 truncate max-w-[65%]">
-                  <MapPinIcon className="w-3.5 h-3.5 text-[#F47B2A] shrink-0" />
-                  <span className="truncate">{activeItem.location}</span>
-                </span>
-                <span className="font-medium inline-flex items-center gap-1.5">
-                  <CalendarIcon className="w-3.5 h-3.5 text-[#F47B2A] shrink-0" />
-                  <span>{activeItem.date}</span>
-                </span>
-              </div>
-            </div>
-
-            {/* Modal Content Body */}
-            <div className="p-6 sm:p-8 space-y-3 overflow-y-auto">
-              <div>
-                <span className="font-gujarati text-[#F47B2A] text-xs sm:text-sm font-semibold block">
-                  {activeItem.titleGu}
-                </span>
-                <h3
-                  id="lightbox-title"
-                  className="font-heading font-extrabold text-xl sm:text-2xl text-forest-dark mt-0.5 leading-snug"
-                >
-                  {activeItem.title}
-                </h3>
-              </div>
-
-              <p className="font-body text-charcoal/80 text-xs sm:text-sm leading-relaxed">
-                {activeItem.description}
-              </p>
-
-              {/* Modal Navigation Footer */}
-              <div className="pt-3 border-t border-cream-dark flex flex-wrap items-center justify-between gap-3 text-xs text-charcoal/70">
-                <div className="flex items-center space-x-2">
-                  <button
-                    type="button"
-                    onClick={handlePrev}
-                    className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-[#0B3025] hover:text-white font-bold transition-colors inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>← Previous</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    className="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-[#0B3025] hover:text-white font-bold transition-colors inline-flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>Next →</span>
-                  </button>
-                  <span className="text-charcoal/60 ml-2 text-[11px] hidden sm:inline">
-                    Photo {filteredItems.findIndex((it) => it.id === activeItem.id) + 1} of {filteredItems.length}
-                  </span>
+          <div className="space-y-16">
+            {PROGRAM_SECTIONS.map((prog) => {
+              const progItems = GALLERY_ITEMS.filter((i) => i.category === prog.category).slice(0, 6);
+              if (progItems.length === 0) return null;
+              return (
+                <div key={prog.category}>
+                  <div className="flex items-center justify-between mb-5">
+                    <div>
+                      <h3 className="font-heading text-xl font-extrabold text-[#0B3025]">
+                        {isGujarati ? prog.titleGu : prog.title}
+                      </h3>
+                      <p className="text-gray-500 text-sm mt-0.5">{prog.desc}</p>
+                    </div>
+                    <Link
+                      href={prog.link}
+                      className="shrink-0 ml-4 inline-flex items-center gap-1 text-[#0B3025] hover:text-[#F47B2A] font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A] rounded"
+                    >
+                      Explore {prog.title} →
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {progItems.map((item) => (
+                      <GalleryCard key={item.id} item={item} size="small" onClick={() => { setSelectedCategory(prog.category); setActiveItem(item); }} />
+                    ))}
+                  </div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-charcoal/50 hidden md:inline">ESC to close</span>
-                  <button
-                    type="button"
-                    onClick={() => setActiveItem(null)}
-                    className="px-4 py-1.5 rounded-lg bg-[#0B3025] text-white hover:bg-forest font-bold transition-colors shadow-xs cursor-pointer"
-                  >
-                    Close
-                  </button>
-                </div>
+      {/* ── 7. VIDEO SECTION ─────────────────────────────────────────────── */}
+      <section className="py-16 bg-[#061F17]" aria-labelledby="video-section-heading">
+        <div className="container-wide section-padding text-center space-y-6">
+          <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest">
+            {isGujarati ? "વિડિઓ" : "Video"}
+          </span>
+          <h2 id="video-section-heading" className="font-heading text-3xl font-extrabold text-white">
+            {isGujarati ? "Swadeep ને ક્રિયામાં જુઓ" : "See Swadeep in Action"}
+          </h2>
+          <p className="text-cream/70 max-w-xl mx-auto text-sm">
+            {isGujarati
+              ? "ક્ષેત્ર ફૂટેજ, ઈન્ટરવ્યૂ અને સ્ટોરી — YouTube ચૅનલ"
+              : "Watch field footage, community stories, and program highlights on our YouTube channel."}
+          </p>
+          {/* Thumbnail placeholder */}
+          <div className="relative max-w-2xl mx-auto rounded-2xl overflow-hidden aspect-video bg-[#0B3025] shadow-xl border border-white/10 group">
+            <Image
+              src="/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-3-700x525.jpg"
+              alt="Watch Swadeep videos on YouTube"
+              fill
+              className="object-cover opacity-60 group-hover:opacity-80 transition-opacity"
+              sizes="(max-width: 768px) 100vw, 672px"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-[#F47B2A]/90 hover:bg-[#F47B2A] flex items-center justify-center shadow-xl transition-all group-hover:scale-110">
+                <PlayIcon className="w-8 h-8 text-white ml-1" />
               </div>
             </div>
           </div>
+          <Link
+            href="/videos"
+            className="inline-flex items-center gap-2 border border-white/30 hover:bg-white/10 text-white font-bold px-8 py-3.5 rounded-full text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+          >
+            Watch All Videos →
+          </Link>
         </div>
+      </section>
+
+      {/* ── 8. DONATION CTA ──────────────────────────────────────────────── */}
+      <section className="py-16 bg-[#F47B2A]" aria-labelledby="gallery-cta-heading">
+        <div className="container-wide section-padding text-center space-y-6">
+          <h2 id="gallery-cta-heading" className="font-heading text-3xl sm:text-4xl font-extrabold text-white">
+            {isGujarati ? "વધુ ફેરફાર કરવામાં મદદ કરો" : "Help Us Create More Impact"}
+          </h2>
+          <p className="text-white/90 max-w-xl mx-auto leading-relaxed">
+            {isGujarati
+              ? "ગ્રામ ઉત્થાન, શિક્ષણ અને આજીવિકા — Swadeep ના કાર્ય સ્તંભ. આ ફોટો પ્રત્યેક ફ્રૅમ પાછળ, જ્ઞાન, ઉદ્ભવ ક્ષણ"
+              : "Every photograph behind this gallery represents real lives transformed. Your donation helps Swadeep continue this vital work across Gujarat."}
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/donate"
+              className="inline-flex items-center gap-2 bg-white text-[#F47B2A] hover:bg-[#FFF5ED] font-extrabold px-8 py-3.5 rounded-full text-base transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
+            >
+              Donate Now →
+            </Link>
+            <Link
+              href="/programs"
+              className="inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white/10 font-bold px-8 py-3.5 rounded-full text-base transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+            >
+              Explore Our Programs
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── LIGHTBOX ─────────────────────────────────────────────────────── */}
+      {activeItem && (
+        <Lightbox
+          item={activeItem}
+          items={filteredItems}
+          onClose={() => setActiveItem(null)}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
       )}
     </main>
   );
