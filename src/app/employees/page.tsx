@@ -510,7 +510,7 @@ export default function EmployeesPage() {
                           onChange={(e) =>
                             setNewEmployee({ ...newEmployee, name: e.target.value })
                           }
-                          placeholder="e.g. Dishaben Dave"
+                          placeholder="e.g. Dishaben"
                           className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest focus:outline-none"
                         />
                       </div>
@@ -754,7 +754,7 @@ export default function EmployeesPage() {
                           onChange={(e) =>
                             setNewLog({ ...newLog, staffName: e.target.value })
                           }
-                          placeholder="e.g. Dishaben Dave"
+                          placeholder="e.g. Dishaben"
                           className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest focus:outline-none"
                         />
                       </div>

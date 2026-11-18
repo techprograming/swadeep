@@ -52,8 +52,8 @@ const OFFICIAL_REVIEWS = [
   },
   {
     id: "rev-official-4",
-    name: "Dishaben Dave",
-    nameGu: "દિશાબેન દવે",
+    name: "Dishaben",
+    nameGu: "દિશાબેન",
     role: "Program Coordinator, Swadeep Shikshan Vikas Sanstha",
     roleGu: "પ્રોગ્રામ કોઓર્ડિનેટર, સ્વદીપ શિક્ષણ વિકાસ સંસ્થા",
     category: "Swadeep Staff",
