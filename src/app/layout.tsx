@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Source_Sans_3, Noto_Sans_Gujarati } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { Providers } from "@/components/layout/Providers";
 import { SITE_CONFIG } from "@/lib/constants";
 import "@/styles/globals.css";
 
@@ -23,39 +24,78 @@ const notoSansGujarati = Noto_Sans_Gujarati({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#0B3025",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
-  title: "Swadeep Shikshan Vikas Sanstha | NGO in Ahmedabad, Gujarat",
+  metadataBase: new URL(SITE_CONFIG.url),
+  title: {
+    default: "Swadeep Shikshan Vikas Sanstha | Grassroots NGO in Gujarat",
+    template: "%s | Swadeep Shikshan Vikas Sanstha",
+  },
   description: SITE_CONFIG.description,
   keywords: [
     "Swadeep Shikshan Vikas Sanstha",
-    "NGO Ahmedabad",
-    "NGO Gujarat",
+    "NGO in Ahmedabad",
+    "Grassroots NGO Gujarat",
     "Rural Development Gujarat",
-    "Education NGO",
-    "Women Empowerment Gujarat",
-    "Healthcare NGO Ahmedabad",
+    "Education NGO Ahmedabad",
+    "Section 80G Tax Exemption NGO",
+    "FCRA Registered NGO",
+    "ICDS Anganwadi BaLA",
+    "Coastal Fishermen Livelihood Sagarbandhu",
+    "Solar Street Lights Rural Infrastructure",
+    "Disaster Relief Gujarat",
   ],
-  authors: [{ name: SITE_CONFIG.name }],
-  metadataBase: new URL(SITE_CONFIG.url),
+  authors: [{ name: SITE_CONFIG.name, url: SITE_CONFIG.url }],
+  creator: SITE_CONFIG.name,
+  publisher: SITE_CONFIG.name,
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/images/favicon.png",
+    apple: "/images/favicon.png",
+  },
   alternates: {
     canonical: SITE_CONFIG.url,
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
-    title: "Swadeep Shikshan Vikas Sanstha | NGO in Ahmedabad, Gujarat",
+    title: "Swadeep Shikshan Vikas Sanstha | Grassroots NGO in Gujarat",
     description: SITE_CONFIG.description,
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/images/hero-1.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Swadeep Shikshan Vikas Sanstha Grassroots Impact",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Swadeep Shikshan Vikas Sanstha | NGO in Ahmedabad, Gujarat",
+    title: "Swadeep Shikshan Vikas Sanstha | Grassroots NGO in Gujarat",
     description: SITE_CONFIG.description,
+    images: ["/images/hero-1.jpg"],
   },
 };
-
-import { Providers } from "@/components/layout/Providers";
 
 export default function RootLayout({
   children,
@@ -64,32 +104,50 @@ export default function RootLayout({
 }) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "NGO",
-    name: "Swadeep Shikshan Vikas Sanstha",
-    alternateName: "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા",
-    url: SITE_CONFIG.url,
-    logo: `${SITE_CONFIG.url}/images/favicon.png`,
-    description: SITE_CONFIG.description,
-    foundingDate: "2005",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "21, Abhinandan Park Society, Prernatirth Derasar Road, Prahlad Nagar",
-      addressLocality: "Ahmedabad",
-      addressRegion: "Gujarat",
-      postalCode: "380015",
-      addressCountry: "IN",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+91-942-830-9408",
-      contactType: "customer service",
-      email: SITE_CONFIG.email,
-      availableLanguage: ["English", "Gujarati"],
-    },
-    sameAs: [
-      SITE_CONFIG.social.facebook,
-      SITE_CONFIG.social.youtube,
-      SITE_CONFIG.social.instagram,
+    "@graph": [
+      {
+        "@type": "NGO",
+        "@id": `${SITE_CONFIG.url}/#organization`,
+        name: "Swadeep Shikshan Vikas Sanstha",
+        alternateName: "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા",
+        url: SITE_CONFIG.url,
+        logo: `${SITE_CONFIG.url}/images/favicon.png`,
+        description: SITE_CONFIG.description,
+        foundingDate: "2005",
+        nonprofitStatus: "Nonprofit501c3",
+        taxID: "AAKTS6375E",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "21, Abhinandan Park Society, Prernatirth Derasar Road, Prahlad Nagar",
+          addressLocality: "Ahmedabad",
+          addressRegion: "Gujarat",
+          postalCode: "380015",
+          addressCountry: "IN",
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: "+91-942-830-9408",
+          contactType: "customer service",
+          email: SITE_CONFIG.email,
+          availableLanguage: ["English", "Gujarati"],
+        },
+        sameAs: [
+          SITE_CONFIG.social.facebook,
+          SITE_CONFIG.social.youtube,
+          SITE_CONFIG.social.instagram,
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_CONFIG.url}/#website`,
+        url: SITE_CONFIG.url,
+        name: "Swadeep Shikshan Vikas Sanstha",
+        description: SITE_CONFIG.description,
+        publisher: {
+          "@id": `${SITE_CONFIG.url}/#organization`,
+        },
+        inLanguage: ["en-IN", "gu-IN"],
+      },
     ],
   };
 
@@ -104,16 +162,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-cream text-charcoal font-body antialiased flex flex-col overflow-x-hidden w-full max-w-full">
+      <body className="min-h-screen flex flex-col font-body bg-cream text-charcoal antialiased">
         <Providers>
-
-          {/* Global Navigation Bar */}
           <Navbar />
-
-          {/* Dynamic Page Content */}
-          <div className="flex-1 flex flex-col">{children}</div>
-
-          {/* Global Footer */}
+          {children}
           <Footer />
         </Providers>
       </body>

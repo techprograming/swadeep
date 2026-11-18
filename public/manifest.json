@@ -1,0 +1,21 @@
+{
+  "name": "Swadeep Shikshan Vikas Sanstha",
+  "short_name": "Swadeep",
+  "description": "Grassroots NGO empowering rural communities across Gujarat through Education, Health, Livelihoods, and Rural Infrastructure.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B3025",
+  "theme_color": "#0B3025",
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
