@@ -50,30 +50,6 @@ const OFFICIAL_REVIEWS = [
     is_approved: true,
     created_at: "2026-10-10T12:00:00.000Z",
   },
-  {
-    id: "rev-official-4",
-    name: "Dishaben",
-    nameGu: "દિશાબેન",
-    role: "Swadeep Staff",
-    roleGu: "સ્વદીપ સ્ટાફ",
-    category: "Swadeep Staff",
-    rating: 5,
-    quote: "I’ve worked at Swadeep for almost 5 years and the experience has been full of joy and satisfaction. It hits you differently when you contribute something to the under privileged people, especially their gratitude towards you makes you more humble and after some time you realize that you have become a part of that community. This feeling made me learn more and more and is always facilitated by Swadeep. The staff training, workshops, exposure and many more helped me to shape myself as a better individual and professional.",
-    is_approved: true,
-    created_at: "2026-10-15T09:00:00.000Z",
-  },
-  {
-    id: "rev-official-5",
-    name: "Vinodbhai Solanki",
-    nameGu: "વિનોદભાઈ સોલંકી",
-    role: "Swadeep Staff",
-    roleGu: "સ્વદીપ સ્ટાફ",
-    category: "Swadeep Staff",
-    rating: 5,
-    quote: "My journey at Swadeep was full of learning as I came in touch with the projects from different areas like Education, Livelihood and Women Empowerment. The joy of working with team Swadeep is something I can cherish the whole life. The opportunities to network, independence of work and right to visualize the assigned project are the things I like the most about Swadeep.",
-    is_approved: true,
-    created_at: "2026-10-20T14:30:00.000Z",
-  },
 ];
 
 function getStoredReviews(): Array<any> {

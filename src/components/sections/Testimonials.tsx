@@ -45,7 +45,9 @@ export default function Testimonials() {
           if (data.success && Array.isArray(data.reviews) && data.reviews.length > 0) {
             if (isMounted) {
               // Combine user reviews at the beginning with initial static testimonials
-              const loadedReviews: ReviewItem[] = data.reviews.map((r: any) => ({
+              const loadedReviews: ReviewItem[] = data.reviews
+                .filter((r: any) => r.category !== 'Swadeep Staff' && !String(r.category || '').toLowerCase().includes('staff'))
+                .map((r: any) => ({
                 id: r.id,
                 name: r.name,
                 role: r.role || "Community Supporter",

@@ -2,6 +2,7 @@ export { default as Hero } from "./Hero";
 export { default as WhoAreWeSection } from "./WhoAreWeSection";
 export { default as FocusAreas } from "./FocusAreas";
 export { default as ImpactStats } from "./ImpactStats";
+export { default as WorkInAction } from "./WorkInAction";
 export { default as FeaturedVideos } from "./FeaturedVideos";
 export { default as Partners } from "./Partners";
 export { default as OurTrustees } from "./OurTrustees";
