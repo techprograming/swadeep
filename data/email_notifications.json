@@ -1,0 +1,39 @@
+[
+  {
+    "id": "notif-1794978006505-wu3yv",
+    "recipient": "swadeepsvs@gmail.com",
+    "type": "Donation / UTR Submission",
+    "subject": "₹5,000 from Vikram Mehta (UTR: UTR1794978006313)",
+    "timestamp": "2026-11-18T05:00:06.505Z",
+    "data": {
+      "donorName": "Vikram Mehta",
+      "email": "vikram.mehta@example.com",
+      "phone": "+919825012345",
+      "panCard": "ABCDE1234F",
+      "amountInr": "₹5,000",
+      "utrReference": "UTR1794978006313",
+      "transferMode": "NEFT &#x2F; RTGS &#x2F; IMPS",
+      "transferDate": "2026-11-18",
+      "donorNotes": "Support for Anganwadi BaLA learning centers.",
+      "status": "Pending Bank Verification & 80G Dispatch",
+      "submittedAt": "2026-11-18T05:00:06.501Z"
+    },
+    "status": "recorded"
+  },
+  {
+    "id": "notif-1794978006308-hcamw",
+    "recipient": "swadeepsvs@gmail.com",
+    "type": "Contact Inquiry",
+    "subject": "Ananya Sharma — CSR School Kit Grant Partnership",
+    "timestamp": "2026-11-18T05:00:06.308Z",
+    "data": {
+      "name": "Ananya Sharma",
+      "email": "ananya.sharma@example.com",
+      "phone": "+919876543210",
+      "subject": "CSR School Kit Grant Partnership",
+      "message": "We are interested in collaborating with Swadeep to sponsor 500 school learning kits in Bhavnagar.",
+      "submittedAt": "2026-11-18T05:00:06.305Z"
+    },
+    "status": "recorded"
+  }
+]

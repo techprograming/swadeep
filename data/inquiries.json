@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "Ananya Sharma",
+    "email": "ananya.sharma@example.com",
+    "phone": "+919876543210",
+    "subject": "CSR School Kit Grant Partnership",
+    "message": "We are interested in collaborating with Swadeep to sponsor 500 school learning kits in Bhavnagar.",
+    "status": "new",
+    "is_read": false,
+    "created_at": "2026-11-18T05:00:06.305Z"
+  }
+]

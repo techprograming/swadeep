@@ -7,7 +7,7 @@ const NOTIFICATIONS_LOG_FILE = path.join(process.cwd(), "data", "email_notificat
 const CONFIG_FILE = path.join(process.cwd(), "data", "email_config.json");
 
 export interface NotificationPayload {
-  type: "Contact Inquiry" | "Donation / UTR Submission" | "Public Review" | "Field Log" | string;
+  type: "Contact Inquiry" | "Donation / UTR Submission" | "Public Review" | string;
   subject: string;
   data: Record<string, any>;
 }

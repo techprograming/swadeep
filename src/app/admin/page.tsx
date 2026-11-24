@@ -1214,7 +1214,7 @@ export default function AdminPage() {
                       </span>
                     </h3>
                     <p className="text-xs text-charcoal/65 mt-1">
-                      Website submissions (Contact, Donations / UTR, Reviews, Field Logs) are configured to email directly to{" "}
+                      Website submissions (Contact, Donations / UTR, Reviews) are configured to email directly to{" "}
                       <strong>swadeepsvs@gmail.com</strong>.
                     </p>
                   </div>

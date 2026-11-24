@@ -210,10 +210,6 @@ export default function Footer() {
             <Link href="/admin" className="hover:text-[#F47B2A] transition-colors opacity-60 hover:opacity-100">
               Admin
             </Link>
-            <span className="text-cream/40">•</span>
-            <Link href="/employees" className="hover:text-[#F47B2A] transition-colors opacity-60 hover:opacity-100">
-              Employees
-            </Link>
           </div>
         </div>
       </div>
