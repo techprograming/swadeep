@@ -97,7 +97,7 @@ export default function VideosPage() {
       {/* ════════════════════════════════════
           1. COMPACT EDITORIAL HERO
       ════════════════════════════════════ */}
-      <section className="relative pt-24 sm:pt-28 pb-12 sm:pb-14 bg-[#0B3025] text-white overflow-hidden">
+      <section className="relative pt-32 sm:pt-36 lg:pt-40 pb-14 sm:pb-16 bg-[#0B3025] text-white overflow-hidden">
         {/* Subtle geometric circles */}
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
           <div className="absolute -top-12 -right-12 w-96 h-96 rounded-full border-2 border-white" />

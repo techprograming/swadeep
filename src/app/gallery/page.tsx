@@ -498,7 +498,7 @@ export default function GalleryPage() {
       ════════════════════════════════════ */}
       <section
         aria-labelledby="gallery-hero-heading"
-        className="relative pt-24 sm:pt-28 pb-12 sm:pb-16 bg-[#0B3025] text-white overflow-hidden"
+        className="relative pt-32 sm:pt-36 lg:pt-40 pb-14 sm:pb-16 bg-[#0B3025] text-white overflow-hidden"
       >
         {/* Background authentic photograph with editorial gradient overlay */}
         <div className="absolute inset-0 pointer-events-none">
