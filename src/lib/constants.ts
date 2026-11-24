@@ -332,10 +332,10 @@ export const ACHIEVEMENTS = {
     titleGu: "આપત્તિ વ્યવસ્થાપન",
     items: [
       { label: "Villages", labelGu: "ગામડાંઓ", count: "27" },
-      { label: "House hold (Tauktae)", labelGu: "વાવાઝોડું સહાય પરિવારો", count: "1,000" },
+      { label: "Households (Tauktae)", labelGu: "વાવાઝોડું સહાય પરિવારો", count: "1,000" },
       { label: "Mask Distribution", labelGu: "માસ્ક વિતરણ", count: "1,00,000" },
       { label: "Ration Kits", labelGu: "રાશન કીટ્સ", count: "1,000" },
-      { label: "House hold (Livelihood support)", labelGu: "આજીવિકા સહાય પરિવારો", count: "20" },
+      { label: "Households (Livelihood Support)", labelGu: "આજીવિકા સહાય પરિવારો", count: "20" },
     ],
   },
 } as const;

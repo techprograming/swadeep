@@ -97,10 +97,10 @@ export default function ImpactStats() {
               500+
             </div>
             <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
-              {isGujarati ? "સમુદાય / આજીવિકા લાભાર્થી" : "Community Beneficiaries"}
+              {isGujarati ? "માછીમારોને સહાય" : "Fishermen Supported"}
             </div>
             <div className="text-[11px] text-cream/70 mt-0.5">
-              {isGujarati ? "માછીમારો અને મહિલા SHG" : "Fishermen & Women SHGs"}
+              {isGujarati ? "૧૦ દરિયાકાંઠાના ગામો" : "Across 10 Coastal Villages"}
             </div>
           </div>
 
