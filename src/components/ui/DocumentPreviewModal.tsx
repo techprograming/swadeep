@@ -14,6 +14,7 @@ export interface PreviewDocument {
   size?: string;
   description?: string;
   descriptionGu?: string;
+  coverImage?: string;
 }
 
 interface DocumentPreviewModalProps {
