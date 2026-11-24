@@ -20,6 +20,8 @@ interface DocumentPreviewModalProps {
   document: PreviewDocument | null;
   isOpen: boolean;
   onClose: () => void;
+  onPrev?: () => void;
+  onNext?: () => void;
   isGujarati?: boolean;
 }
 
@@ -27,6 +29,8 @@ export default function DocumentPreviewModal({
   document,
   isOpen,
   onClose,
+  onPrev,
+  onNext,
   isGujarati = false,
 }: DocumentPreviewModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -49,6 +53,12 @@ export default function DocumentPreviewModal({
       if (e.key === "Escape") {
         onClose();
       }
+      if (e.key === "ArrowLeft" && onPrev) {
+        onPrev();
+      }
+      if (e.key === "ArrowRight" && onNext) {
+        onNext();
+      }
     };
 
     const originalOverflow = window.getComputedStyle(documentBody()).overflow;
@@ -59,7 +69,7 @@ export default function DocumentPreviewModal({
       documentBody().style.overflow = originalOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, onPrev, onNext]);
 
   const documentBody = () => (typeof window !== "undefined" ? window.document.body : { style: { overflow: "" } } as any);
 
@@ -113,7 +123,35 @@ export default function DocumentPreviewModal({
           </div>
 
           {/* Action buttons & Close button */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            {onPrev && (
+              <button
+                type="button"
+                onClick={onPrev}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
+                title={isGujarati ? "પાછલો દસ્તાવેજ (Arrow Left)" : "Previous Document (Arrow Left)"}
+                aria-label="Previous Document"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+
+            {onNext && (
+              <button
+                type="button"
+                onClick={onNext}
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
+                title={isGujarati ? "આગલો દસ્તાવેજ (Arrow Right)" : "Next Document (Arrow Right)"}
+                aria-label="Next Document"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+
             <a
               href={document.fileUrl}
               target="_blank"

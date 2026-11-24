@@ -2,16 +2,22 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { sanitizeInput } from "@/lib/utils";
+import { VERIFIED_REPORTS } from "@/lib/reportsData";
 
 const DATA_FILE = path.join(process.cwd(), "data", "reports.json");
 
 function getReports(): Array<any> {
   try {
-    if (!fs.existsSync(DATA_FILE)) return [];
-    return JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+    if (fs.existsSync(DATA_FILE)) {
+      const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
+      if (Array.isArray(data) && data.length > 0) {
+        return data;
+      }
+    }
+    return VERIFIED_REPORTS;
   } catch (err) {
-    console.error("[Reports API] Error reading file:", err);
-    return [];
+    console.error("[Reports API] Error reading file, falling back to static verified data:", err);
+    return VERIFIED_REPORTS;
   }
 }
 
