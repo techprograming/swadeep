@@ -127,7 +127,7 @@ export default function Partners() {
               id="partners-heading"
               className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-forest-dark tracking-tight"
             >
-              {isGujarati ? "અમારા સહયોગીઓ અને પરોપકારી ભાગીદારો" : "Our Partners & Donors"}
+              {isGujarati ? "અમારા સહયોગીઓ" : "Our Partners"}
             </h2>
             <p className="font-body text-xs sm:text-sm text-charcoal/70">
               {isGujarati

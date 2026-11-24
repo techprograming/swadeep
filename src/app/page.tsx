@@ -69,7 +69,7 @@ export default function HomePage() {
       {/* 4. Our Achievements */}
       <ImpactStats />
 
-      {/* 5. Our Partners & Donors */}
+      {/* 5. Our Partners */}
       <Partners />
 
       {/* 6. Our Trustees */}
