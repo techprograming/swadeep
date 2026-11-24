@@ -5,7 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import MediaSubNav from "@/components/ui/MediaSubNav";
-import { SearchIcon, ReceiptTextIcon, BookOpenIcon, YoutubeIcon } from "@/components/ui/Icons";
+import {
+  SearchIcon,
+  ReceiptTextIcon,
+  BookOpenIcon,
+  YoutubeIcon,
+  CameraIcon,
+  HeartIcon,
+} from "@/components/ui/Icons";
 
 import {
   GALLERY_ITEMS,
@@ -23,6 +30,7 @@ function ChevronLeft({ className }: { className?: string }) {
     </svg>
   );
 }
+
 function ChevronRight({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -30,6 +38,7 @@ function ChevronRight({ className }: { className?: string }) {
     </svg>
   );
 }
+
 function XIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -37,6 +46,7 @@ function XIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
 function PinIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -45,6 +55,18 @@ function PinIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+function CalendarIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <rect width="18" height="18" x="3" y="4" rx="2" ry="2" strokeWidth={2} />
+      <line x1="16" x2="16" y1="2" y2="6" strokeWidth={2} strokeLinecap="round" />
+      <line x1="8" x2="8" y1="2" y2="6" strokeWidth={2} strokeLinecap="round" />
+      <line x1="3" x2="21" y1="10" y2="10" strokeWidth={2} />
+    </svg>
+  );
+}
+
 function PlayIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -56,87 +78,102 @@ function PlayIcon({ className }: { className?: string }) {
 // ─── Impact stats ──────────────────────────────────────────────────────────────
 const IMPACT_STATS = [
   { value: "60,000+", label: "Children Reached", labelGu: "બાળકો સ્પર્શ્યા" },
-  { value: "200+",    label: "Villages Covered", labelGu: "ગામો આવ્યા" },
-  { value: "500+",    label: "Fishermen Supported", labelGu: "માછીમારો" },
-  { value: "20+",     label: "Years of Impact", labelGu: "વર્ષ સેવા" },
+  { value: "200+",    label: "Villages Covered", labelGu: "ગામો આવરી લીધા" },
+  { value: "500+",    label: "Fishermen Supported", labelGu: "માછીમારોને સહાય" },
+  { value: "20+",     label: "Years of Impact", labelGu: "વર્ષની સેવા" },
 ];
 
-// ─── Program sections ─────────────────────────────────────────────────────────
-const PROGRAM_SECTIONS = [
+// ─── Program exploration sections (compact links, avoids 30 photo repeats) ───
+const PROGRAM_EXPLORATION = [
   {
     category: "Education" as GalleryCategory,
-    title: "Education",
-    titleGu: "શિક્ষણ",
-    desc: "Empowering children and communities through quality education across 200+ villages.",
-    link: "/programs/education",
+    titleEn: "Education",
+    titleGu: "શિક્ષણ",
+    slug: "education",
+    descEn: "Supporting primary schooling, pre-primary ICDS centres, and learning aids across 200+ villages.",
+    descGu: "૨૦૦+ ગામોમાં પ્રાથમિક શિક્ષણ, પૂર્વ-પ્રાથમિક આંગણવાડી કેન્દ્રો અને શિષ્યવૃત્તિ સહાય.",
+    thumbnail: "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-1-700x525.jpg",
   },
   {
     category: "Health" as GalleryCategory,
-    title: "Health",
-    titleGu: "આરોગ્ય",
-    desc: "Health camps, eye care, dental drives, and community wellness reaching thousands.",
-    link: "/programs/health",
+    titleEn: "Health & Wellness",
+    titleGu: "આરોગ્ય અને સુખાકારી",
+    slug: "health",
+    descEn: "School dental care, vision screenings, diagnostic health camps, and maternal nutrition drives.",
+    descGu: "શાળા ડેન્ટલ કેમ્પ, આંખ તપાસ, રોગનિદાન શિબિર અને માતા-બાળ સ્વાસ્થ્ય કાર્યક્રમો.",
+    thumbnail: "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-1-400x300.jpg",
   },
   {
     category: "Livelihood" as GalleryCategory,
-    title: "Livelihood",
-    titleGu: "આજીવિકા",
-    desc: "Supporting coastal fishing communities with tools, training, and sustainable resources.",
-    link: "/programs/livelihood",
+    titleEn: "Coastal Livelihoods",
+    titleGu: "દરિયાકાંઠા આજીવિકા",
+    slug: "livelihood",
+    descEn: "Empowering traditional fishing families with insulated ice boxes, solar equipment, and market access.",
+    descGu: "પરંપરાગત માછીમારોને ઇન્સ્યુલેટેડ આઇસ બોક્સ, સુરક્ષા કીટ અને બજાર જોડાણ સહાય.",
+    thumbnail: "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-1-400x300.jpg",
   },
   {
     category: "Infrastructure" as GalleryCategory,
-    title: "Rural Development",
-    titleGu: "ગ્રામ વિકાસ",
-    desc: "Solar street lights, rural infrastructure, and community development across 40 villages.",
-    link: "/programs/infrastructure",
+    titleEn: "Rural Development",
+    titleGu: "ગ્રામ વિકાસ અને માળખા",
+    slug: "infrastructure",
+    descEn: "Solar street lights, drinking water solutions, and BaLA school building improvements in 40+ villages.",
+    descGu: "સોલાર લાઇટ્સ, પીવાના પાણીની સુવિધા અને ૪૦+ ગામોમાં શાળા બિલ્ડિંગ રિનોવેશન.",
+    thumbnail: "/img/Rural%20Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-1-380x800.jpg",
   },
   {
     category: "Relief" as GalleryCategory,
-    title: "Disaster Response",
-    titleGu: "આપત્તિ રાહત",
-    desc: "Emergency relief operations helping communities recover from floods, cyclones, and crises.",
-    link: "/programs/disaster",
+    titleEn: "Disaster Response",
+    titleGu: "આપત્તિ રાહત કાર્ય",
+    slug: "disaster",
+    descEn: "Rapid emergency relief kits, flood rescue support, and rebuilding assistance for vulnerable rural families.",
+    descGu: "ચક્રવાત, પૂર અને કટોકટીમાં તાત્કાલિક રાશન કીટ, પુનર્વસન અને રાહત કાર્ય.",
+    thumbnail: "/img/Disater/Disaster.jpg",
   },
 ];
 
 const PAGE_SIZE = 18;
 
-// ─── Lightbox ─────────────────────────────────────────────────────────────────
+// ─── Professional Lightbox ───────────────────────────────────────────────────
 function Lightbox({
   item,
   items,
   onClose,
   onPrev,
   onNext,
+  isGujarati,
 }: {
   item: GalleryItem;
   items: GalleryItem[];
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+  isGujarati: boolean;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const currentIndex = items.findIndex((i) => i.id === item.id);
 
-  // Focus trap + keyboard
+  // Focus management & keyboard shortcuts
   useEffect(() => {
     closeRef.current?.focus();
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowRight") onNext();
       if (e.key === "ArrowLeft") onPrev();
-      // Basic focus trap
+
+      // Accessibility focus trap
       if (e.key === "Tab" && dialogRef.current) {
         const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         );
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
-          e.preventDefault();
-          (e.shiftKey ? last : first).focus();
+        if (focusable.length > 0) {
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+          if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+            e.preventDefault();
+            (e.shiftKey ? last : first).focus();
+          }
         }
       }
     };
@@ -144,7 +181,7 @@ function Lightbox({
     return () => window.removeEventListener("keydown", handleKey);
   }, [onClose, onNext, onPrev]);
 
-  // Touch swipe
+  // Touch swipe support for mobile
   const touchStartX = useRef<number | null>(null);
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -152,15 +189,22 @@ function Lightbox({
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) diff > 0 ? onNext() : onPrev();
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) onNext();
+      else onPrev();
+    }
     touchStartX.current = null;
   };
 
-  const categoryLabel = CATEGORY_LABELS[item.category as GalleryCategory]?.en ?? item.category;
+  const categoryLabel = isGujarati
+    ? CATEGORY_LABELS[item.category as GalleryCategory]?.gu ?? item.category
+    : CATEGORY_LABELS[item.category as GalleryCategory]?.en ?? item.category;
+
+  const displayTitle = isGujarati && item.titleGu ? item.titleGu : item.title;
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-3 sm:p-5 md:p-8 animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="lightbox-title"
@@ -168,95 +212,132 @@ function Lightbox({
     >
       <div
         ref={dialogRef}
-        className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col lg:flex-row"
+        className="relative w-full max-w-6xl max-h-[94vh] bg-[#0B3025] border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col lg:flex-row"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Image panel */}
-        <div className="relative w-full lg:w-3/5 aspect-[4/3] lg:aspect-auto lg:min-h-[480px] bg-black flex-shrink-0">
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 60vw"
-            priority
-          />
-          {/* Close */}
+        {/* Main Photograph Canvas — Uncropped full view with object-contain */}
+        <div className="relative w-full lg:w-3/5 xl:w-2/3 min-h-[300px] sm:min-h-[420px] lg:min-h-[580px] bg-black/80 flex items-center justify-center p-2 sm:p-4 shrink-0">
+          <div className="relative w-full h-full min-h-[280px] sm:min-h-[400px] lg:min-h-[540px]">
+            <Image
+              src={item.image}
+              alt={displayTitle}
+              fill
+              className="object-contain"
+              sizes="(max-width: 1024px) 100vw, 70vw"
+              priority
+            />
+          </div>
+
+          {/* Close button (top right of photo) */}
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-            aria-label="Close photo viewer"
+            className="absolute top-3 right-3 z-30 w-10 h-10 rounded-full bg-black/70 hover:bg-[#F47B2A] text-white flex items-center justify-center transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            aria-label={isGujarati ? "ફોટો બંધ કરો (Esc)" : "Close photo viewer (Esc)"}
           >
             <XIcon className="w-5 h-5" />
           </button>
-          {/* Category pill */}
-          <span className="absolute top-3 left-3 z-10 bg-[#0B3025]/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-white">
+
+          {/* Category pill on image */}
+          <span className="absolute top-3 left-3 z-20 bg-[#0B3025]/90 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold text-white border border-white/20">
             {categoryLabel}
           </span>
-          {/* Prev arrow */}
+
+          {/* Previous Arrow button */}
           <button
             type="button"
             onClick={onPrev}
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-            aria-label="Previous photo"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#F47B2A] text-white flex items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            aria-label={isGujarati ? "પાછલો ફોટો" : "Previous photo"}
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
-          {/* Next arrow */}
+
+          {/* Next Arrow button */}
           <button
             type="button"
             onClick={onNext}
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-            aria-label="Next photo"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#F47B2A] text-white flex items-center justify-center transition-all shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+            aria-label={isGujarati ? "આગલો ફોટો" : "Next photo"}
           >
             <ChevronRight className="w-6 h-6" />
           </button>
-          {/* Counter */}
-          <div className="absolute bottom-3 left-3 z-10 bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-lg text-white text-xs font-medium">
+
+          {/* Image index counter */}
+          <div className="absolute bottom-3 left-3 z-20 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-white/90 text-xs font-mono font-semibold border border-white/10">
             {currentIndex + 1} / {items.length}
           </div>
         </div>
 
-        {/* Info panel */}
-        <div className="flex flex-col p-6 lg:p-8 gap-4 overflow-y-auto lg:w-2/5">
-          <div>
-            <span className="text-[#F47B2A] text-xs font-bold uppercase tracking-wider font-gujarati block mb-1">
-              {item.titleGu}
-            </span>
-            <h3 id="lightbox-title" className="font-heading font-extrabold text-xl text-[#0B3025] leading-snug">
-              {item.title}
-            </h3>
-          </div>
-          <p className="font-body text-gray-600 text-sm leading-relaxed flex-1">
-            {item.description}
-          </p>
-          <div className="pt-4 border-t border-gray-100 space-y-2 text-sm text-gray-500">
-            <div className="flex items-center gap-2">
-              <PinIcon className="w-4 h-4 text-[#F47B2A] shrink-0" />
-              <span>{item.location}</span>
+        {/* Editorial Metadata Sidebar */}
+        <div className="flex flex-col p-5 sm:p-6 lg:p-8 bg-white text-charcoal overflow-y-auto lg:w-2/5 xl:w-1/3 justify-between">
+          <div className="space-y-4">
+            <div>
+              <span className="text-[#F47B2A] text-xs font-bold uppercase tracking-wider block mb-1">
+                {categoryLabel}
+              </span>
+              <h3
+                id="lightbox-title"
+                className="font-heading font-extrabold text-lg sm:text-xl text-[#0B3025] leading-snug"
+              >
+                {displayTitle}
+              </h3>
+              {isGujarati && item.title && item.title !== item.titleGu && (
+                <p className="text-xs text-charcoal/60 font-body mt-0.5">{item.title}</p>
+              )}
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-4 h-4 text-[#F47B2A] shrink-0 text-center text-xs">📅</span>
-              <span>{item.date}</span>
+
+            {/* Description */}
+            <p className="font-body text-charcoal/80 text-xs sm:text-sm leading-relaxed">
+              {item.description}
+            </p>
+
+            {/* Field Metadata items */}
+            <div className="pt-3 border-t border-neutral-100 space-y-2 text-xs text-charcoal/70">
+              <div className="flex items-center gap-2">
+                <PinIcon className="w-4 h-4 text-[#F47B2A] shrink-0" />
+                <span className="font-medium">{item.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4 text-[#F47B2A] shrink-0" />
+                <span className="font-medium">{item.date}</span>
+              </div>
+              <div className="flex items-center gap-2 text-emerald-800 font-medium pt-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
+                <span>{isGujarati ? "સત્તાવાર ક્ષેત્રીય ફોટોગ્રાફી" : "Official Field Photography"}</span>
+              </div>
             </div>
           </div>
-          <div className="flex gap-3 pt-2">
+
+          {/* Navigation Controls in Sidebar */}
+          <div className="pt-6 mt-6 border-t border-neutral-100 space-y-3">
+            <div className="flex gap-2.5">
+              <button
+                type="button"
+                onClick={onPrev}
+                className="flex-1 py-2.5 rounded-xl border border-neutral-200 hover:bg-[#0B3025] hover:text-white hover:border-[#0B3025] font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>{isGujarati ? "પાછલો ફોટો" : "Previous"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={onNext}
+                className="flex-1 py-2.5 rounded-xl bg-[#0B3025] text-white hover:bg-[#174B38] font-semibold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+              >
+                <span>{isGujarati ? "આગલો ફોટો" : "Next"}</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
             <button
               type="button"
-              onClick={onPrev}
-              className="flex-1 py-2 rounded-xl border border-gray-200 hover:bg-[#0B3025] hover:text-white hover:border-[#0B3025] font-semibold text-sm transition-colors flex items-center justify-center gap-1 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+              onClick={onClose}
+              className="w-full py-2 text-center text-xs text-charcoal/60 hover:text-charcoal font-medium transition-colors"
             >
-              <ChevronLeft className="w-4 h-4" /> Prev
-            </button>
-            <button
-              type="button"
-              onClick={onNext}
-              className="flex-1 py-2 rounded-xl bg-[#0B3025] text-white hover:bg-[#174B38] font-semibold text-sm transition-colors flex items-center justify-center gap-1 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-            >
-              Next <ChevronRight className="w-4 h-4" />
+              {isGujarati ? "ગેલેરી પર પાછા જાઓ (Esc)" : "Back to Gallery (Esc)"}
             </button>
           </div>
         </div>
@@ -265,79 +346,107 @@ function Lightbox({
   );
 }
 
-// ─── Gallery Card ──────────────────────────────────────────────────────────────
+// ─── Editorial Gallery Card ──────────────────────────────────────────────────
 function GalleryCard({
   item,
-  size,
+  index,
   onClick,
+  isGujarati,
 }: {
   item: GalleryItem;
-  size: "large" | "medium" | "small";
+  index: number;
   onClick: () => void;
+  isGujarati: boolean;
 }) {
-  const categoryLabel = CATEGORY_LABELS[item.category as GalleryCategory]?.en ?? item.category;
-  const aspectClass = size === "large" ? "aspect-[4/3]" : size === "medium" ? "aspect-[3/2]" : "aspect-square";
+  const categoryLabel = isGujarati
+    ? CATEGORY_LABELS[item.category as GalleryCategory]?.gu ?? item.category
+    : CATEGORY_LABELS[item.category as GalleryCategory]?.en ?? item.category;
+
+  const displayTitle = isGujarati && item.titleGu ? item.titleGu : item.title;
+
+  // Varied aspect ratio for organic editorial rhythm
+  const aspectClass =
+    index % 7 === 0
+      ? "aspect-[4/3]"
+      : index % 5 === 0
+      ? "aspect-[16/10]"
+      : index % 3 === 0
+      ? "aspect-[3/2]"
+      : "aspect-[4/3]";
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`group relative w-full ${aspectClass} overflow-hidden rounded-2xl bg-gray-100 block cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#F47B2A] focus:ring-offset-2`}
-      aria-label={`View photo: ${item.title}`}
+      className={`group relative w-full ${aspectClass} overflow-hidden rounded-2xl bg-neutral-100 block cursor-pointer border border-neutral-200/70 shadow-xs hover:shadow-xl hover:border-neutral-300 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#F47B2A] text-left`}
+      aria-label={`View full photograph: ${displayTitle}`}
     >
       <Image
         src={item.image}
-        alt={item.title}
+        alt={displayTitle}
         fill
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
         loading="lazy"
       />
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      {/* Category pill */}
-      <span className="absolute top-3 left-3 bg-[#0B3025]/80 backdrop-blur-sm text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
+
+      {/* Elegant dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/5 opacity-40 group-hover:opacity-100 transition-opacity duration-300" />
+
+      {/* Category pill on top-left */}
+      <span className="absolute top-3 left-3 bg-[#0B3025]/85 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-white/15 shadow-sm">
         {categoryLabel}
       </span>
-      {/* Info on hover */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-        <p className="font-heading font-bold text-white text-sm leading-snug line-clamp-2">{item.title}</p>
-        <span className="text-white/70 text-[11px] mt-1 flex items-center gap-1">
-          <PinIcon className="w-3 h-3" /> {item.location}
-        </span>
+
+      {/* Center Zoom indicator on hover */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 text-white transform scale-90 group-hover:scale-100 transition-transform duration-300 shadow-lg">
+          <CameraIcon size={22} className="text-white" />
+        </div>
       </div>
-      {/* View indicator */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-          </svg>
+
+      {/* Bottom Editorial Caption */}
+      <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-4 space-y-1">
+        <p className="font-heading font-bold text-white text-xs sm:text-sm leading-snug line-clamp-2 drop-shadow-sm">
+          {displayTitle}
+        </p>
+        <div className="flex items-center justify-between text-[11px] text-white/80">
+          <span className="flex items-center gap-1 font-medium">
+            <PinIcon className="w-3 h-3 text-[#F47B2A] shrink-0" />
+            <span className="truncate max-w-[140px] sm:max-w-[180px]">{item.location}</span>
+          </span>
+          <span className="font-mono text-[10px] text-white/70">{item.date}</span>
         </div>
       </div>
     </button>
   );
 }
 
-// ─── Main Page ─────────────────────────────────────────────────────────────────
+// ─── Main Gallery Page ────────────────────────────────────────────────────────
 export default function GalleryPage() {
   const { isGujarati } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<GalleryCategory>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
   const [displayLimit, setDisplayLimit] = useState(PAGE_SIZE);
-  const filterBarRef = useRef<HTMLDivElement>(null);
 
-  // Reset limit when category or search changes
+  // Reset limit when filter or search changes
   useEffect(() => {
     setDisplayLimit(PAGE_SIZE);
   }, [selectedCategory, searchQuery]);
 
-  // Lock body scroll when lightbox open
+  // Lock body scroll when lightbox is open
   useEffect(() => {
-    document.body.style.overflow = activeItem ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (activeItem) {
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = prevOverflow;
+      };
+    }
   }, [activeItem]);
 
+  // Filtered collection
   const filteredItems = useMemo(() => {
     return GALLERY_ITEMS.filter((item) => {
       const matchesCategory =
@@ -358,99 +467,115 @@ export default function GalleryPage() {
   const displayedItems = filteredItems.slice(0, displayLimit);
   const hasMore = displayLimit < filteredItems.length;
 
-  const currentIndex = activeItem ? filteredItems.findIndex((i) => i.id === activeItem.id) : -1;
-
+  // Prev / Next Lightbox navigation
   const handleNext = useCallback(() => {
     if (!activeItem) return;
     const idx = filteredItems.findIndex((i) => i.id === activeItem.id);
-    setActiveItem(filteredItems[(idx + 1) % filteredItems.length]);
+    if (idx !== -1) {
+      setActiveItem(filteredItems[(idx + 1) % filteredItems.length]);
+    }
   }, [activeItem, filteredItems]);
 
   const handlePrev = useCallback(() => {
     if (!activeItem) return;
     const idx = filteredItems.findIndex((i) => i.id === activeItem.id);
-    setActiveItem(filteredItems[(idx - 1 + filteredItems.length) % filteredItems.length]);
+    if (idx !== -1) {
+      setActiveItem(filteredItems[(idx - 1 + filteredItems.length) % filteredItems.length]);
+    }
   }, [activeItem, filteredItems]);
 
-  // Scroll to gallery grid
+  // Smooth scroll to gallery grid
   const scrollToGallery = () => {
     document.getElementById("gallery-grid")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  return (
-    <main id="main-content" className="flex-1 bg-[#FAFAF7]">
+  // Quick program filter handler
+  const handleFilterByProgram = (cat: GalleryCategory) => {
+    setSelectedCategory(cat);
+    scrollToGallery();
+  };
 
-      {/* ── 1. HERO ──────────────────────────────────────────────────────── */}
+  return (
+    <main id="main-content" className="flex-1 bg-cream min-h-screen">
+      {/* ════════════════════════════════════
+          1. COMPACT EDITORIAL HERO
+      ════════════════════════════════════ */}
       <section
         aria-labelledby="gallery-hero-heading"
-        className="relative min-h-[480px] lg:min-h-[580px] flex items-center justify-center overflow-hidden bg-[#061F17]"
+        className="relative pt-24 sm:pt-28 pb-12 sm:pb-16 bg-[#0B3025] text-white overflow-hidden"
       >
-        {/* Background photo */}
-        <div className="absolute inset-0">
+        {/* Background authentic photograph with editorial gradient overlay */}
+        <div className="absolute inset-0 pointer-events-none">
           <Image
             src="/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-1-700x525.jpg"
-            alt="Swadeep field work in education"
+            alt="Swadeep Shikshan Vikas Sanstha on-ground education work"
             fill
-            className="object-cover opacity-35"
+            className="object-cover opacity-20"
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#061F17]/70 via-[#0B3025]/60 to-[#061F17]/90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#061F17]/95 via-[#0B3025]/85 to-[#061F17]/95" />
         </div>
 
-        {/* Decorative dot grid */}
-        <div
-          className="absolute inset-0 opacity-[0.06] pointer-events-none"
-          aria-hidden="true"
-          style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "32px 32px" }}
-        />
-        {/* Glow */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#F47B2A]/15 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
-
-        {/* Content */}
-        <div className="relative z-10 text-center px-4 py-20 max-w-4xl mx-auto space-y-6">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-[#F47B2A] border border-white/15">
-            <span>{isGujarati ? "અધિકૃત ક્ષેત્રીય દસ્તાવેજીકરણ" : "Authentic Field Documentation"}</span>
+        {/* Hero Content */}
+        <div className="relative z-10 container-wide section-padding max-w-6xl mx-auto space-y-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#F47B2A]/15 border border-[#F47B2A]/30 text-[#F47B2A]">
+              <CameraIcon size={14} />
+              <span>{isGujarati ? "અધિકૃત ક્ષેત્રીય દસ્તાવેજીકરણ" : "Authentic Field Documentation"}</span>
+            </span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/80 text-xs font-semibold font-mono">
+              {GALLERY_ITEMS.length} {isGujarati ? "ક્ષેત્રીય તસ્વીરો" : "Field Photographs"}
+            </span>
           </div>
-          <h1 id="gallery-hero-heading" className="font-heading text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight">
-            {isGujarati ? "ક્ષેત્ર કાર્ય — જીવંત સ્મૃતિઓ" : "Our Work in Action"}
-          </h1>
-          <p className="text-xl sm:text-2xl font-semibold text-white/90 font-heading">
-            {isGujarati ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા — ફોટો ગેલેરી" : "Swadeep Shikshan Vikas Sanstha — Photo Gallery"}
-          </p>
-          <p className="text-cream/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-body">
-            {isGujarati
-              ? "ગ્રામ ઉત્થાન, શિક્ષણ, આરોગ્ય, આજીવિકા અને આપત્તિ ના ક્ષેત્રોમાં Swadeep ના કાર્યની અસ્સલ ઝલક."
-              : "Real moments captured from Swadeep's on-ground programs across 200+ villages in Gujarat."}
-          </p>
 
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+          <div className="space-y-2 max-w-3xl">
+            <h1
+              id="gallery-hero-heading"
+              className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight"
+            >
+              {isGujarati ? "ક્ષેત્ર કાર્ય — જીવંત સ્મૃતિઓ" : "Our Work in Action"}
+            </h1>
+            <p className="text-sm sm:text-base text-white/85 font-body leading-relaxed max-w-2xl">
+              {isGujarati
+                ? "ગુજરાતના ૨૦૦+ ગામોમાં શિક્ષણ, આરોગ્ય, આજીવિકા, ગ્રામ વિકાસ અને આપત્તિ રાહતના ક્ષેત્રીય કાર્યની અસ્સલ તસ્વીરો."
+                : "Real moments captured from Swadeep's grassroots programs across 200+ villages in Gujarat — education, community health, coastal livelihoods, rural infrastructure, and emergency relief."}
+            </p>
+          </div>
+
+          {/* Quick Hero Actions */}
+          <div className="pt-2 flex flex-wrap items-center gap-3">
             <button
               type="button"
               onClick={scrollToGallery}
-              className="inline-flex items-center gap-2 bg-[#F47B2A] hover:bg-[#e36a1a] text-white font-bold px-8 py-3.5 rounded-full text-base transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F47B2A] focus:ring-offset-2 focus:ring-offset-[#061F17]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
             >
-              <span>{isGujarati ? "ફોટો સંગ્રહ જુઓ ↓" : "View Photo Gallery ↓"}</span>
+              <span>{isGujarati ? "તસ્વીરો જુઓ ↓" : "Browse Photo Archive ↓"}</span>
             </button>
             <Link
               href="/videos"
-              className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-7 py-3.5 rounded-full text-base transition-colors border border-white/20"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
             >
-              <YoutubeIcon size={18} />
-              <span>{isGujarati ? "વિડીયો જુઓ →" : "Watch Videos →"}</span>
+              <YoutubeIcon size={15} />
+              <span>{isGujarati ? "૧૨ વિડીયો જુઓ →" : "Watch Videos →"}</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── 2. IMPACT STATS BAR ──────────────────────────────────────────── */}
-      <section className="bg-[#0B3025] py-10" aria-label="Impact statistics">
-        <div className="container-wide section-padding">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
+      {/* ════════════════════════════════════
+          2. COMPACT IMPACT STATISTICS
+      ════════════════════════════════════ */}
+      <section className="bg-[#061F17] py-6 border-y border-white/10" aria-label="Verified Impact Statistics">
+        <div className="container-wide section-padding max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {IMPACT_STATS.map((s) => (
-              <div key={s.label} className="space-y-1">
-                <div className="font-heading text-3xl sm:text-4xl font-extrabold text-[#F47B2A]">{s.value}</div>
-                <div className="text-cream/90 text-sm font-semibold uppercase tracking-wide">
+              <div key={s.label} className="p-2 space-y-0.5">
+                <div className="font-heading text-2xl sm:text-3xl font-extrabold text-[#F47B2A] font-mono">
+                  {s.value}
+                </div>
+                <div className="text-white/80 text-xs font-semibold tracking-wide">
                   {isGujarati ? s.labelGu : s.label}
                 </div>
               </div>
@@ -462,42 +587,52 @@ export default function GalleryPage() {
       {/* Shared Media Sub-Navigation */}
       <MediaSubNav activeTab="gallery" />
 
-      {/* ── 3. CATEGORY FILTERS & SEARCH TOOLBAR ──────────────────────── */}
-      <section id="gallery-grid" className="pt-14 pb-6 bg-[#FAFAF7]">
-        <div className="container-wide section-padding max-w-6xl mx-auto space-y-6">
-          <div className="text-center space-y-2">
-            <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest">
-              {isGujarati ? "ફોટો ગ્રંથ" : "Photo Archive"}
-            </span>
-            <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-[#0B3025]">
-              {isGujarati ? "ચિત્ર ગ્રંથ — કાર્યક્ષેત્ર મુજબ" : "Browse by Program Area"}
-            </h2>
-            <p className="text-gray-600 max-w-xl mx-auto text-sm">
-              {isGujarati
-                ? "૮૬ ખરી ક્ષેત્ર તસ્વીરો — ૫ કાર્યક્ષેત્રો — ક્લિક કરીને પૂર્ણ કદમાં જુઓ."
-                : "86 authentic field photographs across 5 program areas — click any photo for high-res view."}
-            </p>
+      {/* ════════════════════════════════════
+          3. CATEGORY FILTERS & SEARCH TOOLBAR
+      ════════════════════════════════════ */}
+      <div className="container-wide section-padding max-w-6xl mx-auto space-y-8 sm:space-y-10 mt-8 sm:mt-10">
+        <section id="gallery-grid" className="scroll-mt-32 space-y-4" aria-label="Photo Archive Filters">
+          {/* Section heading */}
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+            <div>
+              <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest block mb-1">
+                {isGujarati ? "ફોટો ગ્રંથ" : "Photo Archive"}
+              </span>
+              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
+                {isGujarati ? "ચિત્ર ગ્રંથ — કાર્યક્ષેત્ર મુજબ" : "Browse by Program Area"}
+              </h2>
+            </div>
+            <div className="text-xs text-charcoal/70 font-medium">
+              <span>{isGujarati ? "દર્શાવેલ: " : "Showing: "}</span>
+              <strong className="text-[#0B3025] font-bold">{filteredItems.length}</strong>
+              <span> of {GALLERY_ITEMS.length} {isGujarati ? "તસ્વીરો" : "photos"}</span>
+            </div>
           </div>
 
-          {/* Search bar & Live Count */}
-          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-white p-4 sm:p-5 rounded-3xl border border-forest/10 shadow-xs">
-            <div className="relative flex-1">
+          {/* Search bar & Category Toolbar */}
+          <div className="bg-white p-4 rounded-2xl border border-forest/10 shadow-xs space-y-3">
+            {/* Search input */}
+            <div className="relative">
               <SearchIcon
                 size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/40"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-charcoal/40"
               />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isGujarati ? "ફોટો, સ્થળ અથવા કાર્યક્રમ શોધો (દા.ત. Mundra, BaLA)..." : "Search photos by title, location or tag (e.g. Mundra, BaLA)..."}
-                className="w-full pl-11 pr-4 py-2.5 rounded-2xl bg-cream/50 border border-forest/15 text-xs sm:text-sm text-charcoal placeholder:text-charcoal/45 focus:outline-none focus:ring-2 focus:ring-[#F47B2A] transition-all"
+                placeholder={
+                  isGujarati
+                    ? "ફોટો, સ્થળ અથવા કાર્યક્રમ શોધો (દા.ત. Mundra, BaLA)..."
+                    : "Search photos by title, location or tag (e.g. Mundra, BaLA)..."
+                }
+                className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-cream/40 border border-forest/15 text-xs sm:text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]/40 focus:border-[#F47B2A] transition-all"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-charcoal/50 hover:text-charcoal"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/50 hover:text-charcoal text-xs"
                   aria-label="Clear search"
                 >
                   ✕
@@ -505,101 +640,118 @@ export default function GalleryPage() {
               )}
             </div>
 
-            <div className="text-xs text-charcoal/70 font-medium px-2 shrink-0 flex items-center justify-between md:justify-end gap-2">
-              <span>{isGujarati ? "પરિણામો: " : "Showing: "}</span>
-              <strong className="text-[#0B3025] font-bold">{filteredItems.length}</strong>
-              <span> of {GALLERY_ITEMS.length} photos</span>
-            </div>
-          </div>
+            {/* Category Filter Pills */}
+            <div
+              role="group"
+              aria-label="Filter gallery by category"
+              className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory flex-nowrap"
+            >
+              {CATEGORIES.map((cat) => {
+                const label = CATEGORY_LABELS[cat];
+                const isActive = selectedCategory === cat;
+                const count =
+                  cat === "All"
+                    ? GALLERY_ITEMS.length
+                    : GALLERY_ITEMS.filter((i) => i.category === cat).length;
 
-          {/* Filter bar */}
-          <div
-            ref={filterBarRef}
-            role="group"
-            aria-label="Filter gallery by program category"
-            className="flex gap-2 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory justify-start sm:justify-center flex-nowrap"
-          >
-            {CATEGORIES.map((cat) => {
-              const label = CATEGORY_LABELS[cat];
-              const isActive = selectedCategory === cat;
-              const count = cat === "All" ? GALLERY_ITEMS.length : GALLERY_ITEMS.filter((i) => i.category === cat).length;
-              return (
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat)}
+                    aria-pressed={isActive}
+                    className={`snap-start shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                      isActive
+                        ? "bg-[#0B3025] text-white shadow-sm"
+                        : "bg-neutral-100 text-charcoal/70 hover:bg-neutral-200"
+                    }`}
+                  >
+                    <span>{isGujarati ? label.gu : label.en}</span>
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+                        isActive ? "bg-white/20 text-white" : "bg-white text-charcoal/60"
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+
+              {(selectedCategory !== "All" || searchQuery) && (
                 <button
-                  key={cat}
                   type="button"
                   onClick={() => {
-                    setSelectedCategory(cat);
+                    setSelectedCategory("All");
+                    setSearchQuery("");
                   }}
-                  aria-pressed={isActive}
-                  className={`snap-start shrink-0 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-[#F47B2A] focus:ring-offset-1 whitespace-nowrap flex items-center gap-1.5 ${
-                    isActive
-                      ? "bg-[#0B3025] text-white shadow-md"
-                      : "bg-white text-gray-700 border border-gray-200 hover:border-[#0B3025] hover:text-[#0B3025]"
-                  }`}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors shrink-0"
                 >
-                  <span>{isGujarati ? label.gu : label.en}</span>
-                  <span className={`text-[11px] rounded-full px-1.5 py-0.5 font-bold ${isActive ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"}`}>
-                    {count}
-                  </span>
+                  {isGujarati ? "ફિલ્ટર્સ સાફ કરો" : "Clear Filters"}
                 </button>
-              );
-            })}
+              )}
+            </div>
+          </div>
+        </section>
 
-            {(selectedCategory !== "All" || searchQuery) && (
+        {/* ════════════════════════════════════
+            4. EDITORIAL PHOTO GRID
+        ════════════════════════════════════ */}
+        <section aria-label="Editorial Photo Gallery">
+          {displayedItems.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-neutral-300 p-8 space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto">
+                <CameraIcon size={24} />
+              </div>
+              <h3 className="font-heading font-bold text-base text-[#0B3025]">
+                {isGujarati ? "કોઈ ફોટો મળ્યો નથી" : "No Photos Found"}
+              </h3>
+              <p className="text-xs text-charcoal/70 max-w-sm mx-auto">
+                {isGujarati
+                  ? "પસંદ કરેલી શ્રેણી અથવા શોધ માટે કોઈ તસ્વીર ઉપલબ્ધ નથી."
+                  : "No photographs match your search or filter criteria. Try resetting the filters."}
+              </p>
               <button
                 type="button"
                 onClick={() => {
                   setSelectedCategory("All");
                   setSearchQuery("");
                 }}
-                className="px-3.5 py-2 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors shrink-0"
+                className="px-4 py-2 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-sm"
               >
-                {isGujarati ? "ફિલ્ટર્સ સાફ કરો" : "Reset Filters"}
+                {isGujarati ? "બધા ફોટો બતાવો" : "Show All Photos"}
               </button>
-            )}
-          </div>
-        </div>
-      </section>
-
-{/* ── 5. MASONRY / BENTO GRID ──────────────────────────────────────── */}
-      <section className="py-8 bg-[#FAFAF7]" aria-label="Photo gallery grid">
-        <div className="container-wide section-padding">
-          {displayedItems.length === 0 ? (
-            <div className="text-center py-24 text-gray-400">
-              <div className="text-5xl mb-4">📷</div>
-              <p className="font-heading font-bold text-xl">{isGujarati ? "કોઈ ફોટો નથી" : "No photos in this category"}</p>
             </div>
           ) : (
             <>
-              {/* Bento grid — CSS columns for masonry effect */}
-              <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-                {displayedItems.map((item, index) => {
-                  // Vary sizes: every 7th is large, every 3rd is medium, rest small
-                  const size = index % 7 === 0 ? "large" : index % 3 === 0 ? "medium" : "small";
-                  return (
-                    <div key={item.id} className="break-inside-avoid">
-                      <GalleryCard
-                        item={item}
-                        size={size}
-                        onClick={() => setActiveItem(item)}
-                      />
-                    </div>
-                  );
-                })}
+              {/* Responsive multi-column editorial masonry grid */}
+              <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 sm:gap-5 space-y-4 sm:space-y-5">
+                {displayedItems.map((item, index) => (
+                  <div key={item.id} className="break-inside-avoid">
+                    <GalleryCard
+                      item={item}
+                      index={index}
+                      onClick={() => setActiveItem(item)}
+                      isGujarati={isGujarati}
+                    />
+                  </div>
+                ))}
               </div>
 
-              {/* Load More */}
+              {/* Load More Button & Progress */}
               {hasMore && (
-                <div className="text-center mt-12">
-                  <p className="text-gray-400 text-sm mb-4">
-                    Showing {displayedItems.length} of {filteredItems.length} photos
+                <div className="text-center pt-10 sm:pt-12 space-y-3">
+                  <p className="text-xs text-charcoal/60 font-medium">
+                    {isGujarati
+                      ? `${filteredItems.length} માંથી ${displayedItems.length} તસ્વીરો દર્શાવેલ છે`
+                      : `Showing ${displayedItems.length} of ${filteredItems.length} photographs`}
                   </p>
                   <button
                     type="button"
                     onClick={() => setDisplayLimit((prev) => prev + PAGE_SIZE)}
-                    className="inline-flex items-center gap-2 bg-white border border-[#0B3025] text-[#0B3025] hover:bg-[#0B3025] hover:text-white font-bold px-8 py-3.5 rounded-full text-sm transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                    className="inline-flex items-center gap-2 bg-[#0B3025] hover:bg-[#174B38] text-white font-bold px-8 py-3 rounded-full text-xs sm:text-sm transition-all shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
                   >
-                    {isGujarati ? "વધુ ફોટો જુઓ" : "Load More Photos"}
+                    <span>{isGujarati ? "વધુ ફોટો જુઓ (Load More)" : "Load More Photos"}</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
@@ -608,143 +760,198 @@ export default function GalleryPage() {
               )}
 
               {!hasMore && filteredItems.length > 0 && (
-                <p className="text-center text-gray-400 text-sm mt-10">
-                  All {filteredItems.length} photos shown
+                <p className="text-center text-xs text-charcoal/60 font-medium pt-8">
+                  {isGujarati
+                    ? `તમે તમામ ${filteredItems.length} તસ્વીરો જોઈ લીધી છે.`
+                    : `You have viewed all ${filteredItems.length} photographs.`}
                 </p>
               )}
             </>
           )}
-        </div>
-      </section>
+        </section>
 
-      {/* ── 6. PROGRAM SECTIONS ──────────────────────────────────────────── */}
-      <section className="py-16 bg-white" aria-labelledby="program-sections-heading">
-        <div className="container-wide section-padding">
-          <div className="text-center mb-12 space-y-2">
+        {/* ════════════════════════════════════
+            5. PROGRAM EXPLORATION SECTION
+            (Compact navigation — avoids repeating 30 photos)
+        ════════════════════════════════════ */}
+        <section aria-labelledby="program-exploration-heading" className="space-y-6 pt-4">
+          <div className="text-center space-y-1">
             <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest">
-              {isGujarati ? "કાર્યક્ષેત્ર" : "By Program"}
+              {isGujarati ? "કાર્યક્ષેત્ર મુજબ અન્વેષણ" : "Explore by Program Area"}
             </span>
-            <h2 id="program-sections-heading" className="font-heading text-3xl font-extrabold text-[#0B3025]">
-              {isGujarati ? "પ્રોગ્રામ પ્રમાણે ફોટો" : "Explore by Program Area"}
+            <h2
+              id="program-exploration-heading"
+              className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]"
+            >
+              {isGujarati ? "મુખ્ય કાર્યક્ષેત્રો અને કાર્યક્રમો" : "Discover Our Core Program Pillars"}
             </h2>
+            <p className="text-xs sm:text-sm text-charcoal/70 max-w-xl mx-auto">
+              {isGujarati
+                ? "કાર્યક્રમ મુજબ ફોટો ફિલ્ટર કરો અથવા સમગ્ર કાર્યક્રમની વિગતો વાંચો."
+                : "Filter gallery photos directly or explore in-depth program documentation and verified reports."}
+            </p>
           </div>
 
-          <div className="space-y-16">
-            {PROGRAM_SECTIONS.map((prog) => {
-              const progItems = GALLERY_ITEMS.filter((i) => i.category === prog.category).slice(0, 6);
-              if (progItems.length === 0) return null;
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {PROGRAM_EXPLORATION.map((prog) => {
+              const count = GALLERY_ITEMS.filter((i) => i.category === prog.category).length;
               return (
-                <div key={prog.category}>
-                  <div className="flex items-center justify-between mb-5">
-                    <div>
-                      <h3 className="font-heading text-xl font-extrabold text-[#0B3025]">
-                        {isGujarati ? prog.titleGu : prog.title}
-                      </h3>
-                      <p className="text-gray-500 text-sm mt-0.5">{prog.desc}</p>
+                <div
+                  key={prog.category}
+                  className="bg-white rounded-2xl border border-forest/10 p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-4"
+                >
+                  <div className="space-y-3">
+                    <div className="relative h-36 rounded-xl overflow-hidden bg-neutral-100">
+                      <Image
+                        src={prog.thumbnail}
+                        alt={prog.titleEn}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                      <span className="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-sm text-white text-[10px] font-mono px-2 py-0.5 rounded-md font-bold">
+                        {count} {isGujarati ? "ફોટો" : "Photos"}
+                      </span>
                     </div>
-                    <Link
-                      href={prog.link}
-                      className="shrink-0 ml-4 inline-flex items-center gap-1 text-[#0B3025] hover:text-[#F47B2A] font-bold text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A] rounded"
-                    >
-                      Explore {prog.title} →
-                    </Link>
+
+                    <div>
+                      <h3 className="font-heading font-bold text-base text-[#0B3025]">
+                        {isGujarati ? prog.titleGu : prog.titleEn}
+                      </h3>
+                      <p className="text-xs text-charcoal/70 mt-1 leading-relaxed line-clamp-2">
+                        {isGujarati ? prog.descGu : prog.descEn}
+                      </p>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {progItems.map((item) => (
-                      <GalleryCard key={item.id} item={item} size="small" onClick={() => { setSelectedCategory(prog.category); setActiveItem(item); }} />
-                    ))}
+
+                  <div className="flex items-center gap-2 pt-2 border-t border-neutral-100">
+                    <button
+                      type="button"
+                      onClick={() => handleFilterByProgram(prog.category)}
+                      className="flex-1 py-2 px-3 rounded-xl bg-cream hover:bg-forest-50 text-[#0B3025] border border-forest/15 text-xs font-bold transition-all text-center"
+                    >
+                      {isGujarati ? `ફોટો જુઓ (${count})` : `Filter (${count})`}
+                    </button>
+                    <Link
+                      href={`/programs/${prog.slug}`}
+                      className="flex-1 py-2 px-3 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all text-center shadow-xs"
+                    >
+                      {isGujarati ? "વિગતવાર →" : "Details →"}
+                    </Link>
                   </div>
                 </div>
               );
             })}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── 7. VIDEO SECTION ─────────────────────────────────────────────── */}
-      <section className="py-16 bg-[#061F17]" aria-labelledby="video-section-heading">
-        <div className="container-wide section-padding text-center space-y-6">
-          <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest">
-            {isGujarati ? "વિડિઓ" : "Video"}
-          </span>
-          <h2 id="video-section-heading" className="font-heading text-3xl font-extrabold text-white">
-            {isGujarati ? "Swadeep ને ક્રિયામાં જુઓ" : "See Swadeep in Action"}
-          </h2>
-          <p className="text-cream/70 max-w-xl mx-auto text-sm">
-            {isGujarati
-              ? "ક્ષેત્ર ફૂટેજ, ઈન્ટરવ્યૂ અને સ્ટોરી — YouTube ચૅનલ"
-              : "Watch field footage, community stories, and program highlights on our YouTube channel."}
-          </p>
-          {/* Thumbnail placeholder */}
-          <div className="relative max-w-2xl mx-auto rounded-2xl overflow-hidden aspect-video bg-[#0B3025] shadow-xl border border-white/10 group">
-            <Image
-              src="/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-3-700x525.jpg"
-              alt="Watch Swadeep videos on YouTube"
-              fill
-              className="object-cover opacity-60 group-hover:opacity-80 transition-opacity"
-              sizes="(max-width: 768px) 100vw, 672px"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-[#F47B2A]/90 hover:bg-[#F47B2A] flex items-center justify-center shadow-xl transition-all group-hover:scale-110">
-                <PlayIcon className="w-8 h-8 text-white ml-1" />
+        {/* ════════════════════════════════════
+            6. VIDEO SPOTLIGHT SECTION
+        ════════════════════════════════════ */}
+        <section
+          aria-labelledby="video-spotlight-heading"
+          className="rounded-3xl bg-[#0B3025] text-white p-6 sm:p-8 md:p-10 shadow-lg border border-white/10"
+        >
+          <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+            {/* Video preview thumbnail with play button */}
+            <div className="relative w-full md:w-1/2 rounded-2xl overflow-hidden aspect-video bg-black/60 shadow-md group shrink-0">
+              <Image
+                src="/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-3-700x525.jpg"
+                alt="Watch Swadeep videos on YouTube"
+                fill
+                className="object-cover opacity-75 group-hover:opacity-90 transition-opacity"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <Link
+                href="/videos"
+                className="absolute inset-0 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                aria-label={isGujarati ? "૧૨ સત્તાવાર વિડીયો જુઓ" : "Watch all 12 activity videos on YouTube"}
+              >
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] flex items-center justify-center shadow-2xl transition-all group-hover:scale-110">
+                  <PlayIcon className="w-7 h-7 sm:w-8 sm:h-8 text-white ml-1" />
+                </div>
+              </Link>
+            </div>
+
+            {/* Content & Links */}
+            <div className="w-full md:w-1/2 space-y-4 text-left">
+              <div className="space-y-1">
+                <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-wider">
+                  {isGujarati ? "વિડીયો આર્કાઇવ" : "Video Archive"}
+                </span>
+                <h3 id="video-spotlight-heading" className="font-heading text-xl sm:text-2xl font-bold text-white">
+                  {isGujarati ? "સ્વદીપને પ્રવૃત્તિમાં જુઓ" : "See Swadeep in Action"}
+                </h3>
+              </div>
+
+              <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-body">
+                {isGujarati
+                  ? "શિક્ષણ વર્ગો, આરોગ્ય શિબિરો અને આજીવિકા વિતરણના ૧૨ સત્તાવાર કાર્યક્રમ વિડીયો YouTube પર જુઓ."
+                  : "Watch community stories, school transformations, and livelihood distributions across Gujarat on our verified YouTube playlist."}
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <Link
+                  href="/videos"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
+                >
+                  <YoutubeIcon size={16} />
+                  <span>{isGujarati ? "બધા ૧૨ વિડીયો જુઓ →" : "Watch All 12 Activity Videos →"}</span>
+                </Link>
+                <Link
+                  href="/publications"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
+                >
+                  <BookOpenIcon size={15} />
+                  <span>{isGujarati ? "શૈક્ષણિક પ્રકાશનો" : "Field Publications"}</span>
+                </Link>
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link
-              href="/videos"
-              className="inline-flex items-center gap-2 bg-[#F47B2A] hover:bg-[#E06A1B] text-white font-bold px-7 py-3 rounded-full text-sm transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-            >
-              <YoutubeIcon size={18} />
-              <span>{isGujarati ? "બધા ૧૨ વિડીયો જુઓ →" : "Watch All 12 Activity Videos →"}</span>
-            </Link>
-            <Link
-              href="/publications"
-              className="inline-flex items-center gap-2 border border-white/30 hover:bg-white/10 text-white font-bold px-6 py-3 rounded-full text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-            >
-              <BookOpenIcon size={16} />
-              <span>{isGujarati ? "શૈક્ષણિક સાહિત્ય જુઓ →" : "Explore Field Publications →"}</span>
-            </Link>
-            <Link
-              href="/resources"
-              className="inline-flex items-center gap-2 border border-white/30 hover:bg-white/10 text-white font-bold px-6 py-3 rounded-full text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
-            >
-              <ReceiptTextIcon size={16} />
-              <span>{isGujarati ? "ઓડિટ અહેવાલો →" : "Statutory Reports →"}</span>
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── 8. DONATION CTA ──────────────────────────────────────────────── */}
-      <section className="py-16 bg-[#F47B2A]" aria-labelledby="gallery-cta-heading">
-        <div className="container-wide section-padding text-center space-y-6">
-          <h2 id="gallery-cta-heading" className="font-heading text-3xl sm:text-4xl font-extrabold text-white">
-            {isGujarati ? "વધુ ફેરફાર કરવામાં મદદ કરો" : "Help Us Create More Impact"}
-          </h2>
-          <p className="text-white/90 max-w-xl mx-auto leading-relaxed">
-            {isGujarati
-              ? "ગ્રામ ઉત્થાન, શિક્ષણ અને આજીવિકા — Swadeep ના કાર્ય સ્તંભ. આ ફોટો પ્રત્યેક ફ્રૅમ પાછળ, જ્ઞાન, ઉદ્ભવ ક્ષણ"
-              : "Every photograph behind this gallery represents real lives transformed. Your donation helps Swadeep continue this vital work across Gujarat."}
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
+        {/* ════════════════════════════════════
+            7. FINAL DONATION & PROGRAM CTA
+        ════════════════════════════════════ */}
+        <section
+          aria-labelledby="gallery-cta-heading"
+          className="rounded-3xl bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] text-white p-8 sm:p-10 text-center space-y-5 shadow-lg"
+        >
+          <div className="max-w-2xl mx-auto space-y-2">
+            <h2
+              id="gallery-cta-heading"
+              className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white"
+            >
+              {isGujarati ? "વધુ ફેરફાર કરવામાં મદદ કરો" : "Help Us Create More Impact"}
+            </h2>
+            <p className="text-white/90 text-xs sm:text-sm leading-relaxed">
+              {isGujarati
+                ? "આ ગેલેરીની દરેક તસ્વીર ગ્રામીણ ગુજરાતમાં પરિવર્તિત થયેલા વાસ્તવિક જીવનનું પ્રતિબિંબ છે. તમારું દાન આ કાર્ય ચાલુ રાખવામાં મદદ કરે છે."
+                : "Every photograph behind this gallery represents real lives transformed across 200+ villages. Your support empowers children, women, and fishing communities in rural Gujarat."}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3 justify-center pt-2">
             <Link
               href="/donate"
-              className="inline-flex items-center gap-2 bg-white text-[#F47B2A] hover:bg-[#FFF5ED] font-extrabold px-8 py-3.5 rounded-full text-base transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-white"
+              className="inline-flex items-center gap-2 bg-white text-[#0B3025] hover:bg-cream font-extrabold px-7 py-3 rounded-full text-xs sm:text-sm transition-all shadow-md hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-white"
             >
-              Donate Now →
+              <HeartIcon size={16} className="text-[#F47B2A]" />
+              <span>{isGujarati ? "દાન આપો (Donate Now) →" : "Donate Now →"}</span>
             </Link>
             <Link
               href="/programs"
-              className="inline-flex items-center gap-2 border-2 border-white text-white hover:bg-white/10 font-bold px-8 py-3.5 rounded-full text-base transition-colors focus:outline-none focus:ring-2 focus:ring-white"
+              className="inline-flex items-center gap-2 border-2 border-white/80 text-white hover:bg-white/10 font-bold px-7 py-3 rounded-full text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 focus:ring-white"
             >
-              Explore Our Programs
+              <span>{isGujarati ? "બધા ૫ કાર્યક્રમો જુઓ" : "Explore All 5 Programs"}</span>
             </Link>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* ── LIGHTBOX ─────────────────────────────────────────────────────── */}
+      {/* ════════════════════════════════════
+          LIGHTBOX MODAL
+      ════════════════════════════════════ */}
       {activeItem && (
         <Lightbox
           item={activeItem}
@@ -752,6 +959,7 @@ export default function GalleryPage() {
           onClose={() => setActiveItem(null)}
           onPrev={handlePrev}
           onNext={handleNext}
+          isGujarati={isGujarati}
         />
       )}
     </main>
