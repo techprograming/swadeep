@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 export default function Navbar() {
   const { t, isGujarati } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpandedIndex, setMobileExpandedIndex] = useState<number | null>(null);
@@ -21,13 +22,15 @@ export default function Navbar() {
   const drawerRef = useRef<HTMLDivElement>(null);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Scroll detection
+  // Scroll detection & progress
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 20);
+
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight > 0) {
+        setScrollProgress(Math.min(100, Math.max(0, (scrollY / docHeight) * 100)));
       }
     };
 
@@ -108,13 +111,13 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top Header Wrapper — Solid, Opaque Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        {/* 1. Solid Top Utility Strip (Condenses on scroll) */}
+      {/* Top Header Wrapper — Animated on Scroll */}
+      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out">
+        {/* 1. Solid Top Utility Strip (Smoothly condenses on scroll) */}
         <div
           className={cn(
-            "bg-[#061F17] text-cream/90 transition-all duration-300 overflow-hidden border-b border-white/10 hidden md:block",
-            isScrolled ? "max-h-0 opacity-0 py-0" : "max-h-12 opacity-100 py-1.5"
+            "bg-[#061F17] text-cream/90 transition-all duration-300 ease-in-out overflow-hidden border-b border-white/10 hidden md:block",
+            isScrolled ? "max-h-0 opacity-0 -translate-y-2 py-0" : "max-h-12 opacity-100 translate-y-0 py-1.5"
           )}
         >
           <div className="container-wide section-padding flex items-center justify-between text-[11px] sm:text-xs">
@@ -185,24 +188,31 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* 2. Main Solid White Navbar (NOT Transparent) */}
+        {/* 2. Main Navbar with smooth backdrop blur and animated elevation */}
         <div
           className={cn(
-            "bg-white transition-all duration-300 ease-in-out border-b border-gray-200/90 shadow-sm",
-            isScrolled ? "py-2 sm:py-2.5 shadow-md" : "py-2.5 sm:py-3"
+            "transition-all duration-300 ease-in-out border-b",
+            isScrolled
+              ? "bg-white/95 backdrop-blur-md py-2 sm:py-2.5 border-forest/10 shadow-[0_4px_25px_-5px_rgba(11,48,37,0.1)]"
+              : "bg-white py-2.5 sm:py-3.5 border-gray-200/90 shadow-xs"
           )}
         >
           <nav
             className="container-wide section-padding flex items-center justify-between gap-1.5 sm:gap-4"
             aria-label="Main Navigation"
           >
-            {/* Logo & Professional Branding */}
+            {/* Logo & Professional Branding with Smooth Scale Animation */}
             <Link
               href="/"
               className="group flex items-center space-x-1.5 xs:space-x-2.5 sm:space-x-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-saffron rounded-2xl p-0.5 sm:p-1 transition-transform duration-200 hover:scale-[1.01] shrink-0"
               aria-label={`${SITE_CONFIG.name} Home`}
             >
-              <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-xs border border-forest/20 bg-white p-0.5 shrink-0 group-hover:shadow-md group-hover:border-forest/40 transition-all">
+              <div
+                className={cn(
+                  "relative rounded-xl overflow-hidden shadow-xs border border-forest/20 bg-white p-0.5 shrink-0 group-hover:shadow-md group-hover:border-forest/40 transition-all duration-300",
+                  isScrolled ? "w-8 h-8 sm:w-9 sm:h-9" : "w-8 h-8 sm:w-10 sm:h-10"
+                )}
+              >
                 <Image
                   src="/images/favicon.png"
                   alt="Swadeep Emblem"
@@ -212,7 +222,12 @@ export default function Navbar() {
                   priority
                 />
               </div>
-              <span className="font-heading text-lg sm:text-2xl font-black tracking-tight text-forest-dark group-hover:text-forest transition-colors leading-none">
+              <span
+                className={cn(
+                  "font-heading font-black tracking-tight text-forest-dark group-hover:text-forest transition-all duration-300 leading-none",
+                  isScrolled ? "text-base sm:text-xl" : "text-lg sm:text-2xl"
+                )}
+              >
                 <span className="text-[#F47B2A]">S</span>wadeep
               </span>
             </Link>
@@ -331,7 +346,12 @@ export default function Navbar() {
               {/* Distinctive, Radiant Donate Now Button */}
               <Link
                 href="/donate"
-                className="inline-flex items-center justify-center whitespace-nowrap px-3.5 xs:px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] hover:from-[#E06A1B] hover:to-[#C8590F] shadow-md shadow-[#F47B2A]/25 hover:shadow-lg hover:shadow-[#F47B2A]/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]"
+                className={cn(
+                  "inline-flex items-center justify-center whitespace-nowrap rounded-full font-extrabold text-white bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] hover:from-[#E06A1B] hover:to-[#C8590F] shadow-md shadow-[#F47B2A]/25 hover:shadow-lg hover:shadow-[#F47B2A]/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]",
+                  isScrolled
+                    ? "px-3 xs:px-3.5 sm:px-5 py-1.5 sm:py-2 text-xs sm:text-sm"
+                    : "px-3.5 xs:px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm"
+                )}
               >
                 <svg
                   className="w-3.5 h-3.5 xs:mr-1.5 text-white/95 shrink-0"
@@ -370,6 +390,20 @@ export default function Navbar() {
               </button>
             </div>
           </nav>
+
+          {/* Subtle Scroll Progress Indicator */}
+          <div
+            className={cn(
+              "h-[2px] bg-gradient-to-r from-[#F47B2A] via-emerald-500 to-[#F47B2A] transition-opacity duration-300 pointer-events-none",
+              isScrolled ? "opacity-100" : "opacity-0"
+            )}
+            style={{ width: `${scrollProgress}%` }}
+            role="progressbar"
+            aria-valuenow={Math.round(scrollProgress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Page scroll progress"
+          />
         </div>
       </header>
 

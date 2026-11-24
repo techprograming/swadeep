@@ -69,23 +69,24 @@ export default function WhoAreWeSection() {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="relative h-96 sm:h-[450px] rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+            <div className="group relative h-96 sm:h-[450px] rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-forest-900">
               <Image
                 src="/images/projects-hero.jpg"
                 alt="Swadeep Field Work"
                 fill
-                sizes="(max-width: 768px) 100vw, 450px"
-                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                quality={95}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/80 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
-                <span className="text-xs uppercase tracking-wider font-semibold text-saffron bg-forest-dark/90 px-3 py-1 rounded-full inline-block">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent pointer-events-none" />
+              <div className="absolute bottom-6 left-6 right-6 text-white space-y-1 z-10">
+                <span className="text-xs uppercase tracking-wider font-semibold text-saffron bg-forest-dark/90 px-3 py-1 rounded-full inline-block border border-white/10 shadow-xs">
                   {isGujarati ? "ક્ષેત્રીય નેતૃત્વ" : "Field Leadership"}
                 </span>
-                <h3 className="font-heading font-bold text-xl">
+                <h3 className="font-heading font-bold text-xl drop-shadow-sm">
                   {isGujarati ? SITE_CONFIG.nameGujarati : SITE_CONFIG.name}
                 </h3>
-                <p className="text-sm text-cream/95">
+                <p className="text-sm text-cream/95 drop-shadow-sm">
                   {isGujarati
                     ? "અમદાવાદ, ગુજરાત – ૨૦૦૫ થી કાર્યરત"
                     : "Ahmedabad, Gujarat – Serving Communities Since 2005"}
