@@ -7,11 +7,15 @@ import { useLanguage } from "@/context/LanguageContext";
 import MediaSubNav from "@/components/ui/MediaSubNav";
 import {
   SearchIcon,
-  ReceiptTextIcon,
   BookOpenIcon,
   YoutubeIcon,
   CameraIcon,
   HeartIcon,
+  GraduationCapIcon,
+  HeartPulseIcon,
+  BriefcaseIcon,
+  BuildingIcon,
+  ShieldCheckIcon,
 } from "@/components/ui/Icons";
 
 import {
@@ -83,7 +87,7 @@ const IMPACT_STATS = [
   { value: "20+",     label: "Years of Impact", labelGu: "વર્ષની સેવા" },
 ];
 
-// ─── Program exploration sections (compact links, avoids 30 photo repeats) ───
+// ─── Program exploration sections (compact links, zero repeated photos) ──────
 const PROGRAM_EXPLORATION = [
   {
     category: "Education" as GalleryCategory,
@@ -92,7 +96,7 @@ const PROGRAM_EXPLORATION = [
     slug: "education",
     descEn: "Supporting primary schooling, pre-primary ICDS centres, and learning aids across 200+ villages.",
     descGu: "૨૦૦+ ગામોમાં પ્રાથમિક શિક્ષણ, પૂર્વ-પ્રાથમિક આંગણવાડી કેન્દ્રો અને શિષ્યવૃત્તિ સહાય.",
-    thumbnail: "/img/Education/Swadeep-Shikshan-Vikas-Sanstha-Education-1-700x525.jpg",
+    icon: GraduationCapIcon,
   },
   {
     category: "Health" as GalleryCategory,
@@ -101,7 +105,7 @@ const PROGRAM_EXPLORATION = [
     slug: "health",
     descEn: "School dental care, vision screenings, diagnostic health camps, and maternal nutrition drives.",
     descGu: "શાળા ડેન્ટલ કેમ્પ, આંખ તપાસ, રોગનિદાન શિબિર અને માતા-બાળ સ્વાસ્થ્ય કાર્યક્રમો.",
-    thumbnail: "/img/Helth/Shikshan-Vikas-SansthaBest-of-Swadeep-Health-Programs-1-400x300.jpg",
+    icon: HeartPulseIcon,
   },
   {
     category: "Livelihood" as GalleryCategory,
@@ -110,25 +114,25 @@ const PROGRAM_EXPLORATION = [
     slug: "livelihood",
     descEn: "Empowering traditional fishing families with insulated ice boxes, solar equipment, and market access.",
     descGu: "પરંપરાગત માછીમારોને ઇન્સ્યુલેટેડ આઇસ બોક્સ, સુરક્ષા કીટ અને બજાર જોડાણ સહાય.",
-    thumbnail: "/img/Livelihood/Swadeep-Shikshan-Vikas-Sanstha-Fishries-1-400x300.jpg",
+    icon: BriefcaseIcon,
   },
   {
     category: "Infrastructure" as GalleryCategory,
-    titleEn: "Rural Development",
-    titleGu: "ગ્રામ વિકાસ અને માળખા",
+    titleEn: "Rural Infrastructure",
+    titleGu: "ગ્રામીણ માળખા",
     slug: "infrastructure",
     descEn: "Solar street lights, drinking water solutions, and BaLA school building improvements in 40+ villages.",
     descGu: "સોલાર લાઇટ્સ, પીવાના પાણીની સુવિધા અને ૪૦+ ગામોમાં શાળા બિલ્ડિંગ રિનોવેશન.",
-    thumbnail: "/img/Rural%20Infastucture/Swadeep-Shikshan-Vikas-Sanstha-Infrastructure-1-380x800.jpg",
+    icon: BuildingIcon,
   },
   {
     category: "Relief" as GalleryCategory,
-    titleEn: "Disaster Response",
-    titleGu: "આપત્તિ રાહત કાર્ય",
+    titleEn: "Disaster",
+    titleGu: "આપત્તિ રાહત",
     slug: "disaster",
     descEn: "Rapid emergency relief kits, flood rescue support, and rebuilding assistance for vulnerable rural families.",
     descGu: "ચક્રવાત, પૂર અને કટોકટીમાં તાત્કાલિક રાશન કીટ, પુનર્વસન અને રાહત કાર્ય.",
-    thumbnail: "/img/Disater/Disaster.jpg",
+    icon: ShieldCheckIcon,
   },
 ];
 
@@ -531,6 +535,11 @@ export default function GalleryPage() {
           </div>
 
           <div className="space-y-2 max-w-3xl">
+            <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#F47B2A]">
+              {isGujarati
+                ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા — ફોટો ગેલેરી"
+                : "Swadeep Shikshan Vikas Sanstha — Photo Gallery"}
+            </p>
             <h1
               id="gallery-hero-heading"
               className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight"
@@ -772,7 +781,7 @@ export default function GalleryPage() {
 
         {/* ════════════════════════════════════
             5. PROGRAM EXPLORATION SECTION
-            (Compact navigation — avoids repeating 30 photos)
+            (Compact navigation — zero repeated photos)
         ════════════════════════════════════ */}
         <section aria-labelledby="program-exploration-heading" className="space-y-6 pt-4">
           <div className="text-center space-y-1">
@@ -795,22 +804,19 @@ export default function GalleryPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {PROGRAM_EXPLORATION.map((prog) => {
               const count = GALLERY_ITEMS.filter((i) => i.category === prog.category).length;
+              const IconComponent = prog.icon;
               return (
                 <div
                   key={prog.category}
-                  className="bg-white rounded-2xl border border-forest/10 p-5 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-4"
+                  className="bg-white rounded-2xl border border-forest/10 p-5 sm:p-6 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between space-y-4"
                 >
                   <div className="space-y-3">
-                    <div className="relative h-36 rounded-xl overflow-hidden bg-neutral-100">
-                      <Image
-                        src={prog.thumbnail}
-                        alt={prog.titleEn}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                      <span className="absolute top-2.5 right-2.5 bg-black/70 backdrop-blur-sm text-white text-[10px] font-mono px-2 py-0.5 rounded-md font-bold">
-                        {count} {isGujarati ? "ફોટો" : "Photos"}
+                    <div className="flex items-center justify-between">
+                      <div className="w-12 h-12 rounded-xl bg-[#0B3025]/5 border border-forest/10 text-[#0B3025] flex items-center justify-center">
+                        <IconComponent size={24} className="text-[#0B3025]" />
+                      </div>
+                      <span className="bg-[#0B3025]/5 text-[#0B3025] text-xs font-mono font-bold px-2.5 py-1 rounded-full border border-forest/10">
+                        {count} {isGujarati ? "તસ્વીરો" : "Photos"}
                       </span>
                     </div>
 
@@ -818,25 +824,25 @@ export default function GalleryPage() {
                       <h3 className="font-heading font-bold text-base text-[#0B3025]">
                         {isGujarati ? prog.titleGu : prog.titleEn}
                       </h3>
-                      <p className="text-xs text-charcoal/70 mt-1 leading-relaxed line-clamp-2">
+                      <p className="text-xs text-charcoal/70 mt-1 leading-relaxed">
                         {isGujarati ? prog.descGu : prog.descEn}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 pt-2 border-t border-neutral-100">
+                  <div className="flex items-center gap-2 pt-3 border-t border-neutral-100">
                     <button
                       type="button"
                       onClick={() => handleFilterByProgram(prog.category)}
                       className="flex-1 py-2 px-3 rounded-xl bg-cream hover:bg-forest-50 text-[#0B3025] border border-forest/15 text-xs font-bold transition-all text-center"
                     >
-                      {isGujarati ? `ફોટો જુઓ (${count})` : `Filter (${count})`}
+                      {isGujarati ? `ફોટો જુઓ (${count})` : `Filter Photos (${count})`}
                     </button>
                     <Link
                       href={`/programs/${prog.slug}`}
                       className="flex-1 py-2 px-3 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all text-center shadow-xs"
                     >
-                      {isGujarati ? "વિગતવાર →" : "Details →"}
+                      {isGujarati ? "વિગતવાર →" : "Program Details →"}
                     </Link>
                   </div>
                 </div>

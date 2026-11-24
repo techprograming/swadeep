@@ -38,8 +38,8 @@ export const CATEGORY_LABELS: Record<GalleryCategory, { en: string; gu: string }
   Education: { en: "Education", gu: "શિક્ષણ" },
   Health: { en: "Health", gu: "આરોગ્ય" },
   Livelihood: { en: "Livelihood", gu: "આજીવિકા" },
-  Infrastructure: { en: "Rural Development", gu: "ગ્રામ વિકાસ" },
-  Relief: { en: "Disaster Relief", gu: "આપત્તિ રાહત" },
+  Infrastructure: { en: "Rural Infrastructure", gu: "ગ્રામીણ માળખા" },
+  Relief: { en: "Disaster", gu: "આપત્તિ રાહત" },
   Media: { en: "Media", gu: "મીડિયા" },
 };
 
