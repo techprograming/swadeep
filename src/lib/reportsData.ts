@@ -2,10 +2,10 @@ import { PreviewDocument } from "@/components/ui/DocumentPreviewModal";
 
 export const OFFICIAL_BROCHURE: PreviewDocument = {
   id: "res-brochure",
-  title: "Swadeep Shikshan Vikas Sanstha Official Organization Brochure",
-  titleGu: "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા સત્તાવાર સંસ્થાકીય બ્રોશર",
-  category: "Official Brochure",
-  categoryGu: "સત્તાવાર બ્રોશર",
+  title: "Brochure",
+  titleGu: "બ્રોશર",
+  category: "Brochure",
+  categoryGu: "બ્રોશર",
   year: "Comprehensive Edition",
   size: "2.73 MB",
   fileUrl: "/brochure/swadeep-brochure.pdf",

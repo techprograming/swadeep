@@ -40,8 +40,8 @@ const NAV_ITEMS: NavItem[] = [
   {
     id: "publications",
     href: "/publications",
-    labelEn: "Field Publications",
-    labelGu: "શૈક્ષણિક સાહિત્ય",
+    labelEn: "Publications",
+    labelGu: "પ્રકાશનો",
     badgeEn: "5 Books & Guides",
     badgeGu: "૫ પુસ્તિકાઓ",
     icon: BookOpenIcon,

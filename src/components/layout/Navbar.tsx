@@ -9,7 +9,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
-  const { language, toggleLanguage, t, isGujarati } = useLanguage();
+  const { t, isGujarati } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -326,35 +326,12 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Right Action Area: Language Switcher + Distinct Donate Now Button */}
+            {/* Right Action Area: Donate Now Button */}
             <div className="flex items-center space-x-1 xs:space-x-1.5 sm:space-x-2.5 shrink-0">
-              {/* Solid Language Selector Pill */}
-              <button
-                type="button"
-                onClick={toggleLanguage}
-                className="inline-flex items-center whitespace-nowrap space-x-1 sm:space-x-1.5 px-2 xs:px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-bold border border-forest/20 text-forest-dark bg-white hover:bg-forest-50 hover:border-forest/40 transition-all shadow-2xs focus:outline-none focus-visible:ring-2 focus-visible:ring-saffron active:scale-95"
-                aria-label={`Switch language to ${language === "en" ? "Gujarati" : "English"}`}
-                title={`Switch language to ${language === "en" ? "Gujarati" : "English"}`}
-              >
-                <svg
-                  className="w-3.5 h-3.5 text-forest"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="12" r="10" strokeWidth={2} />
-                  <path strokeWidth={2} d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20" />
-                </svg>
-                <span className={cn("font-medium", isGujarati ? "font-body" : "font-gujarati")}>
-                  {language === "en" ? "ગુજરાતી" : "English"}
-                </span>
-              </button>
-
               {/* Distinctive, Radiant Donate Now Button */}
               <Link
                 href="/donate"
-                className="inline-flex items-center justify-center whitespace-nowrap px-2.5 xs:px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] hover:from-[#E06A1B] hover:to-[#C8590F] shadow-md shadow-[#F47B2A]/25 hover:shadow-lg hover:shadow-[#F47B2A]/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]"
+                className="inline-flex items-center justify-center whitespace-nowrap px-3.5 xs:px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-[#F47B2A] to-[#E06A1B] hover:from-[#E06A1B] hover:to-[#C8590F] shadow-md shadow-[#F47B2A]/25 hover:shadow-lg hover:shadow-[#F47B2A]/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-98 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]"
               >
                 <svg
                   className="w-3.5 h-3.5 xs:mr-1.5 text-white/95 shrink-0"
@@ -444,17 +421,6 @@ export default function Navbar() {
 
         {/* Drawer Navigation List with Accordion Dropdowns */}
         <div className="px-4 py-4 flex-1 overflow-y-auto space-y-2">
-          {/* Mobile Language Switcher Bar */}
-          <div className="flex items-center justify-between p-3 rounded-xl bg-white/80 border border-forest/10 mb-2">
-            <span className="text-xs font-semibold text-charcoal/70">Language / ભાષા:</span>
-            <button
-              type="button"
-              onClick={toggleLanguage}
-              className="px-3 py-1.5 rounded-lg bg-forest-50 text-forest-dark font-bold text-xs border border-forest/20 hover:bg-forest-100 transition-colors"
-            >
-              {language === "en" ? "ગુજરાતી માં જુઓ" : "Switch to English"}
-            </button>
-          </div>
 
           {NAV_LINKS.map((link, idx) => {
             const hasDropdown = Boolean(link.dropdown && link.dropdown.length > 0);

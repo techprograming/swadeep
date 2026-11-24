@@ -311,7 +311,7 @@ export default function PublicationsPage() {
   }, [previewDoc, filteredPublications]);
 
   return (
-    <main id="main-content" className="pt-24 sm:pt-28 pb-20 bg-cream min-h-screen">
+    <main id="main-content" className="pt-32 sm:pt-36 lg:pt-40 pb-20 bg-cream min-h-screen">
       {/* ════════════════════════════════════
           1. COMPACT EDITORIAL HERO
       ════════════════════════════════════ */}
@@ -323,20 +323,9 @@ export default function PublicationsPage() {
         </div>
 
         <div className="relative z-10 container-wide section-padding max-w-6xl mx-auto space-y-4">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#F47B2A]/15 border border-[#F47B2A]/30 text-[#F47B2A]">
-              <BookOpenIcon size={14} />
-              <span>{isGujarati ? "શૈક્ષણિક સાહિત્ય અને પુસ્તિકાઓ" : "PUBLICATIONS & LEARNING RESOURCES"}</span>
-            </span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/80 text-xs font-semibold font-mono">
-              5 {isGujarati ? "પ્રમાણિત ક્ષેત્રીય પુસ્તકો" : "Verified Field Publications"}
-            </span>
-          </div>
-
           <div className="max-w-3xl space-y-2">
             <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              {isGujarati ? "શૈક્ષણિક પ્રકાશનો અને સંસાધનો" : "Publications & Learning Resources"}
+              Publications
             </h1>
             <p className="font-body text-xs sm:text-sm text-white/85 leading-relaxed max-w-2xl">
               {isGujarati
@@ -473,7 +462,7 @@ export default function PublicationsPage() {
                 {isGujarati ? "પ્રકાશન સંગ્રહ" : "Digital Library"}
               </span>
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-                {isGujarati ? "તમામ અધિકૃત પુસ્તકો અને માર્ગદર્શિકાઓ" : "Official Educational Publications"}
+                Publications
               </h2>
             </div>
             <div className="text-xs text-neutral-500 font-medium">

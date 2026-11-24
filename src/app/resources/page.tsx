@@ -388,7 +388,7 @@ export default function ResourcesPage() {
             </span>
             <span className="text-white/40 text-xs">•</span>
             <span className="text-white/80 text-xs font-semibold font-mono">
-              32 {isGujarati ? "પ્રમાણિત અહેવાલો + ૧ સત્તાવાર બ્રોશર" : "Verified Reports + 1 Official Brochure"}
+              32 {isGujarati ? "પ્રમાણિત અહેવાલો + ૧ બ્રોશર" : "Verified Reports + 1 Brochure"}
             </span>
           </div>
 
@@ -400,7 +400,7 @@ export default function ResourcesPage() {
             <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed max-w-2xl">
               {isGujarati
                 ? "સ્વદીપના છેલ્લા ૧૩ વર્ષના પ્રમાણિત વાર્ષિક અહેવાલો (૨૦૧૨-૨૫), સનદી હિસાબી ઓડિટ રિપોર્ટ્સ, એફસીઆરએ વિદેશી અનુદાન ખાતાઓ અને સંસ્થાકીય પરિચય બ્રોશર."
-                : "Explore 13+ years of audited statutory annual reports, chartered accountant balance sheets, foreign contribution (FCRA) accounts, and our official organization brochure."}
+                : "Explore 13+ years of audited statutory annual reports, chartered accountant balance sheets, foreign contribution (FCRA) accounts, and our organization brochure."}
             </p>
           </div>
 
@@ -419,7 +419,7 @@ export default function ResourcesPage() {
               className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-[11px] font-bold transition-all shadow-sm"
             >
               <BookOpenIcon size={13} />
-              <span>{isGujarati ? "શૈક્ષણિક પ્રકાશનો →" : "Field Publications & Storybooks →"}</span>
+              <span>{isGujarati ? "પ્રકાશનો →" : "Publications →"}</span>
             </Link>
           </div>
         </div>
@@ -492,7 +492,7 @@ export default function ResourcesPage() {
         {/* ════════════════════════════════════
             3. FEATURED ORGANIZATION BROCHURE CARD
         ════════════════════════════════════ */}
-        <section aria-label="Official Organization Brochure">
+        <section aria-label="Brochure">
           <div className="relative overflow-hidden rounded-2xl bg-white border border-neutral-200 shadow-sm hover:shadow-lg transition-all duration-300">
             <div className="flex flex-col md:flex-row items-stretch">
               {/* Tactile Brochure Visual Cover */}
@@ -506,7 +506,7 @@ export default function ResourcesPage() {
                 </div>
 
                 <span className="text-[#F47B2A] text-[11px] font-bold uppercase tracking-widest mb-1">
-                  {isGujarati ? "સત્તાવાર બ્રોશર" : "Official Brochure"}
+                  {isGujarati ? "બ્રોશર" : "Brochure"}
                 </span>
 
                 <span className="text-white font-heading font-extrabold text-lg sm:text-xl leading-tight text-center">
@@ -768,7 +768,7 @@ export default function ResourcesPage() {
               {isGujarati ? "સ્વદીપ ડિજિટલ જ્ઞાન કેન્દ્ર" : "Swadeep Digital Knowledge Center"}
             </span>
             <h3 className="font-heading text-lg sm:text-xl font-bold text-white">
-              {isGujarati ? "શૈક્ષણિક સાહિત્ય, ક્ષેત્રીય તસ્વીરો અને વિડીયો" : "Looking for Field Publications, Photos or Videos?"}
+              {isGujarati ? "શૈક્ષણિક પ્રકાશનો, ક્ષેત્રીય તસ્વીરો અને વિડીયો" : "Looking for Publications, Photos or Videos?"}
             </h3>
             <p className="text-xs sm:text-sm text-white/75 leading-relaxed font-body">
               {isGujarati
@@ -782,7 +782,7 @@ export default function ResourcesPage() {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs font-bold shadow-md transition-all"
             >
               <BookOpenIcon size={14} />
-              <span>{isGujarati ? "શૈક્ષણિક પ્રકાશનો" : "Field Publications"}</span>
+              <span>{isGujarati ? "પ્રકાશનો" : "Publications"}</span>
             </Link>
             <Link
               href="/gallery"
