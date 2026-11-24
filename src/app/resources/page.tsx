@@ -7,11 +7,9 @@ import {
   BookOpenIcon,
   DownloadIcon,
   ExternalLinkIcon,
-  SearchIcon,
   ShieldCheckIcon,
   CameraIcon,
   YoutubeIcon,
-  CalendarIcon,
   ReceiptTextIcon,
 } from "@/components/ui/Icons";
 import DocumentPreviewModal, { PreviewDocument } from "@/components/ui/DocumentPreviewModal";
@@ -366,10 +364,6 @@ export default function ResourcesPage() {
   const { isGujarati } = useLanguage();
   // Static initialization guaranteeing instant 32 reports render without waiting for API
   const [reports, setReports] = useState<PreviewDocument[]>(VERIFIED_REPORTS);
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [selectedYear, setSelectedYear] = useState<string>("All");
-  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
-  const [searchQuery, setSearchQuery] = useState<string>("");
   const [previewDoc, setPreviewDoc] = useState<PreviewDocument | null>(null);
 
   // Background revalidation
@@ -413,105 +407,41 @@ export default function ResourcesPage() {
     };
   }, []);
 
-  // Category counts
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {
-      All: reports.length,
-      "Annual Report": 0,
-      "Audit Report": 0,
-      "FC Accounts": 0,
-    };
-    reports.forEach((r) => {
-      counts[r.category] = (counts[r.category] || 0) + 1;
-    });
-    return counts;
+  // Segment reports into the 3 main rows sorted newest first
+  const annualReports = useMemo(() => {
+    return reports
+      .filter((d) => d.category === "Annual Report")
+      .sort((a, b) => (b.year || "").localeCompare(a.year || "", undefined, { numeric: true }));
   }, [reports]);
 
-  // Available fiscal years sorted descending
-  const availableYears = useMemo(() => {
-    const yearSet = new Set<string>();
-    reports.forEach((r) => {
-      if (r.year && r.year.trim()) yearSet.add(r.year.trim());
-    });
-    return Array.from(yearSet).sort().reverse();
+  const auditReports = useMemo(() => {
+    return reports
+      .filter((d) => d.category === "Audit Report")
+      .sort((a, b) => (b.year || "").localeCompare(a.year || "", undefined, { numeric: true }));
   }, [reports]);
 
-  // Filtered and sorted collection
-  const filteredResources = useMemo(() => {
-    const list = reports.filter((item) => {
-      const matchesCategory =
-        activeCategory === "All" || item.category === activeCategory;
-      const matchesYear =
-        selectedYear === "All" || item.year === selectedYear;
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
-        item.title.toLowerCase().includes(q) ||
-        (item.titleGu && item.titleGu.toLowerCase().includes(q)) ||
-        (item.year && item.year.toLowerCase().includes(q)) ||
-        item.category.toLowerCase().includes(q) ||
-        (item.description && item.description.toLowerCase().includes(q)) ||
-        (item.descriptionGu && item.descriptionGu.toLowerCase().includes(q));
-
-      return matchesCategory && matchesYear && matchesSearch;
-    });
-
-    return list.sort((a, b) => {
-      const yearA = a.year || "";
-      const yearB = b.year || "";
-      return sortOrder === "newest"
-        ? yearB.localeCompare(yearA, undefined, { numeric: true })
-        : yearA.localeCompare(yearB, undefined, { numeric: true });
-    });
-  }, [reports, activeCategory, selectedYear, searchQuery, sortOrder]);
-
-  // Segment filtered resources into the 3 main rows
-  const annualReports = useMemo(
-    () => filteredResources.filter((d) => d.category === "Annual Report"),
-    [filteredResources]
-  );
-  const auditReports = useMemo(
-    () => filteredResources.filter((d) => d.category === "Audit Report"),
-    [filteredResources]
-  );
-  const fcraReports = useMemo(
-    () => filteredResources.filter((d) => d.category === "FC Accounts"),
-    [filteredResources]
-  );
-
-  const hasActiveFilters =
-    activeCategory !== "All" || selectedYear !== "All" || searchQuery.trim().length > 0;
-
-  const handleResetFilters = useCallback(() => {
-    setActiveCategory("All");
-    setSelectedYear("All");
-    setSearchQuery("");
-  }, []);
-
-  const handleCategorySelect = useCallback((key: string) => {
-    setActiveCategory(key);
-    const target = document.getElementById("document-library-section");
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, []);
+  const fcraReports = useMemo(() => {
+    return reports
+      .filter((d) => d.category === "FC Accounts")
+      .sort((a, b) => (b.year || "").localeCompare(a.year || "", undefined, { numeric: true }));
+  }, [reports]);
 
   // Previous and Next document navigation for in-page modal
   const handleNextDoc = useCallback(() => {
     if (!previewDoc) return;
-    const idx = filteredResources.findIndex((d) => d.id === previewDoc.id);
+    const idx = reports.findIndex((d) => d.id === previewDoc.id);
     if (idx !== -1) {
-      setPreviewDoc(filteredResources[(idx + 1) % filteredResources.length]);
+      setPreviewDoc(reports[(idx + 1) % reports.length]);
     }
-  }, [previewDoc, filteredResources]);
+  }, [previewDoc, reports]);
 
   const handlePrevDoc = useCallback(() => {
     if (!previewDoc) return;
-    const idx = filteredResources.findIndex((d) => d.id === previewDoc.id);
+    const idx = reports.findIndex((d) => d.id === previewDoc.id);
     if (idx !== -1) {
-      setPreviewDoc(filteredResources[(idx - 1 + filteredResources.length) % filteredResources.length]);
+      setPreviewDoc(reports[(idx - 1 + reports.length) % reports.length]);
     }
-  }, [previewDoc, filteredResources]);
+  }, [previewDoc, reports]);
 
   return (
     <main id="main-content" className="pt-32 sm:pt-36 lg:pt-40 pb-20 bg-cream min-h-screen">
@@ -636,219 +566,32 @@ export default function ResourcesPage() {
         </section>
 
         {/* ════════════════════════════════════
-            4. SEARCH & FILTER TOOLBAR
+            4. MAIN 3 ROWS: ANNUAL REPORT, AUDIT REPORT, FCRA ACCOUNTS (WITH SLIDE BARS)
         ════════════════════════════════════ */}
-        <section id="document-library-section" className="scroll-mt-28 space-y-4" aria-label="Reports Archive">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-            <div>
-              <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest block mb-1">
-                {isGujarati ? "સત્તાવાર સંગ્રહ" : "Official Archive"}
-              </span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-                Reports
-              </h2>
-            </div>
-            <div className="text-xs text-neutral-500 font-medium">
-              <span>{isGujarati ? "દર્શાવેલ: " : "Showing: "}</span>
-              <strong className="text-[#0B3025] font-bold">{filteredResources.length}</strong>
-              <span> of {reports.length} {isGujarati ? "અહેવાલો" : "reports"}</span>
-            </div>
-          </div>
+        <section aria-label="Official Reports by Category" className="space-y-12 sm:space-y-14">
+          <ReportRowSlider
+            categoryKey="Annual Report"
+            config={CATEGORY_CONFIG["Annual Report"]}
+            documents={annualReports}
+            onPreview={(d) => setPreviewDoc(d)}
+            isGujarati={isGujarati}
+          />
 
-          {/* Search + Controls Container */}
-          <div className="bg-white p-4 sm:p-5 rounded-2xl border border-neutral-200 shadow-xs space-y-3.5">
-            {/* Top row: Search input + Year Select + Sort */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-              {/* Search input */}
-              <div className="relative flex-1">
-                <SearchIcon
-                  size={16}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400"
-                />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={
-                    isGujarati
-                      ? "અહેવાલનું શીર્ષક, વર્ષ અથવા પ્રકાર શોધો..."
-                      : "Search reports by title, fiscal year, or keywords..."
-                  }
-                  className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs sm:text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]/40 focus:border-[#F47B2A] transition-all"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 text-xs"
-                    aria-label="Clear search"
-                  >
-                    ✕
-                  </button>
-                )}
-              </div>
+          <ReportRowSlider
+            categoryKey="Audit Report"
+            config={CATEGORY_CONFIG["Audit Report"]}
+            documents={auditReports}
+            onPreview={(d) => setPreviewDoc(d)}
+            isGujarati={isGujarati}
+          />
 
-              {/* Year Dropdown */}
-              <div className="flex items-center gap-2 shrink-0">
-                <CalendarIcon size={14} className="text-neutral-400 hidden sm:block" />
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className="px-3 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-semibold text-neutral-700 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]/40 cursor-pointer"
-                  aria-label="Filter by Fiscal Year"
-                >
-                  <option value="All">{isGujarati ? "તમામ વર્ષો (All Years)" : "All Fiscal Years"}</option>
-                  {availableYears.map((yr) => (
-                    <option key={yr} value={yr}>
-                      {yr}
-                    </option>
-                  ))}
-                </select>
-
-                {/* Sort Order */}
-                <select
-                  value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
-                  className="px-3 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs font-semibold text-neutral-700 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]/40 cursor-pointer"
-                  aria-label="Sort documents by year"
-                >
-                  <option value="newest">{isGujarati ? "સૌથી નવા પ્રથમ" : "Newest First"}</option>
-                  <option value="oldest">{isGujarati ? "સૌથી જૂના પ્રથમ" : "Oldest First"}</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Bottom row: Category Filter Pills */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-neutral-100">
-              <div className="flex flex-wrap items-center gap-2">
-                {/* All Reports Tab */}
-                <button
-                  type="button"
-                  onClick={() => setActiveCategory("All")}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    activeCategory === "All"
-                      ? "bg-[#0B3025] text-white shadow-xs"
-                      : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
-                  }`}
-                >
-                  <span>{isGujarati ? "તમામ અહેવાલો" : "All Reports"}</span>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
-                      activeCategory === "All" ? "bg-white/20 text-white" : "bg-white text-neutral-600"
-                    }`}
-                  >
-                    {categoryCounts["All"]}
-                  </span>
-                </button>
-
-                {/* Specific Category Tabs */}
-                {(Object.entries(CATEGORY_CONFIG) as [CategoryKey, typeof CATEGORY_CONFIG[CategoryKey]][]).map(
-                  ([key, cfg]) => {
-                    const isActive = activeCategory === key;
-                    const count = categoryCounts[key] || 0;
-
-                    return (
-                      <button
-                        key={key}
-                        type="button"
-                        onClick={() => setActiveCategory(key)}
-                        className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-                          isActive
-                            ? "bg-[#0B3025] text-white shadow-xs"
-                            : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
-                        }`}
-                      >
-                        <span>{isGujarati ? cfg.labelGu : cfg.labelEn}</span>
-                        <span
-                          className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
-                            isActive ? "bg-white/20 text-white" : "bg-white text-neutral-600"
-                          }`}
-                        >
-                          {count}
-                        </span>
-                      </button>
-                    );
-                  }
-                )}
-
-                {hasActiveFilters && (
-                  <button
-                    type="button"
-                    onClick={handleResetFilters}
-                    className="px-3 py-1.5 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors"
-                  >
-                    {isGujarati ? "ફિલ્ટર્સ સાફ કરો" : "Clear Filters"}
-                  </button>
-                )}
-              </div>
-
-              {/* Status indicator */}
-              <span className="text-[11px] text-emerald-800 font-medium flex items-center gap-1.5 font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-                All 32 Original Reports Verified
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            5. MAIN 3 ROWS: ANNUAL REPORT, AUDIT REPORT, FCRA ACCOUNTS (WITH SLIDE BARS)
-        ════════════════════════════════════ */}
-        <section aria-label="Official Reports by Category" className="space-y-10 sm:space-y-12">
-          {(activeCategory === "All" || activeCategory === "Annual Report") && annualReports.length > 0 && (
-            <ReportRowSlider
-              categoryKey="Annual Report"
-              config={CATEGORY_CONFIG["Annual Report"]}
-              documents={annualReports}
-              onPreview={(d) => setPreviewDoc(d)}
-              isGujarati={isGujarati}
-            />
-          )}
-
-          {(activeCategory === "All" || activeCategory === "Audit Report") && auditReports.length > 0 && (
-            <ReportRowSlider
-              categoryKey="Audit Report"
-              config={CATEGORY_CONFIG["Audit Report"]}
-              documents={auditReports}
-              onPreview={(d) => setPreviewDoc(d)}
-              isGujarati={isGujarati}
-            />
-          )}
-
-          {(activeCategory === "All" || activeCategory === "FC Accounts") && fcraReports.length > 0 && (
-            <ReportRowSlider
-              categoryKey="FC Accounts"
-              config={CATEGORY_CONFIG["FC Accounts"]}
-              documents={fcraReports}
-              onPreview={(d) => setPreviewDoc(d)}
-              isGujarati={isGujarati}
-            />
-          )}
-
-          {filteredResources.length === 0 && (
-            <div className="p-12 sm:p-16 rounded-2xl bg-white border border-dashed border-neutral-300 text-center space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto">
-                <SearchIcon size={24} />
-              </div>
-              <div className="space-y-1 max-w-sm mx-auto">
-                <h3 className="font-heading font-bold text-base text-[#0B3025]">
-                  {isGujarati ? "કોઈ અહેવાલ મળ્યો નથી" : "No Reports Found"}
-                </h3>
-                <p className="text-xs text-neutral-500">
-                  {isGujarati
-                    ? "પસંદ કરેલા ફિલ્ટર્સ માટે કોઈ દસ્તાવેજ ઉપલબ્ધ નથી. કૃપા કરીને અન્ય વર્ષ અથવા શ્રેણી પસંદ કરો."
-                    : "No documents match your selected filters. Please adjust the year, category, or search keywords."}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={handleResetFilters}
-                className="px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
-              >
-                {isGujarati ? "તમામ દસ્તાવેજો બતાવો" : "Reset & Show All Documents"}
-              </button>
-            </div>
-          )}
+          <ReportRowSlider
+            categoryKey="FC Accounts"
+            config={CATEGORY_CONFIG["FC Accounts"]}
+            documents={fcraReports}
+            onPreview={(d) => setPreviewDoc(d)}
+            isGujarati={isGujarati}
+          />
         </section>
 
         {/* ════════════════════════════════════
