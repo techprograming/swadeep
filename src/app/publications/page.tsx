@@ -604,7 +604,7 @@ export default function PublicationsPage() {
                 {isGujarati ? "સત્તાવાર શાસન અને પારદર્શિતા" : "Official Governance & Transparency"}
               </span>
               <h3 id="governance-cta-heading" className="font-heading text-xl sm:text-2xl font-bold text-white">
-                {isGujarati ? "વાર્ષિક અહેવાલો, ઓડિટ અને એફસીઆરએ" : "Looking for Statutory Reports & Audits?"}
+                {isGujarati ? "વાર્ષિક અહેવાલો અને ઓડિટ" : "Looking for Reports?"}
               </h3>
               <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-body">
                 {isGujarati

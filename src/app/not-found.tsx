@@ -42,10 +42,10 @@ export default function NotFound() {
             Our Work &amp; Programs
           </Link>
           <Link
-            href="/resources#reports"
+            href="/resources"
             className="p-3.5 rounded-xl bg-cream-dark/60 hover:bg-forest hover:text-white border border-forest/10 transition-colors text-sm font-semibold text-forest-dark block"
           >
-            Official Reports
+            Reports
           </Link>
           <Link
             href="/gallery"

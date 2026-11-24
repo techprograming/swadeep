@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import {
@@ -229,6 +229,138 @@ function EditorialDocumentCard({
   );
 }
 
+/* ─── Interactive Report Row Slider ─── */
+function ReportRowSlider({
+  categoryKey,
+  config,
+  documents,
+  onPreview,
+  isGujarati,
+}: {
+  categoryKey: CategoryKey;
+  config: (typeof CATEGORY_CONFIG)[CategoryKey];
+  documents: PreviewDocument[];
+  onPreview: (doc: PreviewDocument) => void;
+  isGujarati: boolean;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = useCallback(() => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 10);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkScroll();
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [checkScroll, documents]);
+
+  const slideLeft = () => {
+    scrollRef.current?.scrollBy({ left: -340, behavior: "smooth" });
+  };
+
+  const slideRight = () => {
+    scrollRef.current?.scrollBy({ left: 340, behavior: "smooth" });
+  };
+
+  if (documents.length === 0) return null;
+
+  return (
+    <section className="space-y-4 py-2" aria-label={config.labelEn}>
+      {/* Row Header with Category Title, Count & Slide Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className={`w-10 h-10 rounded-xl ${config.iconBg} text-white flex items-center justify-center shadow-sm shrink-0`}>
+            {config.icon}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-[#0B3025]">
+                {isGujarati ? config.labelGu : config.labelEn}
+              </h3>
+              <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-neutral-100 text-[#0B3025] border border-neutral-200">
+                {documents.length} {isGujarati ? "અહેવાલો" : "Reports"}
+              </span>
+            </div>
+            <p className="font-mono text-xs text-neutral-500 font-semibold hidden sm:block">
+              {isGujarati ? config.subtitleGu : config.subtitleEn}
+            </p>
+          </div>
+        </div>
+
+        {/* Slide Controls (Prev / Next Buttons) */}
+        <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+          <span className="text-[11px] font-mono text-neutral-400 mr-1 hidden md:inline">
+            Slide to view
+          </span>
+          <button
+            type="button"
+            onClick={slideLeft}
+            disabled={!canScrollLeft}
+            className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 ${
+              canScrollLeft
+                ? "bg-white border-[#0B3025]/20 text-[#0B3025] hover:bg-[#0B3025] hover:text-white shadow-xs cursor-pointer"
+                : "bg-neutral-100 border-neutral-200 text-neutral-300 cursor-not-allowed opacity-40"
+            }`}
+            aria-label={`Slide left ${config.labelEn}`}
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            onClick={slideRight}
+            disabled={!canScrollRight}
+            className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-200 ${
+              canScrollRight
+                ? "bg-white border-[#0B3025]/20 text-[#0B3025] hover:bg-[#0B3025] hover:text-white shadow-xs cursor-pointer"
+                : "bg-neutral-100 border-neutral-200 text-neutral-300 cursor-not-allowed opacity-40"
+            }`}
+            aria-label={`Slide right ${config.labelEn}`}
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Horizontal Scroll / Slide Track with Slide Bar */}
+      <div
+        ref={scrollRef}
+        className="flex gap-5 overflow-x-auto scroll-smooth pb-4 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "#CBD5E1 #F1F5F9",
+        }}
+      >
+        {documents.map((doc) => (
+          <div key={doc.id} className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 snap-start">
+            <EditorialDocumentCard
+              document={doc}
+              onPreview={onPreview}
+              isGujarati={isGujarati}
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── Main Resources Page Component ─── */
 export default function ResourcesPage() {
   const { isGujarati } = useLanguage();
@@ -333,6 +465,20 @@ export default function ResourcesPage() {
     });
   }, [reports, activeCategory, selectedYear, searchQuery, sortOrder]);
 
+  // Segment filtered resources into the 3 main rows
+  const annualReports = useMemo(
+    () => filteredResources.filter((d) => d.category === "Annual Report"),
+    [filteredResources]
+  );
+  const auditReports = useMemo(
+    () => filteredResources.filter((d) => d.category === "Audit Report"),
+    [filteredResources]
+  );
+  const fcraReports = useMemo(
+    () => filteredResources.filter((d) => d.category === "FC Accounts"),
+    [filteredResources]
+  );
+
   const hasActiveFilters =
     activeCategory !== "All" || selectedYear !== "All" || searchQuery.trim().length > 0;
 
@@ -368,7 +514,7 @@ export default function ResourcesPage() {
   }, [previewDoc, filteredResources]);
 
   return (
-    <main id="main-content" className="pt-24 sm:pt-28 pb-20 bg-cream min-h-screen">
+    <main id="main-content" className="pt-32 sm:pt-36 lg:pt-40 pb-20 bg-cream min-h-screen">
       {/* ════════════════════════════════════
           1. COMPACT EDITORIAL HEADER
       ════════════════════════════════════ */}
@@ -379,48 +525,31 @@ export default function ResourcesPage() {
           <div className="absolute top-1/2 left-0 w-64 h-64 rounded-full border border-white" />
         </div>
 
-        <div className="relative z-10 container-wide section-padding max-w-6xl mx-auto space-y-5">
-          {/* Badge row */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#F47B2A]/15 border border-[#F47B2A]/30 text-[#F47B2A]">
-              <ShieldCheckIcon className="w-3.5 h-3.5" />
-              <span>{isGujarati ? "વૈધાનિક પારદર્શિતા અને શાસન" : "STATUTORY TRANSPARENCY & GOVERNANCE"}</span>
-            </span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/80 text-xs font-semibold font-mono">
-              32 {isGujarati ? "પ્રમાણિત અહેવાલો + ૧ બ્રોશર" : "Verified Reports + 1 Brochure"}
-            </span>
-          </div>
-
-          {/* Heading & description */}
-          <div className="max-w-3xl space-y-2.5">
+        <div className="relative z-10 container-wide section-padding max-w-6xl mx-auto space-y-4">
+          <div className="max-w-3xl space-y-2">
             <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-white">
-              {isGujarati ? "સત્તાવાર અહેવાલો, ઓડિટ અને સંસાધનો" : "Official Reports, Audits & Resources"}
+              Reports
             </h1>
-            <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed max-w-2xl">
+            <p className="font-body text-xs sm:text-sm text-white/85 leading-relaxed max-w-2xl">
               {isGujarati
                 ? "સ્વદીપના છેલ્લા ૧૩ વર્ષના પ્રમાણિત વાર્ષિક અહેવાલો (૨૦૧૨-૨૫), સનદી હિસાબી ઓડિટ રિપોર્ટ્સ, એફસીઆરએ વિદેશી અનુદાન ખાતાઓ અને સંસ્થાકીય પરિચય બ્રોશર."
-                : "Explore 13+ years of audited statutory annual reports, chartered accountant balance sheets, foreign contribution (FCRA) accounts, and our organization brochure."}
+                : "Explore audited statutory annual reports, chartered accountant balance sheets, foreign contribution (FCRA) accounts, and brochure."}
             </p>
           </div>
 
           {/* Statutory Credentials */}
-          <div className="flex flex-wrap items-center gap-2.5 pt-1">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.08] border border-white/[0.12] text-[11px] text-white">
+          <div className="flex flex-wrap items-center gap-2.5 pt-1 text-xs">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-white">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-              <span>{isGujarati ? "કલમ ૮૦G અને ૧૨A કર મુક્તિ પ્રમાણિત" : "Section 80G & 12A Certified"}</span>
+              <span>Section 80G & 12A Certified</span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.08] border border-white/[0.12] text-[11px] text-white">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-white">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-              <span>{isGujarati ? "FCRA માન્ય (ગૃહ મંત્રાલય MHA)" : "MHA FCRA Registered"}</span>
+              <span>MHA FCRA Registered</span>
             </div>
-            <Link
-              href="/publications"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-[11px] font-bold transition-all shadow-sm"
-            >
-              <BookOpenIcon size={13} />
-              <span>{isGujarati ? "પ્રકાશનો →" : "Publications →"}</span>
-            </Link>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-white font-mono">
+              <span>32 Verified Reports</span>
+            </div>
           </div>
         </div>
       </section>
@@ -432,62 +561,6 @@ export default function ResourcesPage() {
           MAIN CONTENT AREA
       ════════════════════════════════════ */}
       <div className="container-wide section-padding max-w-6xl mx-auto space-y-10 sm:space-y-14 mt-8 sm:mt-10">
-
-        {/* ════════════════════════════════════
-            2. THREE PROMINENT CATEGORY NAVIGATION CARDS
-        ════════════════════════════════════ */}
-        <section aria-label="Document Category Navigation">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {(Object.entries(CATEGORY_CONFIG) as [CategoryKey, typeof CATEGORY_CONFIG[CategoryKey]][]).map(
-              ([key, cfg]) => {
-                const count = categoryCounts[key] || 0;
-                const isActive = activeCategory === key;
-
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => handleCategorySelect(key)}
-                    className={`group text-left p-6 rounded-2xl border transition-all duration-300 relative flex flex-col justify-between ${
-                      isActive
-                        ? "bg-white border-[#0B3025] shadow-lg ring-2 ring-[#0B3025]/20 -translate-y-0.5"
-                        : "bg-white border-neutral-200/90 shadow-xs hover:shadow-md hover:border-neutral-300 hover:-translate-y-0.5"
-                    }`}
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div className={`w-12 h-12 rounded-xl ${cfg.iconBg} text-white flex items-center justify-center shadow-sm`}>
-                          {cfg.icon}
-                        </div>
-                        <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-neutral-100 text-[#0B3025]">
-                          {count} {isGujarati ? "દસ્તાવેજો" : "Reports"}
-                        </span>
-                      </div>
-
-                      <div className="space-y-1">
-                        <h3 className="font-heading font-extrabold text-lg text-[#0B3025] group-hover:text-[#F47B2A] transition-colors">
-                          {isGujarati ? cfg.labelGu : cfg.labelEn}
-                        </h3>
-                        <p className="font-mono text-xs text-neutral-500 font-semibold">
-                          {isGujarati ? cfg.subtitleGu : cfg.subtitleEn}
-                        </p>
-                      </div>
-
-                      <p className="font-body text-xs text-neutral-600 leading-relaxed line-clamp-3">
-                        {isGujarati ? cfg.descGu : cfg.descEn}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 mt-4 border-t border-neutral-100 flex items-center justify-between text-xs font-bold text-[#0B3025] group-hover:text-[#F47B2A]">
-                      <span>{isGujarati ? "આ કેટેગરીના અહેવાલો જુઓ" : "View Collection"}</span>
-                      <span>→</span>
-                    </div>
-                  </button>
-                );
-              }
-            )}
-          </div>
-        </section>
 
         {/* ════════════════════════════════════
             3. FEATURED ORGANIZATION BROCHURE CARD
@@ -565,14 +638,14 @@ export default function ResourcesPage() {
         {/* ════════════════════════════════════
             4. SEARCH & FILTER TOOLBAR
         ════════════════════════════════════ */}
-        <section id="document-library-section" className="scroll-mt-28 space-y-4" aria-label="Document Repository">
+        <section id="document-library-section" className="scroll-mt-28 space-y-4" aria-label="Reports Archive">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <div>
               <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest block mb-1">
-                {isGujarati ? "દસ્તાવેજ ભંડાર" : "Document Library"}
+                {isGujarati ? "સત્તાવાર સંગ્રહ" : "Official Archive"}
               </span>
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-                {isGujarati ? "વૈધાનિક અહેવાલોનો સંગ્રહ" : "Statutory Document Collection"}
+                Reports
               </h2>
             </div>
             <div className="text-xs text-neutral-500 font-medium">
@@ -719,21 +792,40 @@ export default function ResourcesPage() {
         </section>
 
         {/* ════════════════════════════════════
-            5. DOCUMENT LIBRARY CARDS GRID
+            5. MAIN 3 ROWS: ANNUAL REPORT, AUDIT REPORT, FCRA ACCOUNTS (WITH SLIDE BARS)
         ════════════════════════════════════ */}
-        <section aria-label="Official Document Library">
-          {filteredResources.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-              {filteredResources.map((doc) => (
-                <EditorialDocumentCard
-                  key={doc.id}
-                  document={doc}
-                  onPreview={(d) => setPreviewDoc(d)}
-                  isGujarati={isGujarati}
-                />
-              ))}
-            </div>
-          ) : (
+        <section aria-label="Official Reports by Category" className="space-y-10 sm:space-y-12">
+          {(activeCategory === "All" || activeCategory === "Annual Report") && annualReports.length > 0 && (
+            <ReportRowSlider
+              categoryKey="Annual Report"
+              config={CATEGORY_CONFIG["Annual Report"]}
+              documents={annualReports}
+              onPreview={(d) => setPreviewDoc(d)}
+              isGujarati={isGujarati}
+            />
+          )}
+
+          {(activeCategory === "All" || activeCategory === "Audit Report") && auditReports.length > 0 && (
+            <ReportRowSlider
+              categoryKey="Audit Report"
+              config={CATEGORY_CONFIG["Audit Report"]}
+              documents={auditReports}
+              onPreview={(d) => setPreviewDoc(d)}
+              isGujarati={isGujarati}
+            />
+          )}
+
+          {(activeCategory === "All" || activeCategory === "FC Accounts") && fcraReports.length > 0 && (
+            <ReportRowSlider
+              categoryKey="FC Accounts"
+              config={CATEGORY_CONFIG["FC Accounts"]}
+              documents={fcraReports}
+              onPreview={(d) => setPreviewDoc(d)}
+              isGujarati={isGujarati}
+            />
+          )}
+
+          {filteredResources.length === 0 && (
             <div className="p-12 sm:p-16 rounded-2xl bg-white border border-dashed border-neutral-300 text-center space-y-4">
               <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto">
                 <SearchIcon size={24} />
@@ -751,7 +843,7 @@ export default function ResourcesPage() {
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs"
+                className="px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
               >
                 {isGujarati ? "તમામ દસ્તાવેજો બતાવો" : "Reset & Show All Documents"}
               </button>

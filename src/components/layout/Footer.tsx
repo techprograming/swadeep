@@ -200,7 +200,7 @@ export default function Footer() {
             </Link>
             <span className="text-cream/40">•</span>
             <Link href="/resources" className="hover:text-[#F47B2A] transition-colors">
-              Official Reports
+              Reports
             </Link>
             <span className="text-cream/40">•</span>
             <Link href="/publications" className="hover:text-[#F47B2A] transition-colors">

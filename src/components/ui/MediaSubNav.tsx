@@ -31,8 +31,8 @@ const NAV_ITEMS: NavItem[] = [
   {
     id: "resources",
     href: "/resources",
-    labelEn: "Reports & Governance",
-    labelGu: "અહેવાલો અને સંસાધનો",
+    labelEn: "Reports",
+    labelGu: "અહેવાલો",
     badgeEn: "33 Documents",
     badgeGu: "૩૩ દસ્તાવેજો",
     icon: ReceiptTextIcon,
