@@ -59,18 +59,18 @@ export default function ImpactStats() {
             {isGujarati ? "અમારી સિદ્ધિઓ" : "Our Achievements"}
           </h2>
 
-          <p className="font-gujarati text-xs sm:text-base md:text-lg text-cream/80 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-base md:text-lg text-cream/80 max-w-xl mx-auto leading-relaxed">
             {isGujarati
               ? "પાયાના સ્તરે નોંધાયેલ વાસ્તવિક અને પ્રમાણિત વિકાસ પરિણામો"
-              : "અમારી સિદ્ધિઓ — શિક્ષણ, આરોગ્ય, આજીવિકા અને રાહત કાર્ય"}
+              : "Verifiable grassroots impact across education, community health, coastal livelihoods, infrastructure, and relief."}
           </p>
         </div>
 
-        {/* 4 Verified High-Level Headline Impact Metrics (Prompt Step 4 Specification) */}
+        {/* 4 Verified High-Level Headline Impact Metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 max-w-5xl mx-auto pt-2">
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 text-center border border-white/15">
             <div className="font-heading font-black text-3xl sm:text-4xl lg:text-5xl text-saffron tracking-tight">
-              60K+
+              60,000+
             </div>
             <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
               {isGujarati ? "બાળકો સુધી પહોંચ" : "Children Reached"}

@@ -322,7 +322,7 @@ export const ACHIEVEMENTS = {
     items: [
       { label: "Villages", labelGu: "ગામડાંઓ", count: "40" },
       { label: "School Ground Development", labelGu: "શાળા રમતના મેદાન વિકાસ", count: "30" },
-      { label: "Solar Light", labelGu: "સોલાર સ્ટ્રીટ લાઇટ્સ", count: "1,050" },
+      { label: "Solar Lights", labelGu: "સોલાર સ્ટ્રીટ લાઇટ્સ", count: "1,050" },
       { label: "ICDS Beautification", labelGu: "આંગણવાડી સુશોભન (BaLA)", count: "100" },
       { label: "Children", labelGu: "બાળકો", count: "7,000" },
     ],
