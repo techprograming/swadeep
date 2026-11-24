@@ -3,9 +3,10 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { BookOpenIcon, DownloadIcon, ExternalLinkIcon, SearchIcon } from "@/components/ui/Icons";
+import { BookOpenIcon, DownloadIcon, ExternalLinkIcon, SearchIcon, CameraIcon, YoutubeIcon, ReceiptTextIcon } from "@/components/ui/Icons";
 import DocumentCard from "@/components/ui/DocumentCard";
 import DocumentPreviewModal, { PreviewDocument } from "@/components/ui/DocumentPreviewModal";
+import MediaSubNav from "@/components/ui/MediaSubNav";
 
 const OFFICIAL_PUBLICATIONS: PreviewDocument[] = [
   {
@@ -154,23 +155,22 @@ export default function PublicationsPage() {
             </p>
           </div>
 
-          {/* Quick Stats & Cross-link Pills */}
+          {/* Quick Stats & Badges */}
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-xs border border-white/15 text-xs text-white">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
               <span>{isGujarati ? "૧૦૦% જાહેર સુલભતા" : "100% Free Public Access"}</span>
             </div>
-
-            <Link
-              href="/resources"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 text-white text-xs font-bold transition-all shadow-xs"
-            >
-              <BookOpenIcon className="w-3.5 h-3.5" />
-              <span>{isGujarati ? "વાર્ષિક અહેવાલો અને સંસાધનો જુઓ →" : "View Annual Reports & Resources →"}</span>
-            </Link>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-xs border border-white/15 text-xs text-white">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span>{isGujarati ? "સત્તાવાર પીડીએફ ડાઉનલોડ" : "Official Verified PDFs"}</span>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* Shared Media Sub-Navigation */}
+      <MediaSubNav activeTab="publications" />
 
       {/* Main Container */}
       <div className="container-wide section-padding max-w-6xl mx-auto space-y-12 mt-10">
@@ -347,24 +347,44 @@ export default function PublicationsPage() {
           )}
         </section>
 
-        {/* 5. Institutional Support Callout */}
-        <section className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-forest-900 to-[#0B3025] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+        {/* 5. Institutional Support & Media Discovery Callout */}
+        <section className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#0B3025] via-[#174B38] to-[#0B3025] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-md border border-white/10">
           <div className="space-y-2 max-w-xl text-left">
+            <span className="text-xs uppercase tracking-wider text-[#F47B2A] font-bold">
+              {isGujarati ? "સ્વદીપ દસ્તાવેજ કેન્દ્ર" : "Swadeep Digital Knowledge Center"}
+            </span>
             <h3 className="font-heading text-xl sm:text-2xl font-bold text-white">
-              {isGujarati ? "વાર્ષિક અને ઓડિટ અહેવાલો શોધી રહ્યા છો?" : "Looking for Statutory Audit & Annual Reports?"}
+              {isGujarati ? "વાર્ષિક હિસાબો, તસ્વીરો અને વિડીયો જુઓ" : "Looking for Statutory Audits, Photos, or Videos?"}
             </h3>
-            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+            <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-body">
               {isGujarati
-                ? "સ્વદીપના છેલ્લા ૧૩ વર્ષના વાર્ષિક અહેવાલો, ઓડિટેડ બેલેન્સશીટ અને એફસીઆરએ હિસાબો અમારા રિસોર્સ કેન્દ્રમાં ઉપલબ્ધ છે."
-                : "Explore 13+ years of audited balance sheets, official annual reports, and foreign contribution statements in our comprehensive governance repository."}
+                ? "સ્વદીપના છેલ્લા ૧૩ વર્ષના વાર્ષિક અહેવાલો, ઓડિટેડ બેલેન્સશીટ, ૮૬ થી વધુ ક્ષેત્રીય તસ્વીરો અને ૧૨ સત્તાવાર કાર્યક્રમ વિડીયો ઉપલબ્ધ છે."
+                : "Explore 13+ years of audited balance sheets, official annual reports, 86+ high-resolution field photographs, and 12 YouTube activity videos."}
             </p>
           </div>
-          <Link
-            href="/resources"
-            className="px-6 py-3 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all shrink-0 self-start md:self-auto"
-          >
-            {isGujarati ? "અહેવાલો અને હિસાબો જુઓ →" : "Explore Reports & Governance →"}
-          </Link>
+          <div className="flex flex-wrap items-center gap-3 shrink-0 self-start md:self-auto">
+            <Link
+              href="/resources"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
+            >
+              <ReceiptTextIcon size={15} />
+              <span>{isGujarati ? "ઓડિટ અહેવાલો" : "Statutory Reports"}</span>
+            </Link>
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
+            >
+              <CameraIcon size={15} />
+              <span>{isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}</span>
+            </Link>
+            <Link
+              href="/videos"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
+            >
+              <YoutubeIcon size={15} />
+              <span>{isGujarati ? "વિડીયો ગેલેરી" : "Video Gallery"}</span>
+            </Link>
+          </div>
         </section>
       </div>
 

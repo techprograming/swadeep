@@ -9,9 +9,12 @@ import {
   ExternalLinkIcon,
   SearchIcon,
   ShieldCheckIcon,
+  CameraIcon,
+  YoutubeIcon,
 } from "@/components/ui/Icons";
 import DocumentCard from "@/components/ui/DocumentCard";
 import DocumentPreviewModal, { PreviewDocument } from "@/components/ui/DocumentPreviewModal";
+import MediaSubNav from "@/components/ui/MediaSubNav";
 import {
   OFFICIAL_BROCHURE,
   VERIFIED_REPORTS,
@@ -223,6 +226,9 @@ export default function ResourcesPage() {
         </div>
       </section>
 
+      {/* Shared Media Sub-Navigation */}
+      <MediaSubNav activeTab="resources" />
+
       {/* Main Container */}
       <div className="container-wide section-padding max-w-6xl mx-auto space-y-12 mt-10">
         {/* 2. Featured Official Brochure Showcase Banner */}
@@ -427,6 +433,46 @@ export default function ResourcesPage() {
               </button>
             </div>
           )}
+        </section>
+
+        {/* 5. Cross-Media Discovery Callout Banner */}
+        <section className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#0B3025] via-[#174B38] to-[#0B3025] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-md border border-white/10">
+          <div className="space-y-2 max-w-xl text-left">
+            <span className="text-xs uppercase tracking-wider text-[#F47B2A] font-bold">
+              {isGujarati ? "સ્વદીપ દસ્તાવેજ કેન્દ્ર" : "Swadeep Digital Knowledge Center"}
+            </span>
+            <h3 className="font-heading text-xl sm:text-2xl font-bold text-white">
+              {isGujarati ? "શૈક્ષણિક સાહિત્ય, ક્ષેત્રીય તસ્વીરો અને વિડીયો" : "Looking for Field Publications, Photos or Videos?"}
+            </h3>
+            <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-body">
+              {isGujarati
+                ? "બાળકો માટે ડેન્ટલ હાઇજીન વાર્તાપુસ્તકો, ૮૬ થી વધુ ક્ષેત્રીય તસ્વીરો અને ૧૨ સત્તાવાર કાર્યક્રમ વિડીયો ઉપલબ્ધ છે."
+                : "Explore illustrated children's storybooks, 86+ high-resolution field photographs, and 12 YouTube activity videos."}
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 shrink-0 self-start md:self-auto">
+            <Link
+              href="/publications"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
+            >
+              <BookOpenIcon size={15} />
+              <span>{isGujarati ? "શૈક્ષણિક પ્રકાશનો" : "Field Publications"}</span>
+            </Link>
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
+            >
+              <CameraIcon size={15} />
+              <span>{isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}</span>
+            </Link>
+            <Link
+              href="/videos"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
+            >
+              <YoutubeIcon size={15} />
+              <span>{isGujarati ? "વિડીયો ગેલેરી" : "Video Gallery"}</span>
+            </Link>
+          </div>
         </section>
       </div>
 
