@@ -9,18 +9,27 @@ interface VideoCardProps {
   video: YouTubeVideoItem;
   onPlay: (video: YouTubeVideoItem) => void;
   priority?: boolean;
+  isGujarati?: boolean;
 }
 
-export default function VideoCard({ video, onPlay, priority = false }: VideoCardProps) {
+export default function VideoCard({
+  video,
+  onPlay,
+  priority = false,
+  isGujarati = false,
+}: VideoCardProps) {
   const [imgSrc, setImgSrc] = useState<string>(
     `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`
   );
 
+  const displayTitle = isGujarati && video.titleGu ? video.titleGu : video.title;
+  const secondaryTitle = isGujarati && video.titleGu ? video.title : video.titleGu;
+
   return (
-    <div className="group relative flex flex-col bg-white dark:bg-forest-900/80 rounded-2xl overflow-hidden border border-warm-cream-border dark:border-forest-800 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 focus-within:ring-2 focus-within:ring-saffron-500">
-      {/* Thumbnail & Play Overlay */}
+    <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-forest/10 shadow-xs hover:shadow-xl hover:border-forest/25 transition-all duration-300 hover:-translate-y-1">
+      {/* 16:9 Thumbnail Container */}
       <div
-        className="relative w-full aspect-video bg-forest-950 overflow-hidden cursor-pointer"
+        className="relative w-full aspect-video bg-neutral-900 overflow-hidden cursor-pointer select-none"
         onClick={() => onPlay(video)}
         role="button"
         tabIndex={0}
@@ -30,89 +39,88 @@ export default function VideoCard({ video, onPlay, priority = false }: VideoCard
             onPlay(video);
           }
         }}
-        aria-label={`Play video: ${video.title}`}
+        aria-label={`Play video: ${displayTitle}`}
       >
         <Image
           src={imgSrc}
-          alt={video.title}
+          alt={displayTitle}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           priority={priority}
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           onError={() => {
-            // Fallback to standard thumbnail if hqdefault fails
             setImgSrc(`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`);
           }}
         />
 
         {/* Ambient Dark Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+
+        {/* Category Pill Over Thumbnail */}
+        <div className="absolute top-3 left-3 z-10">
+          <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold tracking-wide bg-[#0B3025]/90 backdrop-blur-md text-white border border-white/20 shadow-sm">
+            {video.category}
+          </span>
+        </div>
 
         {/* Duration Badge */}
         {video.duration && (
-          <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-xs text-white text-xs font-mono font-medium flex items-center gap-1 shadow-sm">
-            <ClockIcon size={12} className="text-warm-cream" />
+          <div className="absolute bottom-3 right-3 z-10 px-2.5 py-1 rounded-md bg-black/85 backdrop-blur-xs text-white text-xs font-mono font-bold flex items-center gap-1 shadow-sm">
+            <ClockIcon size={12} className="text-[#F47B2A]" />
             <span>{video.duration}</span>
           </div>
         )}
 
-        {/* Play Button - Minimal Modern Interactive Animation */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Interactive Play Button */}
+        <div className="absolute inset-0 flex items-center justify-center z-10">
           <div className="relative flex items-center justify-center">
-            {/* Glowing ring animation on hover */}
-            <div className="absolute w-16 h-16 rounded-full bg-saffron-500/30 group-hover:scale-125 group-hover:bg-saffron-500/40 blur-md transition-all duration-300" />
-            
-            <span className="relative flex items-center justify-center w-14 h-14 rounded-full bg-red-600 text-white shadow-lg group-hover:bg-saffron-500 group-hover:scale-110 group-active:scale-95 transition-all duration-300">
-              <PlayIcon size={22} className="ml-1 text-white" />
+            <div className="absolute w-14 h-14 rounded-full bg-[#F47B2A]/30 group-hover:scale-125 group-hover:bg-[#F47B2A]/40 blur-md transition-all duration-300" />
+            <span className="relative flex items-center justify-center w-12 h-12 rounded-full bg-red-600 text-white shadow-xl group-hover:bg-[#F47B2A] group-hover:scale-110 group-active:scale-95 transition-all duration-300">
+              <PlayIcon size={20} className="ml-0.5 text-white" />
             </span>
           </div>
-        </div>
-
-        {/* Category Pill Over Thumbnail */}
-        <div className="absolute top-3 left-3">
-          <span className="inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-semibold tracking-wide bg-forest-900/90 backdrop-blur-xs text-warm-cream border border-forest-700/60 shadow-xs">
-            {video.category}
-          </span>
         </div>
       </div>
 
       {/* Card Content */}
-      <div className="flex-1 flex flex-col p-5 sm:p-6">
-        <h3 className="text-lg sm:text-xl font-serif font-bold text-forest-900 dark:text-forest-100 line-clamp-2 leading-snug group-hover:text-forest-700 dark:group-hover:text-forest-300 transition-colors">
-          {video.title}
-        </h3>
+      <div className="flex-1 flex flex-col p-5 sm:p-6 justify-between space-y-3">
+        <div className="space-y-1.5">
+          <h3 className="text-base sm:text-lg font-heading font-bold text-[#0B3025] line-clamp-2 leading-snug group-hover:text-[#F47B2A] transition-colors">
+            {displayTitle}
+          </h3>
 
-        {video.titleGu && (
-          <p className="mt-1.5 text-sm sm:text-base text-forest-700 dark:text-forest-300 font-gujarati font-medium line-clamp-1">
-            {video.titleGu}
+          {secondaryTitle && (
+            <p className="text-xs text-charcoal/60 font-body line-clamp-1">
+              {secondaryTitle}
+            </p>
+          )}
+
+          <p className="text-xs sm:text-sm text-charcoal/75 line-clamp-3 leading-relaxed pt-1">
+            {video.description}
           </p>
-        )}
-
-        <p className="mt-3 text-sm sm:text-base text-forest-800/90 dark:text-forest-200/90 line-clamp-3 leading-relaxed flex-1">
-          {video.description}
-        </p>
+        </div>
 
         {/* Card Footer Actions */}
-        <div className="mt-5 pt-3.5 border-t border-warm-cream-border dark:border-forest-800 flex items-center justify-between text-sm sm:text-base">
+        <div className="pt-3 border-t border-forest/10 flex items-center justify-between text-xs">
           <button
             type="button"
             onClick={() => onPlay(video)}
-            className="inline-flex items-center gap-2 font-bold text-forest-900 dark:text-forest-100 hover:text-saffron-600 dark:hover:text-saffron-400 transition-colors"
+            className="inline-flex items-center gap-1.5 font-bold text-[#0B3025] hover:text-[#F47B2A] transition-colors"
           >
-            <PlayIcon size={16} className="text-saffron-500" />
-            <span>Play Video</span>
+            <PlayIcon size={14} className="text-[#F47B2A]" />
+            <span>{isGujarati ? "વિડીયો જુઓ" : "Play Video"}</span>
           </button>
 
           <a
             href={`https://www.youtube.com/watch?v=${video.id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 font-medium text-forest-600 dark:text-forest-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+            className="inline-flex items-center gap-1 text-charcoal/60 hover:text-red-600 transition-colors font-semibold"
             title="Watch directly on YouTube"
           >
-            <YoutubeIcon size={16} />
+            <YoutubeIcon size={15} />
             <span>YouTube</span>
-            <ExternalLinkIcon size={13} />
+            <ExternalLinkIcon size={12} />
           </a>
         </div>
       </div>

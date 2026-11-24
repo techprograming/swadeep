@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { YOUTUBE_VIDEOS, YOUTUBE_CHANNEL, YouTubeVideoItem } from "@/lib/constants";
@@ -16,6 +17,9 @@ import {
   UsersGroupIcon,
   HeartPulseIcon,
   CameraIcon,
+  PlayIcon,
+  ClockIcon,
+  HeartIcon,
   BookOpenIcon,
   ReceiptTextIcon,
 } from "@/components/ui/Icons";
@@ -85,102 +89,68 @@ export default function VideosPage() {
     });
   }, [selectedCategory, searchQuery]);
 
+  // Featured Video: first item from verified list
+  const featuredVideo: YouTubeVideoItem = YOUTUBE_VIDEOS[0];
+
   return (
-    <main id="main-content" className="flex-1 min-h-screen bg-[#FAFAF7]">
-      {/* 1. Hero Header Section */}
-      <section className="relative py-16 sm:py-20 bg-gradient-to-r from-[#0B3025] via-[#174B38] to-[#205943] text-white overflow-hidden">
-        {/* Modern ambient backdrop glow */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-forest-700/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-10 w-80 h-80 bg-[#F47B2A]/10 rounded-full blur-3xl pointer-events-none" />
+    <main id="main-content" className="flex-1 min-h-screen bg-cream">
+      {/* ════════════════════════════════════
+          1. COMPACT EDITORIAL HERO
+      ════════════════════════════════════ */}
+      <section className="relative pt-24 sm:pt-28 pb-12 sm:pb-14 bg-[#0B3025] text-white overflow-hidden">
+        {/* Subtle geometric circles */}
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
+          <div className="absolute -top-12 -right-12 w-96 h-96 rounded-full border-2 border-white" />
+          <div className="absolute bottom-0 left-10 w-72 h-72 rounded-full border border-white" />
+        </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
-            {/* Left Content */}
-            <div className="max-w-2xl text-center lg:text-left space-y-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#F47B2A] text-xs font-bold tracking-wider uppercase backdrop-blur-xs">
-                <YoutubeIcon size={16} className="text-red-500" />
-                <span>{isGujarati ? "સત્તાવાર વિડીયો ચેનલ" : "Official Video Channel"}</span>
-              </div>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 space-y-4">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 border border-red-500/30 text-red-400 text-[11px] font-bold tracking-wider uppercase">
+              <YoutubeIcon size={14} className="text-red-500" />
+              <span>{isGujarati ? "સત્તાવાર વિડીયો ચેનલ" : "Official Video Channel"}</span>
+            </span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-[#F47B2A] text-xs font-mono font-bold">
+              {YOUTUBE_CHANNEL.handle}
+            </span>
+            <span className="text-white/40 text-xs">•</span>
+            <span className="text-white/80 text-xs font-mono font-semibold">
+              12 {isGujarati ? "પ્રવૃત્તિ વિડીયો" : "Activity Videos"}
+            </span>
+          </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight text-white leading-tight">
-                {isGujarati ? "પ્રવૃત્તિ વિડીયો ગેલેરી" : "Activity Video Gallery"}
-              </h1>
-              <p className="text-base sm:text-lg font-body text-saffron-300 font-semibold">
-                {isGujarati ? `સ્વદીપ શિક્ષણ વિકાસ — ${YOUTUBE_CHANNEL.handle}` : `Swadeep Shikshan Vikas — ${YOUTUBE_CHANNEL.handle}`}
-              </p>
+          <div className="max-w-3xl space-y-2">
+            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+              {isGujarati ? "પ્રવૃત્તિ વિડીયો ગેલેરી" : "Activity Video Gallery"}
+            </h1>
+            <p className="font-body text-xs sm:text-sm text-white/85 leading-relaxed max-w-2xl">
+              {isGujarati
+                ? "ગ્રામીણ ગુજરાતમાં પ્રાથમિક શિક્ષણ, આંગણવાડી કાર્યકર તાલીમ, બાળ આરોગ્ય શિબિરો અને સમુદાય સશક્તિકરણની જીવંત ક્ષેત્રીય પ્રવૃત્તિઓના સત્તાવાર વિડીયો દસ્તાવેજીકરણ."
+                : "Experience authentic on-ground moments from rural Gujarat: classroom innovations, Anganwadi capacity building workshops, child health check-ups, and community empowerment sessions."}
+            </p>
+          </div>
 
-              <p className="text-sm sm:text-base text-cream/85 leading-relaxed font-body">
-                {isGujarati
-                  ? "ગ્રામીણ ગુજરાતમાં પ્રાથમિક શિક્ષણ, આંગણવાડી કાર્યકર તાલીમ, બાળ આરોગ્ય કેમ્પ અને સમુદાય સશક્તિકરણની જીવંત પ્રવૃત્તિઓના સત્તાવાર વિડીયો."
-                  : "Experience authentic on-ground moments from rural Gujarat: classroom innovations, Anganwadi capacity building workshops, child health check-ups, and community empowerment sessions."}
-              </p>
+          {/* Quick Hero Actions */}
+          <div className="pt-2 flex flex-wrap items-center gap-3">
+            <a
+              href={YOUTUBE_CHANNEL.subscribeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
+            >
+              <YoutubeIcon size={16} />
+              <span>{isGujarati ? "YouTube પર સબ્સ્ક્રાઇબ કરો" : "Subscribe on YouTube"}</span>
+              <ExternalLinkIcon size={13} className="opacity-80" />
+            </a>
 
-              {/* Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <a
-                  href={YOUTUBE_CHANNEL.subscribeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
-                >
-                  <YoutubeIcon size={18} />
-                  <span>{isGujarati ? "YouTube પર સબ્સ્ક્રાઇબ કરો" : "Subscribe on YouTube"}</span>
-                  <ExternalLinkIcon size={14} className="opacity-80" />
-                </a>
-
-                <Link
-                  href="/gallery"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
-                >
-                  <CameraIcon size={16} />
-                  <span>{isGujarati ? "ફોટો ગેલેરી જુઓ" : "View Photo Gallery"}</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Right Card: Official Channel Highlights */}
-            <div className="w-full lg:w-auto shrink-0">
-              <div className="bg-[#061F17]/90 backdrop-blur-md border border-white/15 rounded-3xl p-6 sm:p-7 shadow-2xl max-w-md mx-auto">
-                <div className="flex items-center gap-4 border-b border-white/10 pb-5">
-                  <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-500 shrink-0 shadow-inner">
-                    <YoutubeIcon size={32} />
-                  </div>
-                  <div>
-                    <h2 className="text-lg font-heading font-bold text-white">
-                      Swadeep Shikshan Vikas
-                    </h2>
-                    <p className="text-sm text-[#F47B2A] font-mono font-semibold">
-                      {YOUTUBE_CHANNEL.handle}
-                    </p>
-                    <p className="text-xs text-white/70 mt-0.5">
-                      {isGujarati ? "બિન-નફાકારક સંસ્થા • ગુજરાત" : "Non-Profit Organization • Gujarat"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-5 space-y-3.5 text-xs sm:text-sm text-cream/90 font-medium">
-                  <div className="flex items-center gap-2.5">
-                    <GraduationCapIcon size={18} className="text-[#F47B2A] shrink-0" />
-                    <span>{isGujarati ? "૨૯૫+ પ્રાથમિક શાળાઓ અને કેન્દ્રો" : "295+ Primary Schools & Learning Centers"}</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <UsersGroupIcon size={18} className="text-[#F47B2A] shrink-0" />
-                    <span>{isGujarati ? "૯૫૦+ આંગણવાડી કાર્યકરો તાલીમ પામેલા" : "950+ Anganwadi Workers Trained"}</span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <HeartPulseIcon size={18} className="text-[#F47B2A] shrink-0" />
-                    <span>{isGujarati ? "બાળ આરોગ્ય અને પોષણ માર્ગદર્શન" : "Preventive Child Healthcare & Nutrition"}</span>
-                  </div>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-white/10 text-center">
-                  <span className="inline-flex items-center gap-2 text-xs text-[#F47B2A] font-bold">
-                    <CheckCircleIcon size={16} className="text-emerald-400" />
-                    <span>{isGujarati ? "સત્તાવાર પ્રમાણિત સામગ્રી" : "Official Verified Content"}</span>
-                  </span>
-                </div>
-              </div>
-            </div>
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
+            >
+              <CameraIcon size={15} />
+              <span>{isGujarati ? "ફોટો ગેલેરી જુઓ" : "Photo Gallery (86 Photos)"}</span>
+            </Link>
           </div>
         </div>
       </section>
@@ -188,102 +158,217 @@ export default function VideosPage() {
       {/* Shared Media Sub-Navigation */}
       <MediaSubNav activeTab="videos" />
 
-      {/* 2. Interactive Controls & Filters */}
-      <section className="py-8 bg-white border-b border-forest/10 shadow-xs">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-5">
-          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      {/* Main Content Area */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-10 sm:space-y-12 mt-8 sm:mt-10">
+
+        {/* ════════════════════════════════════
+            2. FEATURED VIDEO SHOWCASE
+        ════════════════════════════════════ */}
+        <section aria-label="Featured Organization Video">
+          <div className="bg-white rounded-3xl border border-neutral-200/90 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+            <div className="flex flex-col lg:flex-row items-stretch">
+              {/* 16:9 Thumbnail with large interactive play button */}
+              <div
+                className="relative lg:w-3/5 aspect-video bg-neutral-900 overflow-hidden cursor-pointer group shrink-0"
+                onClick={() => setActiveVideo(featuredVideo)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setActiveVideo(featuredVideo);
+                  }
+                }}
+                aria-label={`Play featured video: ${featuredVideo.title}`}
+              >
+                <Image
+                  src={`https://img.youtube.com/vi/${featuredVideo.id}/hqdefault.jpg`}
+                  alt={featuredVideo.title}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+
+                {/* Dark Vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10 group-hover:opacity-75 transition-opacity" />
+
+                {/* Featured Badge */}
+                <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-[#F47B2A] text-white text-xs font-bold uppercase tracking-wider shadow-sm">
+                    {isGujarati ? "મુખ્ય વિડીયો" : "Featured Spotlight"}
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-sm text-white text-[11px] font-mono font-bold">
+                    {featuredVideo.duration}
+                  </span>
+                </div>
+
+                {/* Center Large Play Icon with Pulse */}
+                <div className="absolute inset-0 flex items-center justify-center z-10">
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute w-20 h-20 rounded-full bg-[#F47B2A]/30 group-hover:scale-125 group-hover:bg-[#F47B2A]/50 blur-lg transition-all duration-300" />
+                    <span className="relative flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-red-600 text-white shadow-2xl group-hover:bg-[#F47B2A] group-hover:scale-110 transition-all duration-300">
+                      <PlayIcon size={28} className="ml-1 text-white" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Featured Content & Actions */}
+              <div className="flex-1 p-6 sm:p-8 flex flex-col justify-between space-y-4">
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#F47B2A] font-mono">
+                    {featuredVideo.category}
+                  </span>
+                  <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-[#0B3025] leading-snug">
+                    {isGujarati && featuredVideo.titleGu ? featuredVideo.titleGu : featuredVideo.title}
+                  </h2>
+                  {featuredVideo.titleGu && (
+                    <p className="text-xs text-charcoal/60 font-body">
+                      {isGujarati ? featuredVideo.title : featuredVideo.titleGu}
+                    </p>
+                  )}
+                  <p className="font-body text-xs sm:text-sm text-charcoal/75 leading-relaxed pt-2">
+                    {featuredVideo.description}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-neutral-100 flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setActiveVideo(featuredVideo)}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
+                  >
+                    <PlayIcon size={16} />
+                    <span>{isGujarati ? "વિડીયો ચલાવો" : "Play Featured Video"}</span>
+                  </button>
+
+                  <a
+                    href={`https://www.youtube.com/watch?v=${featuredVideo.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-charcoal text-xs font-semibold transition-colors"
+                  >
+                    <YoutubeIcon size={16} className="text-red-600" />
+                    <span>Watch on YouTube</span>
+                    <ExternalLinkIcon size={12} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════════════════════
+            3. CATEGORY NAVIGATION & SEARCH TOOLBAR
+        ════════════════════════════════════ */}
+        <section aria-label="Video Filters and Search" className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+            <div>
+              <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest block mb-1">
+                {isGujarati ? "વિડીયો ભંડાર" : "Video Repository"}
+              </span>
+              <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
+                {isGujarati ? "શ્રેણી મુજબ વિડીયો જુઓ" : "Browse by Program Area"}
+              </h2>
+            </div>
+            <div className="text-xs text-neutral-500 font-medium">
+              <span>{isGujarati ? "દર્શાવેલ: " : "Showing: "}</span>
+              <strong className="text-[#0B3025] font-bold">{filteredVideos.length}</strong>
+              <span> of {YOUTUBE_VIDEOS.length} videos</span>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 rounded-2xl border border-neutral-200 shadow-xs space-y-3">
             {/* Search Input */}
-            <div className="relative flex-1 max-w-md">
+            <div className="relative">
               <SearchIcon
                 size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal/40 pointer-events-none"
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none"
               />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isGujarati ? "વિડીયો અથવા વિષય શોધો..." : "Search videos by title or topic..."}
-                className="w-full pl-11 pr-12 py-2.5 rounded-2xl bg-[#FBF8F3] border border-forest/15 text-xs sm:text-sm text-charcoal placeholder:text-charcoal/45 focus:outline-none focus:ring-2 focus:ring-[#F47B2A] transition-all"
+                placeholder={isGujarati ? "વિડીયો શીર્ષક, વિષય અથવા શ્રેણી શોધો..." : "Search videos by title, topic, or category..."}
+                className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs sm:text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]/40 focus:border-[#F47B2A] transition-all"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-charcoal/50 hover:text-charcoal"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 text-xs"
+                  aria-label="Clear search"
                 >
                   ✕
                 </button>
               )}
             </div>
 
-            {/* Video Counter */}
-            <div className="text-xs text-charcoal/70 font-medium flex items-center gap-1.5 self-center">
-              <span>{isGujarati ? "પરિણામો: " : "Showing: "}</span>
-              <strong className="font-bold text-[#0B3025]">
-                {filteredVideos.length}
-              </strong>
-              <span> of {YOUTUBE_VIDEOS.length} videos</span>
-            </div>
-          </div>
+            {/* Category Filter Chips — Horizontally Scrollable on Mobile */}
+            <div
+              role="group"
+              aria-label="Filter videos by category"
+              className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory flex-nowrap"
+            >
+              {CATEGORIES.map((cat) => {
+                const isActive = selectedCategory === cat;
+                const labelObj = VIDEO_CATEGORY_LABELS[cat] || { en: cat, gu: cat };
+                const count = categoryCounts[cat] || 0;
 
-          {/* Category Filter Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none snap-x snap-mandatory">
-            {CATEGORIES.map((cat) => {
-              const isActive = selectedCategory === cat;
-              const labelObj = VIDEO_CATEGORY_LABELS[cat] || { en: cat, gu: cat };
-              const count = categoryCounts[cat] || 0;
-
-              return (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`snap-start shrink-0 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-1.5 ${
-                    isActive
-                      ? "bg-[#0B3025] text-white shadow-sm"
-                      : "bg-[#FBF8F3] text-charcoal/80 border border-forest/10 hover:bg-forest-50"
-                  }`}
-                >
-                  <span>{isGujarati ? labelObj.gu : labelObj.en}</span>
-                  <span
-                    className={`text-[10px] rounded-full px-1.5 py-0.5 font-bold ${
-                      isActive ? "bg-white/20 text-white" : "bg-neutral-200/70 text-charcoal/60"
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat)}
+                    aria-pressed={isActive}
+                    className={`snap-start shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 flex items-center gap-1.5 ${
+                      isActive
+                        ? "bg-[#0B3025] text-white shadow-xs"
+                        : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
                     }`}
                   >
-                    {count}
-                  </span>
+                    <span>{isGujarati ? labelObj.gu : labelObj.en}</span>
+                    <span
+                      className={`text-[10px] rounded-full px-1.5 py-0.2 font-mono font-bold ${
+                        isActive ? "bg-white/20 text-white" : "bg-white text-neutral-600"
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+
+              {(selectedCategory !== "All" || searchQuery) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCategory("All");
+                    setSearchQuery("");
+                  }}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors shrink-0"
+                >
+                  {isGujarati ? "ફિલ્ટર્સ સાફ કરો" : "Clear Filters"}
                 </button>
-              );
-            })}
-
-            {(selectedCategory !== "All" || searchQuery) && (
-              <button
-                type="button"
-                onClick={() => {
-                  setSelectedCategory("All");
-                  setSearchQuery("");
-                }}
-                className="px-3.5 py-2 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors shrink-0"
-              >
-                {isGujarati ? "ફિલ્ટર્સ સાફ કરો" : "Reset Filters"}
-              </button>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 3. Videos Grid */}
-      <section className="py-12 sm:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* ════════════════════════════════════
+            4. VIDEO GRID
+        ════════════════════════════════════ */}
+        <section aria-label="Activity Videos Collection">
           {filteredVideos.length === 0 ? (
-            <div className="text-center py-20 bg-white rounded-3xl border border-forest/10 max-w-lg mx-auto p-8 shadow-xs">
-              <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-800 mx-auto flex items-center justify-center mb-4">
+            <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-neutral-300 p-8 space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 mx-auto flex items-center justify-center mb-2">
                 <SearchIcon size={24} />
               </div>
-              <h3 className="text-lg font-heading font-bold text-[#0B3025]">
+              <h3 className="font-heading font-bold text-base text-[#0B3025]">
                 {isGujarati ? "કોઈ વિડીયો મળ્યો નથી" : "No Videos Found"}
               </h3>
-              <p className="mt-2 text-xs text-charcoal/70">
+              <p className="text-xs text-neutral-500 max-w-sm mx-auto">
                 {isGujarati
                   ? `તમારી શોધ "${searchQuery || selectedCategory}" માટે કોઈ વિડીયો મળ્યો નથી.`
                   : `No videos match your filter "${searchQuery || selectedCategory}". Try another search term or reset filters.`}
@@ -294,78 +379,86 @@ export default function VideosPage() {
                   setSelectedCategory("All");
                   setSearchQuery("");
                 }}
-                className="mt-5 inline-flex items-center px-5 py-2.5 rounded-full bg-[#0B3025] text-white text-xs font-bold hover:bg-[#174B38] transition-colors"
+                className="px-4 py-2 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs"
               >
                 {isGujarati ? "બધા વિડીયો જુઓ" : "Reset All Filters"}
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {filteredVideos.map((video, idx) => (
-                <div key={video.id} className="transition-all duration-300">
-                  <VideoCard
-                    video={video}
-                    onPlay={(v) => setActiveVideo(v)}
-                    priority={idx < 3}
-                  />
-                </div>
+                <VideoCard
+                  key={video.id}
+                  video={video}
+                  onPlay={(v) => setActiveVideo(v)}
+                  priority={idx < 3}
+                  isGujarati={isGujarati}
+                />
               ))}
             </div>
           )}
-        </div>
-      </section>
+        </section>
 
-      {/* 4. Cross-Media Discovery Callout Banner */}
-      <section className="pb-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="bg-gradient-to-r from-[#0B3025] via-[#174B38] to-[#0B3025] text-white rounded-3xl p-8 sm:p-12 shadow-xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="max-w-xl text-center md:text-left space-y-2">
-              <span className="text-xs uppercase tracking-wider text-[#F47B2A] font-bold">
-                {isGujarati ? "વધુ સંસાધનો જુઓ" : "Explore More Resources"}
+        {/* ════════════════════════════════════
+            5. CLEAN CLOSING BOTTOM SECTION
+        ════════════════════════════════════ */}
+        <section
+          aria-labelledby="video-closing-heading"
+          className="rounded-3xl bg-[#0B3025] text-white p-8 sm:p-10 shadow-lg border border-white/10"
+        >
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
+            <div className="space-y-2 max-w-xl text-center md:text-left">
+              <span className="text-[11px] uppercase tracking-wider text-[#F47B2A] font-bold">
+                {isGujarati ? "અમારી સાથે જોડાઓ" : "Stay Connected & Support"}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-white">
-                {isGujarati ? "તસ્વીરો, વાર્ષિક અહેવાલો અને પ્રકાશનો" : "High-Resolution Photos, Reports & Storybooks"}
+              <h3 id="video-closing-heading" className="font-heading text-xl sm:text-2xl font-bold text-white">
+                {isGujarati ? "સ્વદીપના કાર્યોને ટેકો આપો" : "Support Swadeep's Grassroots Mission"}
               </h3>
               <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-body">
                 {isGujarati
-                  ? "૮૬ થી વધુ ક્ષેત્રીય તસ્વીરો, છેલ્લા ૧૩ વર્ષના વાર્ષિક ઓડિટ અહેવાલો અને ડેન્ટલ હાઇજીન બાળવાર્તાઓ જુઓ."
-                  : "Browse through 86+ field photographs, 13+ years of audited balance sheets, and illustrated children's storybooks."}
+                  ? "અમારી YouTube ચેનલ સબ્સ્ક્રાઇબ કરો, ૮૬+ ક્ષેત્રીય તસ્વીરો જુઓ અથવા ગ્રામીણ બાળકો અને મહિલાઓના કલ્યાણ માટે દાન આપો."
+                  : "Subscribe to our YouTube channel for updates, explore our 86+ field photos, or support our 5 core programs across Gujarat."}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+              <a
+                href={YOUTUBE_CHANNEL.subscribeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
+              >
+                <YoutubeIcon size={16} />
+                <span>{isGujarati ? "સબ્સ્ક્રાઇબ કરો" : "Subscribe on YouTube"}</span>
+              </a>
+
               <Link
                 href="/gallery"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all"
               >
-                <CameraIcon size={16} />
+                <CameraIcon size={15} />
                 <span>{isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}</span>
               </Link>
 
               <Link
-                href="/publications"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition-colors"
+                href="/donate"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
               >
-                <BookOpenIcon size={16} />
-                <span>{isGujarati ? "શૈક્ષણિક પ્રકાશનો" : "Publications"}</span>
-              </Link>
-
-              <Link
-                href="/resources"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition-colors"
-              >
-                <ReceiptTextIcon size={16} />
-                <span>{isGujarati ? "ઓડિટ અહેવાલો" : "Statutory Reports"}</span>
+                <HeartIcon size={15} />
+                <span>{isGujarati ? "દાન આપો" : "Support Our Cause"}</span>
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* Video Modal Player */}
+      {/* ════════════════════════════════════
+          LAZY LOADED VIDEO PLAYER MODAL
+      ════════════════════════════════════ */}
       <VideoModal
         video={activeVideo}
         onClose={() => setActiveVideo(null)}
+        isGujarati={isGujarati}
       />
     </main>
   );

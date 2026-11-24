@@ -7,9 +7,10 @@ import { YoutubeIcon, ExternalLinkIcon } from "@/components/ui/Icons";
 interface VideoModalProps {
   video: YouTubeVideoItem | null;
   onClose: () => void;
+  isGujarati?: boolean;
 }
 
-export default function VideoModal({ video, onClose }: VideoModalProps) {
+export default function VideoModal({ video, onClose, isGujarati = false }: VideoModalProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -56,12 +57,12 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
             <div className="min-w-0">
               <h3
                 id="video-modal-title"
-                className="text-lg sm:text-xl font-serif font-bold text-forest-900 dark:text-forest-100 truncate"
+                className="text-base sm:text-lg font-heading font-bold text-[#0B3025] truncate"
               >
-                {video.title}
+                {isGujarati && video.titleGu ? video.titleGu : video.title}
               </h3>
-              <p className="text-sm text-forest-700 dark:text-forest-300 font-gujarati font-medium truncate">
-                {video.titleGu}
+              <p className="text-xs text-charcoal/60 truncate">
+                {isGujarati && video.titleGu ? video.title : video.titleGu}
               </p>
             </div>
           </div>
@@ -69,8 +70,8 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close modal"
-            className="p-2 text-forest-500 hover:text-forest-900 dark:text-forest-400 dark:hover:text-forest-100 rounded-lg hover:bg-forest-100 dark:hover:bg-forest-800 transition-colors shrink-0"
+            aria-label={isGujarati ? "વિડીયો પ્લેયર બંધ કરો (Esc)" : "Close video player (Esc)"}
+            className="w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 text-charcoal flex items-center justify-center transition-colors shrink-0"
           >
             <svg
               className="w-5 h-5"
@@ -101,36 +102,35 @@ export default function VideoModal({ video, onClose }: VideoModalProps) {
         </div>
 
         {/* Details & Action Bar */}
-        <div className="p-5 sm:p-6 bg-white dark:bg-forest-900/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1.5">
-            <span className="inline-block text-xs sm:text-sm font-bold px-3 py-1 rounded-full bg-forest-100 text-forest-900 dark:bg-forest-800 dark:text-forest-100">
+        <div className="p-4 sm:p-6 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1 max-w-xl">
+            <span className="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#0B3025] text-white">
               {video.category}
             </span>
-            <p className="text-base sm:text-lg text-forest-800 dark:text-forest-200 leading-relaxed max-w-2xl font-normal">
+            <p className="text-xs sm:text-sm text-charcoal/80 leading-relaxed font-body">
               {video.description}
             </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0">
             <a
               href={`https://www.youtube.com/watch?v=${video.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white text-sm font-semibold tracking-wide transition-all shadow-sm hover:shadow"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-all shadow-sm"
             >
-              <YoutubeIcon size={18} />
-              <span>Watch on YouTube</span>
-              <ExternalLinkIcon size={14} />
+              <YoutubeIcon size={16} />
+              <span>{isGujarati ? "YouTube પર જુઓ" : "Open on YouTube"}</span>
+              <ExternalLinkIcon size={12} />
             </a>
 
-            <a
-              href={YOUTUBE_CHANNEL.subscribeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-warm-cream-border dark:bg-forest-800 text-forest-900 dark:text-forest-100 hover:bg-forest-200 dark:hover:bg-forest-700 text-sm font-semibold transition-colors"
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-3.5 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-charcoal text-xs font-semibold transition-colors"
             >
-              <span>Channel</span>
-            </a>
+              {isGujarati ? "બંધ કરો (Esc)" : "Close"}
+            </button>
           </div>
         </div>
       </div>
