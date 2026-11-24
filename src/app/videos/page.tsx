@@ -105,21 +105,6 @@ export default function VideosPage() {
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 space-y-4">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600/20 border border-red-500/30 text-red-400 text-[11px] font-bold tracking-wider uppercase">
-              <YoutubeIcon size={14} className="text-red-500" />
-              <span>{isGujarati ? "સત્તાવાર વિડીયો ચેનલ" : "Official Video Channel"}</span>
-            </span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-[#F47B2A] text-xs font-mono font-bold">
-              {YOUTUBE_CHANNEL.handle}
-            </span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/80 text-xs font-mono font-semibold">
-              12 {isGujarati ? "પ્રવૃત્તિ વિડીયો" : "Activity Videos"}
-            </span>
-          </div>
-
           <div className="max-w-3xl space-y-2">
             <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
               {isGujarati ? "પ્રવૃત્તિ વિડીયો ગેલેરી" : "Activity Video Gallery"}
