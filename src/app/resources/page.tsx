@@ -3,45 +3,39 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { BookOpenIcon, DownloadIcon, ExternalLinkIcon, SearchIcon, ShieldCheckIcon } from "@/components/ui/Icons";
+import {
+  BookOpenIcon,
+  DownloadIcon,
+  ExternalLinkIcon,
+  SearchIcon,
+  ShieldCheckIcon,
+} from "@/components/ui/Icons";
 import DocumentCard from "@/components/ui/DocumentCard";
 import DocumentPreviewModal, { PreviewDocument } from "@/components/ui/DocumentPreviewModal";
-
-const OFFICIAL_BROCHURE: PreviewDocument = {
-  id: "res-brochure",
-  title: "Swadeep Shikshan Vikas Sanstha Official Organization Brochure",
-  titleGu: "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા સત્તાવાર સંસ્થાકીય બ્રોશર",
-  category: "Official Brochure",
-  categoryGu: "સત્તાવાર બ્રોશર",
-  year: "Comprehensive Edition",
-  size: "2.73 MB",
-  fileUrl: "/brochure/swadeep-brochure.pdf",
-  description:
-    "Comprehensive institutional presentation detailing Swadeep's 20+ years of grassroots impact across 200+ villages, 5 thematic core programs, and governance architecture.",
-  descriptionGu:
-    "ગુજરાતના ૨૦૦+ ગામોમાં ૨૦+ વર્ષના ક્ષેત્રીય કાર્ય, ૫ મુખ્ય કાર્યક્રમો અને સંસ્થાકીય માળખાની વિગતવાર માહિતી આપતી સત્તાવાર બ્રોશર પુસ્તિકા.",
-};
+import {
+  OFFICIAL_BROCHURE,
+  VERIFIED_REPORTS,
+} from "@/lib/reportsData";
 
 export default function ResourcesPage() {
   const { isGujarati } = useLanguage();
-  const [reports, setReports] = useState<PreviewDocument[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Initialize with verified static reports so SSR/first paint renders all 33 documents immediately with exact counts
+  const [reports, setReports] = useState<PreviewDocument[]>(VERIFIED_REPORTS);
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [selectedYear, setSelectedYear] = useState<string>("All");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [previewDoc, setPreviewDoc] = useState<PreviewDocument | null>(null);
 
-  // Fetch verified reports repository
+  // Background revalidation: fetch latest reports from API in case admin updated records via /admin
   useEffect(() => {
     let isMounted = true;
-    async function fetchReports() {
+    async function revalidateReports() {
       try {
         const res = await fetch("/api/reports");
         if (res.ok) {
           const data = await res.json();
-          if (data.success && Array.isArray(data.reports) && isMounted) {
-            // Map reports to PreviewDocument format
+          if (data.success && Array.isArray(data.reports) && data.reports.length > 0 && isMounted) {
             const mapped: PreviewDocument[] = data.reports.map((r: any) => ({
               id: r.id,
               title: r.title,
@@ -65,25 +59,29 @@ export default function ResourcesPage() {
           }
         }
       } catch (err) {
-        console.warn("Could not load reports:", err);
-      } finally {
-        if (isMounted) setLoading(false);
+        // Silently preserve verified static reports on network error
+        console.warn("Could not revalidate reports API:", err);
       }
     }
-    fetchReports();
+    revalidateReports();
     return () => {
       isMounted = false;
     };
   }, []);
 
-  // Combine brochure with all reports
+  // Combine brochure with verified statutory reports
   const allResources: PreviewDocument[] = useMemo(() => {
     return [OFFICIAL_BROCHURE, ...reports];
   }, [reports]);
 
-  // Unique categories with counts
+  // Dynamic category tabs with exact real-time item counts
   const categories = useMemo(() => {
-    const list: { key: string; labelEn: string; labelGu: string; count: number }[] = [
+    const annualCount = allResources.filter((r) => r.category === "Annual Report").length;
+    const auditCount = allResources.filter((r) => r.category === "Audit Report").length;
+    const fcCount = allResources.filter((r) => r.category === "FC Accounts").length;
+    const brochureCount = allResources.filter((r) => r.category === "Official Brochure").length;
+
+    return [
       {
         key: "All",
         labelEn: "All Resources",
@@ -94,31 +92,30 @@ export default function ResourcesPage() {
         key: "Annual Report",
         labelEn: "Annual Reports",
         labelGu: "વાર્ષિક અહેવાલો",
-        count: allResources.filter((r) => r.category === "Annual Report").length,
+        count: annualCount,
       },
       {
         key: "Audit Report",
         labelEn: "Audit Reports",
         labelGu: "ઓડિટ અહેવાલો",
-        count: allResources.filter((r) => r.category === "Audit Report").length,
+        count: auditCount,
       },
       {
         key: "FC Accounts",
         labelEn: "FCRA Accounts",
         labelGu: "એફસીઆરએ હિસાબ",
-        count: allResources.filter((r) => r.category === "FC Accounts").length,
+        count: fcCount,
       },
       {
         key: "Official Brochure",
         labelEn: "Official Brochure",
         labelGu: "સત્તાવાર બ્રોશર",
-        count: allResources.filter((r) => r.category === "Official Brochure").length,
+        count: brochureCount,
       },
     ];
-    return list;
   }, [allResources]);
 
-  // Unique years for the year filter dropdown
+  // Available fiscal years sorted descending
   const availableYears = useMemo(() => {
     const yearSet = new Set<string>();
     reports.forEach((r) => {
@@ -127,18 +124,18 @@ export default function ResourcesPage() {
     return Array.from(yearSet).sort().reverse();
   }, [reports]);
 
-  // Filtered and sorted resources
+  // Filtered and sorted collection
   const filteredResources = useMemo(() => {
     const list = allResources.filter((item) => {
-      // Category filter
+      // Category match
       const matchesCategory =
         activeCategory === "All" || item.category === activeCategory;
 
-      // Year filter
+      // Year match
       const matchesYear =
         selectedYear === "All" || item.year === selectedYear;
 
-      // Keyword search
+      // Search match
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
         !q ||
@@ -146,12 +143,13 @@ export default function ResourcesPage() {
         (item.titleGu && item.titleGu.toLowerCase().includes(q)) ||
         (item.year && item.year.toLowerCase().includes(q)) ||
         item.category.toLowerCase().includes(q) ||
-        (item.description && item.description.toLowerCase().includes(q));
+        (item.description && item.description.toLowerCase().includes(q)) ||
+        (item.descriptionGu && item.descriptionGu.toLowerCase().includes(q));
 
       return matchesCategory && matchesYear && matchesSearch;
     });
 
-    // Sorting (by year where available)
+    // Sorting
     return list.sort((a, b) => {
       if (a.id === "res-brochure") return -1;
       if (b.id === "res-brochure") return 1;
@@ -164,6 +162,15 @@ export default function ResourcesPage() {
     });
   }, [allResources, activeCategory, selectedYear, searchQuery, sortOrder]);
 
+  const hasActiveFilters =
+    activeCategory !== "All" || selectedYear !== "All" || searchQuery.trim().length > 0;
+
+  const handleResetFilters = () => {
+    setActiveCategory("All");
+    setSelectedYear("All");
+    setSearchQuery("");
+  };
+
   return (
     <main id="main-content" className="pt-24 sm:pt-28 pb-20 bg-cream min-h-screen">
       {/* 1. Hero Section */}
@@ -175,8 +182,10 @@ export default function ResourcesPage() {
               <span>{isGujarati ? "પારદર્શિતા અને વૈધાનિક હિસાબો" : "STATUTORY TRANSPARENCY & GOVERNANCE"}</span>
             </span>
             <span className="text-white/60 text-xs">•</span>
-            <span className="text-white/80 text-xs font-medium">
-              {isGujarati ? "૩૩+ સત્તાવાર દસ્તાવેજો" : "33+ Official Statutory Documents"}
+            <span className="text-white/90 text-xs font-semibold">
+              {isGujarati
+                ? `${allResources.length} પ્રમાણિત વૈધાનિક દસ્તાવેજો`
+                : `${allResources.length} Verified Statutory Documents`}
             </span>
           </div>
 
@@ -191,7 +200,7 @@ export default function ResourcesPage() {
             </p>
           </div>
 
-          {/* Compliance Highlights & Publications Link */}
+          {/* Statutory Credentials & Publications CTA */}
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-xs border border-white/15 text-xs text-white">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
@@ -219,7 +228,7 @@ export default function ResourcesPage() {
         {/* 2. Featured Official Brochure Showcase Banner */}
         <section aria-label="Official Organization Brochure">
           <div className="relative overflow-hidden rounded-3xl bg-white border border-forest/15 shadow-sm hover:shadow-md transition-shadow p-6 sm:p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
-            {/* Visual Icon Badge */}
+            {/* Visual Document Emblem */}
             <div className="w-full md:w-1/3 shrink-0 flex flex-col items-center justify-center p-8 rounded-2xl bg-gradient-to-br from-[#0B3025]/10 via-[#174B38]/10 to-[#F47B2A]/10 border border-forest/15 text-center space-y-3">
               <div className="w-16 h-16 rounded-2xl bg-[#0B3025] text-white flex items-center justify-center shadow-md">
                 <BookOpenIcon className="w-8 h-8" />
@@ -291,6 +300,7 @@ export default function ResourcesPage() {
                   type="button"
                   onClick={() => setSearchQuery("")}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-charcoal/50 hover:text-charcoal"
+                  aria-label="Clear search"
                 >
                   ✕
                 </button>
@@ -308,6 +318,7 @@ export default function ResourcesPage() {
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(e.target.value)}
                   className="px-3 py-2 rounded-xl bg-cream/50 border border-forest/15 text-xs font-semibold text-charcoal focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                  aria-label="Filter by Fiscal Year"
                 >
                   <option value="All">{isGujarati ? "તમામ વર્ષો (All Years)" : "All Years"}</option>
                   {availableYears.map((yr) => (
@@ -323,6 +334,7 @@ export default function ResourcesPage() {
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value as "newest" | "oldest")}
                 className="px-3 py-2 rounded-xl bg-cream/50 border border-forest/15 text-xs font-semibold text-charcoal focus:outline-none focus:ring-2 focus:ring-[#F47B2A]"
+                aria-label="Sort documents"
               >
                 <option value="newest">{isGujarati ? "સૌથી નવા પ્રથમ" : "Newest First"}</option>
                 <option value="oldest">{isGujarati ? "સૌથી જૂના પ્રથમ" : "Oldest First"}</option>
@@ -330,59 +342,57 @@ export default function ResourcesPage() {
             </div>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            {categories.map((cat) => {
-              const isActive = activeCategory === cat.key;
-              return (
-                <button
-                  key={cat.key}
-                  type="button"
-                  onClick={() => setActiveCategory(cat.key)}
-                  className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    isActive
-                      ? "bg-[#0B3025] text-white shadow-xs"
-                      : "bg-white text-charcoal/80 hover:bg-forest-50 border border-forest/10"
-                  }`}
-                >
-                  <span>{isGujarati ? cat.labelGu : cat.labelEn}</span>
-                  <span
-                    className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                      isActive ? "bg-white/20 text-white" : "bg-neutral-100 text-charcoal/60"
+          {/* Category Filter Pills with Live Accurate Counts */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat.key;
+                return (
+                  <button
+                    key={cat.key}
+                    type="button"
+                    onClick={() => setActiveCategory(cat.key)}
+                    className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      isActive
+                        ? "bg-[#0B3025] text-white shadow-xs"
+                        : "bg-white text-charcoal/80 hover:bg-forest-50 border border-forest/10"
                     }`}
                   >
-                    {cat.count}
-                  </span>
-                </button>
-              );
-            })}
+                    <span>{isGujarati ? cat.labelGu : cat.labelEn}</span>
+                    <span
+                      className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                        isActive ? "bg-white/20 text-white" : "bg-neutral-100 text-charcoal/60"
+                      }`}
+                    >
+                      {cat.count}
+                    </span>
+                  </button>
+                );
+              })}
 
-            {(activeCategory !== "All" || selectedYear !== "All" || searchQuery) && (
-              <button
-                type="button"
-                onClick={() => {
-                  setActiveCategory("All");
-                  setSelectedYear("All");
-                  setSearchQuery("");
-                }}
-                className="px-3.5 py-2 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors"
-              >
-                {isGujarati ? "ફિલ્ટર્સ સાફ કરો (Clear)" : "Clear Filters"}
-              </button>
-            )}
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="px-3.5 py-2 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors"
+                >
+                  {isGujarati ? "ફિલ્ટર્સ સાફ કરો (Clear)" : "Clear Filters"}
+                </button>
+              )}
+            </div>
+
+            {/* Results Count Indicator */}
+            <div className="text-xs text-charcoal/60 font-medium">
+              <span>{isGujarati ? "દર્શાવેલ દસ્તાવેજો: " : "Showing: "}</span>
+              <strong className="text-[#0B3025] font-bold">{filteredResources.length}</strong>
+              <span> of {allResources.length}</span>
+            </div>
           </div>
         </section>
 
         {/* 4. Resources Cards Grid */}
         <section aria-label="Official Resources Grid">
-          {loading ? (
-            <div className="py-20 text-center space-y-3">
-              <div className="w-8 h-8 border-3 border-[#0B3025] border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-xs text-charcoal/60">
-                {isGujarati ? "દસ્તાવેજો લોડ થઈ રહ્યા છે..." : "Loading verified reports repository..."}
-              </p>
-            </div>
-          ) : filteredResources.length > 0 ? (
+          {filteredResources.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredResources.map((doc) => (
                 <DocumentCard
@@ -410,12 +420,8 @@ export default function ResourcesPage() {
               </div>
               <button
                 type="button"
-                onClick={() => {
-                  setActiveCategory("All");
-                  setSelectedYear("All");
-                  setSearchQuery("");
-                }}
-                className="px-4 py-2 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all"
+                onClick={handleResetFilters}
+                className="px-4 py-2 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs"
               >
                 {isGujarati ? "તમામ દસ્તાવેજો બતાવો" : "Reset & Show All Documents"}
               </button>
