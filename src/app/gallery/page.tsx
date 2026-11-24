@@ -79,14 +79,6 @@ function PlayIcon({ className }: { className?: string }) {
   );
 }
 
-// ─── Impact stats ──────────────────────────────────────────────────────────────
-const IMPACT_STATS = [
-  { value: "60,000+", label: "Children Reached", labelGu: "બાળકો સ્પર્શ્યા" },
-  { value: "200+",    label: "Villages Covered", labelGu: "ગામો આવરી લીધા" },
-  { value: "500+",    label: "Fishermen Supported", labelGu: "માછીમારોને સહાય" },
-  { value: "20+",     label: "Years of Impact", labelGu: "વર્ષની સેવા" },
-];
-
 // ─── Program exploration sections (compact links, zero repeated photos) ──────
 const PROGRAM_EXPLORATION = [
   {
@@ -569,26 +561,6 @@ export default function GalleryPage() {
               <YoutubeIcon size={15} />
               <span>{isGujarati ? "૧૨ વિડીયો જુઓ →" : "Watch Videos →"}</span>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════
-          2. COMPACT IMPACT STATISTICS
-      ════════════════════════════════════ */}
-      <section className="bg-[#061F17] py-6 border-y border-white/10" aria-label="Verified Impact Statistics">
-        <div className="container-wide section-padding max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {IMPACT_STATS.map((s) => (
-              <div key={s.label} className="p-2 space-y-0.5">
-                <div className="font-heading text-2xl sm:text-3xl font-extrabold text-[#F47B2A] font-mono">
-                  {s.value}
-                </div>
-                <div className="text-white/80 text-xs font-semibold tracking-wide">
-                  {isGujarati ? s.labelGu : s.label}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
