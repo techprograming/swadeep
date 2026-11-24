@@ -515,17 +515,6 @@ export default function GalleryPage() {
 
         {/* Hero Content */}
         <div className="relative z-10 container-wide section-padding max-w-6xl mx-auto space-y-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#F47B2A]/15 border border-[#F47B2A]/30 text-[#F47B2A]">
-              <CameraIcon size={14} />
-              <span>{isGujarati ? "અધિકૃત ક્ષેત્રીય દસ્તાવેજીકરણ" : "Authentic Field Documentation"}</span>
-            </span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/80 text-xs font-semibold font-mono">
-              {GALLERY_ITEMS.length} {isGujarati ? "ક્ષેત્રીય તસ્વીરો" : "Field Photographs"}
-            </span>
-          </div>
-
           <div className="space-y-2 max-w-3xl">
             <p className="text-xs sm:text-sm font-semibold tracking-wider uppercase text-[#F47B2A]">
               {isGujarati
