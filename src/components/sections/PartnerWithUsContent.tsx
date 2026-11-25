@@ -280,7 +280,7 @@ export default function PartnerWithUsContent() {
                     />
                   </div>
                   <span className="text-xs font-semibold text-charcoal/90 leading-tight">
-                    {partner.shortName || partner.name}
+                    {partner.shortName}
                   </span>
                 </div>
               ))}
