@@ -1,5 +1,57 @@
 [
   {
+    "id": "notif-1795600084725-bp57v",
+    "recipient": "swadeepsvs@gmail.com",
+    "type": "Career Job Application",
+    "subject": "Job Application: Co-ordinator- Education Project — Test Applicant",
+    "timestamp": "2026-11-25T09:48:04.725Z",
+    "data": {
+      "applicantName": "Test Applicant",
+      "position": "Co-ordinator- Education Project",
+      "email": "applicant@example.com",
+      "phone": "+919428309408",
+      "cvFile": "1795600084724_test_resume.pdf",
+      "submittedAt": "2026-11-25T09:48:04.724Z"
+    },
+    "status": "smtp_credentials_pending",
+    "note": "Credentials pending. Add Gmail App Password to send outbound emails."
+  },
+  {
+    "id": "notif-1795600051520-bis21",
+    "recipient": "swadeepsvs@gmail.com",
+    "type": "Partner Collaboration Inquiry",
+    "subject": "Partnership Inquiry: Test CSR Partner (Partner Lead)",
+    "timestamp": "2026-11-25T09:47:31.520Z",
+    "data": {
+      "organization": "Test CSR Partner",
+      "contactPerson": "Partner Lead",
+      "email": "csr.test@example.com",
+      "phone": "+919428309408",
+      "area": "Education &amp; Anganwadi Support",
+      "message": "Interested in collaborating for Anganwadi FLN support.",
+      "submittedAt": "2026-11-25T09:47:31.520Z"
+    },
+    "status": "smtp_credentials_pending",
+    "note": "Credentials pending. Add Gmail App Password to send outbound emails."
+  },
+  {
+    "id": "notif-1795600051383-gn7ww",
+    "recipient": "swadeepsvs@gmail.com",
+    "type": "Volunteer Application",
+    "subject": "New Volunteer: Test Volunteer (volunteer.test@example.com)",
+    "timestamp": "2026-11-25T09:47:31.383Z",
+    "data": {
+      "name": "Test Volunteer",
+      "email": "volunteer.test@example.com",
+      "phone": "+919428309408",
+      "location": "Ahmedabad, Gujarat, India",
+      "message": "I would love to help in rural classroom education.",
+      "submittedAt": "2026-11-25T09:47:31.383Z"
+    },
+    "status": "smtp_credentials_pending",
+    "note": "Credentials pending. Add Gmail App Password to send outbound emails."
+  },
+  {
     "id": "notif-1794978006505-wu3yv",
     "recipient": "swadeepsvs@gmail.com",
     "type": "Donation / UTR Submission",

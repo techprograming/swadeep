@@ -187,9 +187,10 @@ export const NAV_LINKS: readonly NavLinkItem[] = [
     labelGu: "જોડાવો",
     href: "/get-involved",
     dropdown: [
-      { label: "Volunteer", labelGu: "સ્વયંસેવક બનો", href: "/get-involved#volunteer", description: "Join grassroots initiatives in Gujarat", descriptionGu: "ગુજરાતમાં ક્ષેત્રીય સેવા આપો" },
-      { label: "CSR Partnerships", labelGu: "કોર્પોરેટ CSR ભાગીદારી", href: "/get-involved#csr-partnerships", description: "Corporate CSR and institutional linkages", descriptionGu: "CSR અને સંસ્થાકીય સહયોગ" },
-      { label: "Donate", labelGu: "દાન કરો", href: "/donate", description: "Contribute to education, health & livelihood", descriptionGu: "શિક્ષણ અને સેવા કાર્યમાં સહભાગી બનો" },
+      { label: "Donation", labelGu: "દાન", href: "/donation", description: "Tax-exempt support under Section 80G & FCRA", descriptionGu: "કલમ ૮૦G અને FCRA હેઠળ કરમુક્ત દાન" },
+      { label: "Become A Volunteer", labelGu: "સ્વયંસેવક બનો", href: "/become-a-volunteer", description: "Join grassroots initiatives in Gujarat", descriptionGu: "ગુજરાતમાં ક્ષેત્રીય સેવા આપો" },
+      { label: "Partner with us", labelGu: "સહયોગી બનો", href: "/partner-with-us", description: "Collaborate for impactful grassroots work", descriptionGu: "સંસ્થાકીય અને CSR સહયોગ" },
+      { label: "Career", labelGu: "કારકિર્દી", href: "/career", description: "Come, be a part of team Swadeep", descriptionGu: "ટીમ સ્વદીપ સાથે જોડાઓ" },
     ],
   },
   {

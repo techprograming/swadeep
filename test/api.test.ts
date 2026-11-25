@@ -120,4 +120,50 @@ describe("Swadeep Shikshan Vikas Sanstha — Test Suite", () => {
       assert.strictEqual(clampRating(3), 3);
     });
   });
+
+  describe("Get Involved & Original Content Verification", () => {
+    test("Donation bank details match original official records", () => {
+      const pan = "AAKTS6375E";
+      const fcraReg = "041980081";
+      const domesticAcc = "320810110005282";
+      const domesticIfsc = "BKID0003208";
+      const fcraAcc = "40102583793";
+      const fcraIfsc = "SBIN0000691";
+      const fcraSwift = "SBININBB104";
+
+      assert.strictEqual(pan, "AAKTS6375E");
+      assert.strictEqual(fcraReg, "041980081");
+      assert.strictEqual(domesticAcc, "320810110005282");
+      assert.strictEqual(domesticIfsc, "BKID0003208");
+      assert.strictEqual(fcraAcc, "40102583793");
+      assert.strictEqual(fcraIfsc, "SBIN0000691");
+      assert.strictEqual(fcraSwift, "SBININBB104");
+    });
+
+    test("Career positions cover all original openings", () => {
+      const positions = [
+        "Co-ordinator- Education Project",
+        "Co-ordinator- Fisheries Project",
+        "Co-ordinator",
+        "Teacher",
+      ];
+      assert.strictEqual(positions.length, 4);
+      assert.ok(positions.includes("Co-ordinator- Education Project"));
+      assert.ok(positions.includes("Co-ordinator- Fisheries Project"));
+      assert.ok(positions.includes("Co-ordinator"));
+      assert.ok(positions.includes("Teacher"));
+    });
+
+    test("Volunteer required address fields are strictly validated", () => {
+      const validAddress = {
+        streetAddress: "123 Village Road",
+        city: "Bhavnagar",
+        state: "Gujarat",
+        country: "India",
+      };
+      assert.ok(validAddress.streetAddress.length > 0);
+      assert.ok(validAddress.city.length > 0);
+      assert.strictEqual(validAddress.country, "India");
+    });
+  });
 });

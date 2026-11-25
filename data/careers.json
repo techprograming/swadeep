@@ -1,0 +1,14 @@
+[
+  {
+    "id": "car_1795600084724_ei80g",
+    "firstName": "Test",
+    "lastName": "Applicant",
+    "fullName": "Test Applicant",
+    "email": "applicant@example.com",
+    "phone": "+919428309408",
+    "position": "Co-ordinator- Education Project",
+    "cvFileName": "1795600084724_test_resume.pdf",
+    "submittedAt": "2026-11-25T09:48:04.724Z",
+    "status": "new"
+  }
+]
