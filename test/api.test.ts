@@ -6,6 +6,9 @@ import { translations } from "../src/lib/translations";
 import { isValidEmail, sanitizeInput } from "../src/lib/utils";
 import { config } from "../server/src/config";
 import { inMemoryFallback, testConnection } from "../server/src/db";
+import { CATEGORIES, CATEGORY_LABELS, GALLERY_ITEMS } from "../src/lib/galleryData";
+import fs from "fs";
+import path from "path";
 
 describe("Swadeep Shikshan Vikas Sanstha — Test Suite", () => {
   describe("Bilingual Dictionary Integrity", () => {
@@ -164,6 +167,25 @@ describe("Swadeep Shikshan Vikas Sanstha — Test Suite", () => {
       assert.ok(validAddress.streetAddress.length > 0);
       assert.ok(validAddress.city.length > 0);
       assert.strictEqual(validAddress.country, "India");
+    });
+
+    test("Photo Gallery preserves the six exact original category names and all 86 images", () => {
+      const visibleCategories = CATEGORIES.filter((c) => c !== "All").map(
+        (c) => CATEGORY_LABELS[c].en
+      );
+      assert.deepStrictEqual(visibleCategories, [
+        "Education",
+        "Health",
+        "Livelihood",
+        "Rural Infrastructure",
+        "Disaster",
+        "Media",
+      ]);
+      assert.strictEqual(GALLERY_ITEMS.length, 86);
+      const missing = GALLERY_ITEMS.filter(
+        (item) => !fs.existsSync(path.join(process.cwd(), "public", decodeURIComponent(item.image)))
+      );
+      assert.strictEqual(missing.length, 0);
     });
   });
 });

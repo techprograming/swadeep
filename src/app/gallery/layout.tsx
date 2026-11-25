@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Photo Gallery | Swadeep Shikshan Vikas Sanstha",
   description:
-    "Explore 86+ authentic on-ground photographs documenting Swadeep's grassroots work in education, health, livelihoods, rural development, and disaster response across Gujarat.",
+    "Photo Gallery of Swadeep Shikshan Vikas Sanstha across Education, Health, Livelihood, Rural Infrastructure, Disaster, and Media.",
   alternates: {
     canonical: "/gallery",
   },
   openGraph: {
     title: "Photo Gallery | Swadeep Shikshan Vikas Sanstha",
     description:
-      "Authentic moments from Swadeep's field interventions across 200+ villages in Gujarat.",
+      "Photo Gallery of Swadeep Shikshan Vikas Sanstha across Education, Health, Livelihood, Rural Infrastructure, Disaster, and Media.",
     url: "https://www.swadeep.org/gallery",
     siteName: "Swadeep Shikshan Vikas Sanstha",
     type: "website",
