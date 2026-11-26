@@ -102,18 +102,6 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         </span>
       )}
 
-      {/* Optional Gujarati Sub-heading */}
-      {gujaratiText && (
-        <span
-          className={cn(
-            "font-gujarati text-saffron text-sm sm:text-base font-semibold tracking-wide mb-1.5 block",
-            gujaratiClassName
-          )}
-        >
-          {gujaratiText}
-        </span>
-      )}
-
       {/* Main Heading */}
       <Component
         className={cn(

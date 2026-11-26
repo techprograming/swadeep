@@ -22,105 +22,98 @@ import MediaSubNav from "@/components/ui/MediaSubNav";
 const OFFICIAL_PUBLICATIONS: (PreviewDocument & {
   groupCategory: "storybooks" | "manuals";
   groupCategoryEn: string;
-  groupCategoryGu: string;
   coverImage: string;
   badgeEn: string;
-  badgeGu: string;
 })[] = [
   {
     id: "pub-arti",
     title: "Story Book: Arti & The Tooth Fairy",
-    titleGu: "વાર્તા પુસ્તક: આરતી અને દાંતની પરી",
+    
     category: "Child Health & Storytelling",
-    categoryGu: "બાળ આરોગ્ય અને બાળવાર્તા",
+    
     groupCategory: "storybooks",
     groupCategoryEn: "Storybooks & Children's Literature",
-    groupCategoryGu: "બાળવાર્તા અને બાળ સાહિત્ય",
+    
     size: "12.76 MB",
     fileUrl: "/publications/Story-Book-Arti-Tooth-Fairy.pdf",
     coverImage: "/publications/covers/Story-Book-Arti-Tooth-Fairy.jpg",
     badgeEn: "Illustrated Storybook",
-    badgeGu: "સચિત્ર બાળવાર્તા",
+    
     description:
       "Colorful illustrated children’s storybook encouraging joyful dental hygiene habits, regular brushing techniques, and cavity prevention among primary students.",
-    descriptionGu:
-      "પ્રાથમિક શાળા અને આંગણવાડી બાળકોમાં દાંતની સ્વચ્છતા, યોગ્ય બ્રશિંગ અને કાળજી અંગેની રંગબેરંગી ચિત્રવાર્તા પુસ્તિકા.",
+    
   },
   {
     id: "pub-tlm",
     title: "Dental Health Teaching Learning Material (TLM) Book",
-    titleGu: "ડેન્ટલ હેલ્થ શિક્ષણ-શિક્ષણ સામગ્રી (TLM) પુસ્તિકા",
+    
     category: "Pedagogy & Healthcare",
-    categoryGu: "શિક્ષણ અને આરોગ્ય",
+    
     groupCategory: "manuals",
     groupCategoryEn: "Teaching & Training Manuals",
-    groupCategoryGu: "શિક્ષણ અને તાલીમ માર્ગદર્શિકાઓ",
+    
     size: "1.31 MB",
     fileUrl: "/publications/DH-TLM-book-English.pdf",
     coverImage: "/publications/covers/DH-TLM-book-English.jpg",
     badgeEn: "Educator Manual",
-    badgeGu: "શિક્ષક માર્ગદર્શિકા",
+    
     description:
       "Comprehensive English teaching-learning manual designed for educators, teachers, and health mobilizers to deliver interactive dental hygiene pedagogy.",
-    descriptionGu:
-      "શિક્ષકો અને ક્ષેત્રીય આરોગ્ય કાર્યકરો માટે દાંતની સ્વચ્છતા અને શિક્ષણ પદ્ધતિ અંગેની વ્યાપક માર્ગદર્શિકા પુસ્તિકા.",
+    
   },
   {
     id: "pub-mano-prem-asha",
     title: "Maa No Prem Children’s Rhymes & Poem Book",
-    titleGu: "મા નો પ્રેમ — બાળગીતો અને કવિતા સંગ્રહ",
+    
     category: "Early Childhood Literature",
-    categoryGu: "બાળ સાહિત્ય અને બાળગીતો",
+    
     groupCategory: "storybooks",
     groupCategoryEn: "Storybooks & Children's Literature",
-    groupCategoryGu: "બાળવાર્તા અને બાળ સાહિત્ય",
+    
     size: "1.67 MB",
     fileUrl: "/publications/Ma-no-Prem-Poem-book-asha.pdf",
     coverImage: "/publications/covers/Ma-no-Prem-Poem-book-asha.jpg",
     badgeEn: "Gujarati Rhymes",
-    badgeGu: "બાળગીતો અને કવિતા",
+    
     description:
       "Illustrated Gujarati rhymes and emotional verses celebrating motherly affection, family values, and early childhood learning in rural Gujarat.",
-    descriptionGu:
-      "માતૃપ્રેમ, કૌટુંબિક સંસ્કાર અને પૂર્વ-પ્રાથમિક બાળ શિક્ષણને પ્રોત્સાહિત કરતી સચિત્ર ગુજરાતી કવિતાઓ અને બાળગીતોનો સંગ્રહ.",
+    
   },
   {
     id: "pub-mano-prem-makvana",
     title: "Maa No Prem Poem Collection (Special Edition)",
-    titleGu: "મા નો પ્રેમ કાવ્ય સંગ્રહ (વિશેષ આવૃત્તિ)",
+    
     category: "Poetry & Literature",
-    categoryGu: "કાવ્ય સાહિત્ય",
+    
     groupCategory: "storybooks",
     groupCategoryEn: "Storybooks & Children's Literature",
-    groupCategoryGu: "બાળવાર્તા અને બાળ સાહિત્ય",
+    
     size: "0.09 MB",
     fileUrl: "/publications/Ma-no-Prem-Poem-book-asha-makvana.pdf",
     coverImage: "/publications/covers/Ma-no-Prem-Poem-book-asha-makvana.jpg",
     badgeEn: "Special Poetry Edition",
-    badgeGu: "વિશેષ કાવ્ય આવૃત્તિ",
+    
     description:
       "Dedicated poetic verses and educational reflections authored by grassroots contributor Asha Makvana supporting village learning.",
-    descriptionGu:
-      "ક્ષેત્રીય સાથી આશા મકવાણા દ્વારા રચિત પ્રેરક કાવ્યો અને શિક્ષણલક્ષી પંક્તિઓનો વિશેષ સંગ્રહ.",
+    
   },
   {
     id: "pub-manual",
     title: "Swadeep Organizational Manual & Operational Guidelines",
-    titleGu: "સ્વદીપ સંસ્થાકીય માર્ગદર્શિકા અને સંચાલન નિયમાવલી",
+    
     category: "Governance & SOPs",
-    categoryGu: "સંચાલન અને નીતિનિયમો",
+    
     groupCategory: "manuals",
     groupCategoryEn: "Teaching & Training Manuals",
-    groupCategoryGu: "શિક્ષણ અને તાલીમ માર્ગદર્શિકાઓ",
+    
     size: "0.67 MB",
     fileUrl: "/publications/organizational-manual-swadeep-18.04.23.pdf",
     coverImage: "/publications/covers/organizational-manual-swadeep-18.04.23.jpg",
     badgeEn: "SOP & Governance",
-    badgeGu: "સંચાલન નિયમાવલી",
+    
     description:
       "Official institutional standard operating procedures, personnel policies, field management frameworks, and transparency protocols.",
-    descriptionGu:
-      "સંસ્થાની સ્ટાન્ડર્ડ ઓપરેટિંગ પ્રોસિજર્સ (SOPs), કર્મચારી નીતિઓ, ક્ષેત્રીય પ્રોટોકોલ અને વહીવટી પારદર્શિતા માર્ગદર્શિકા.",
+    
   },
 ];
 
@@ -134,9 +127,9 @@ function PublicationCard({
   onPreview: (doc: PreviewDocument) => void;
   isGujarati: boolean;
 }) {
-  const displayTitle = isGujarati && pub.titleGu ? pub.titleGu : pub.title;
-  const secondaryTitle = isGujarati && pub.titleGu ? pub.title : pub.titleGu;
-  const displayBadge = isGujarati ? pub.badgeGu : pub.badgeEn;
+  const displayTitle = pub.title;
+  const secondaryTitle = pub.titleGu;
+  const displayBadge = pub.badgeEn;
 
   return (
     <div className="group relative flex flex-col bg-white rounded-2xl border border-neutral-200/90 shadow-xs hover:shadow-xl hover:border-neutral-300 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
@@ -181,7 +174,7 @@ function PublicationCard({
             className="px-4 py-2 rounded-full bg-white text-[#0B3025] hover:bg-[#F47B2A] hover:text-white text-xs font-bold shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-1.5"
           >
             <ExternalLinkIcon size={13} />
-            <span>{isGujarati ? "વાંચો / પ્રીવ્યૂ" : "Read / Preview"}</span>
+            <span>{"Read / Preview"}</span>
           </button>
         </div>
       </div>
@@ -190,7 +183,7 @@ function PublicationCard({
       <div className="flex flex-col flex-1 p-5 justify-between space-y-3">
         <div className="space-y-1.5">
           <span className="text-[10px] font-bold uppercase tracking-wider text-[#F47B2A] font-mono block">
-            {isGujarati ? pub.categoryGu : pub.category}
+            {pub.category}
           </span>
 
           <h3
@@ -207,7 +200,7 @@ function PublicationCard({
           )}
 
           <p className="text-xs text-neutral-600 line-clamp-3 leading-relaxed font-body pt-1">
-            {isGujarati && pub.descriptionGu ? pub.descriptionGu : pub.description}
+            {pub.description}
           </p>
         </div>
 
@@ -219,7 +212,7 @@ function PublicationCard({
             className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-neutral-50 hover:bg-neutral-100 text-[#0B3025] border border-neutral-200 hover:border-neutral-300 text-xs font-semibold transition-all"
           >
             <ExternalLinkIcon size={12} />
-            <span>{isGujarati ? "વાંચો" : "Preview"}</span>
+            <span>{"Preview"}</span>
           </button>
 
           <a
@@ -228,7 +221,7 @@ function PublicationCard({
             className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-semibold transition-all shadow-xs"
           >
             <DownloadIcon size={12} />
-            <span>{isGujarati ? "ડાઉનલોડ" : "Download"}</span>
+            <span>{"Download"}</span>
           </a>
         </div>
       </div>
@@ -255,19 +248,19 @@ export default function PublicationsPage() {
       {
         key: "All",
         labelEn: "All Publications",
-        labelGu: "તમામ પ્રકાશનો",
+        
         count: OFFICIAL_PUBLICATIONS.length,
       },
       {
         key: "storybooks",
         labelEn: "Storybooks & Literature",
-        labelGu: "બાળવાર્તા અને બાળસાહિત્ય",
+        
         count: storyCount,
       },
       {
         key: "manuals",
         labelEn: "Teaching & Training Manuals",
-        labelGu: "શિક્ષણ અને સંચાલન માર્ગદર્શિકા",
+        
         count: manualCount,
       },
     ];
@@ -328,9 +321,7 @@ export default function PublicationsPage() {
               Publications
             </h1>
             <p className="font-body text-xs sm:text-sm text-white/85 leading-relaxed max-w-2xl">
-              {isGujarati
-                ? "બાળકો, શિક્ષકો અને ક્ષેત્રીય કાર્યકરો માટે તૈયાર કરાયેલ ડેન્ટલ હાઇજીન માર્ગદર્શિકા, સચિત્ર બાળવાર્તાઓ, કાવ્ય સંગ્રહો અને સંસ્થાકીય નીતિ નિયમાવલી."
-                : "Explore field-tested health pedagogical manuals, illustrated children's storybooks, Gujarati poem collections, and official institutional operating guidelines."}
+              {"Explore field-tested health pedagogical manuals, illustrated children's storybooks, Gujarati poem collections, and official institutional operating guidelines."}
             </p>
           </div>
 
@@ -338,11 +329,11 @@ export default function PublicationsPage() {
           <div className="pt-1 flex flex-wrap items-center gap-2.5 text-xs">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-white">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>{isGujarati ? "૧૦૦% સાર્વજનિક સુલભતા" : "100% Free Public Access"}</span>
+              <span>{"100% Free Public Access"}</span>
             </div>
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.12] text-white">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span>{isGujarati ? "સત્તાવાર પીડીએફ દસ્તાવેજો" : "Official Verified PDFs"}</span>
+              <span>{"Official Verified PDFs"}</span>
             </div>
           </div>
         </div>
@@ -391,7 +382,7 @@ export default function PublicationsPage() {
                 <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-20">
                   <span className="px-4 py-2 rounded-full bg-white text-[#0B3025] text-xs font-bold shadow-lg flex items-center gap-1.5">
                     <ExternalLinkIcon size={13} />
-                    <span>{isGujarati ? "વાંચો / પ્રીવ્યૂ" : "Quick Preview"}</span>
+                    <span>{"Quick Preview"}</span>
                   </span>
                 </div>
               </div>
@@ -401,7 +392,7 @@ export default function PublicationsPage() {
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
                     <span className="px-3 py-1 rounded-full bg-[#F47B2A] text-white text-[11px] font-bold uppercase tracking-wider shadow-xs">
-                      {isGujarati ? "વિશેષ બાળવાર્તા પ્રકાશન" : "Featured Publication"}
+                      {"Featured Publication"}
                     </span>
                     <span className="text-xs font-mono font-semibold text-neutral-500">
                       {featuredPublication.size} • PDF
@@ -409,18 +400,18 @@ export default function PublicationsPage() {
                   </div>
 
                   <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-extrabold text-[#0B3025] leading-snug">
-                    {isGujarati ? featuredPublication.titleGu : featuredPublication.title}
+                    {featuredPublication.title}
                   </h2>
 
                   {featuredPublication.titleGu && (
                     <p className="text-xs text-neutral-500 font-body">
-                      {isGujarati ? featuredPublication.title : featuredPublication.titleGu}
+                      {featuredPublication.titleGu}
                     </p>
                   )}
                 </div>
 
                 <p className="font-body text-xs sm:text-sm text-neutral-700 leading-relaxed">
-                  {isGujarati ? featuredPublication.descriptionGu : featuredPublication.description}
+                  {featuredPublication.description}
                 </p>
 
                 <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -430,7 +421,7 @@ export default function PublicationsPage() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
                   >
                     <ExternalLinkIcon size={14} />
-                    <span>{isGujarati ? "વાર્તાપુસ્તક વાંચો (Preview)" : "Read Storybook (Preview)"}</span>
+                    <span>{"Read Storybook (Preview)"}</span>
                   </button>
 
                   <a
@@ -439,12 +430,12 @@ export default function PublicationsPage() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
                   >
                     <DownloadIcon size={14} />
-                    <span>{isGujarati ? "ડાઉનલોડ કરો (PDF)" : "Download PDF"}</span>
+                    <span>{"Download PDF"}</span>
                   </a>
 
                   <span className="text-xs text-emerald-800 font-medium flex items-center gap-1.5 font-mono">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                    {isGujarati ? "સત્તાવાર પ્રકાશિત પુસ્તિકા" : "Official Published Storybook"}
+                    {"Official Published Storybook"}
                   </span>
                 </div>
               </div>
@@ -459,14 +450,14 @@ export default function PublicationsPage() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <div>
               <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest block mb-1">
-                {isGujarati ? "પ્રકાશન સંગ્રહ" : "Digital Library"}
+                {"Digital Library"}
               </span>
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
                 Publications
               </h2>
             </div>
             <div className="text-xs text-neutral-500 font-medium">
-              <span>{isGujarati ? "દર્શાવેલ: " : "Showing: "}</span>
+              <span>{"Showing: "}</span>
               <strong className="text-[#0B3025] font-bold">{filteredPublications.length}</strong>
               <span> of {OFFICIAL_PUBLICATIONS.length} publications</span>
             </div>
@@ -483,7 +474,7 @@ export default function PublicationsPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isGujarati ? "પુસ્તિકાનું નામ, વિષય અથવા લેખક શોધો..." : "Search publications by title, category, or keywords..."}
+                placeholder={"Search publications by title, category, or keywords..."}
                 className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs sm:text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]/40 focus:border-[#F47B2A] transition-all"
               />
               {searchQuery && (
@@ -519,7 +510,7 @@ export default function PublicationsPage() {
                         : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
                     }`}
                   >
-                    <span>{isGujarati ? tab.labelGu : tab.labelEn}</span>
+                    <span>{tab.labelEn}</span>
                     <span
                       className={`text-[10px] rounded-full px-1.5 py-0.2 font-mono font-bold ${
                         isActive ? "bg-white/20 text-white" : "bg-white text-neutral-600"
@@ -540,7 +531,7 @@ export default function PublicationsPage() {
                   }}
                   className="px-3 py-1.5 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors shrink-0"
                 >
-                  {isGujarati ? "ફિલ્ટર્સ સાફ કરો" : "Clear Filters"}
+                  {"Clear Filters"}
                 </button>
               )}
             </div>
@@ -569,12 +560,10 @@ export default function PublicationsPage() {
               </div>
               <div className="space-y-1 max-w-sm mx-auto">
                 <h3 className="font-heading font-bold text-base text-[#0B3025]">
-                  {isGujarati ? "કોઈ પ્રકાશન મળ્યું નથી" : "No Publications Found"}
+                  {"No Publications Found"}
                 </h3>
                 <p className="text-xs text-neutral-500">
-                  {isGujarati
-                    ? "તમારી શોધ માટે કોઈ સાહિત્ય મળ્યું નથી. કૃપા કરીને અન્ય શોધ શબ્દ અજમાવો."
-                    : "No publications match your selected category or search keyword."}
+                  {"No publications match your selected category or search keyword."}
                 </p>
               </div>
               <button
@@ -585,7 +574,7 @@ export default function PublicationsPage() {
                 }}
                 className="px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs"
               >
-                {isGujarati ? "બધા પ્રકાશનો બતાવો" : "View All Publications"}
+                {"View All Publications"}
               </button>
             </div>
           )}
@@ -601,15 +590,13 @@ export default function PublicationsPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
             <div className="space-y-2 max-w-xl text-center md:text-left">
               <span className="text-[11px] uppercase tracking-wider text-[#F47B2A] font-bold">
-                {isGujarati ? "સત્તાવાર શાસન અને પારદર્શિતા" : "Official Governance & Transparency"}
+                {"Official Governance & Transparency"}
               </span>
               <h3 id="governance-cta-heading" className="font-heading text-xl sm:text-2xl font-bold text-white">
-                {isGujarati ? "વાર્ષિક અહેવાલો અને ઓડિટ" : "Looking for Reports?"}
+                {"Looking for Reports?"}
               </h3>
               <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-body">
-                {isGujarati
-                  ? "સ્વદીપના છેલ્લા ૧૩ વર્ષના વાર્ષિક અહેવાલો, સનદી હિસાબી ઓડિટ રિપોર્ટ્સ, FCRA ખાતાઓ અને સત્તાવાર સંસ્થાકીય બ્રોશર જુઓ."
-                  : "Explore 13+ years of audited annual balance sheets, chartered accountant reports, foreign contribution filings, and our organization brochure."}
+                {"Explore 13+ years of audited annual balance sheets, chartered accountant reports, foreign contribution filings, and our organization brochure."}
               </p>
             </div>
 
@@ -619,7 +606,7 @@ export default function PublicationsPage() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
               >
                 <ReceiptTextIcon size={15} />
-                <span>{isGujarati ? "૩૨ અહેવાલો જુઓ →" : "Explore Reports (32 Documents) →"}</span>
+                <span>{"Explore Reports (32 Documents) →"}</span>
               </Link>
 
               <Link
@@ -627,7 +614,7 @@ export default function PublicationsPage() {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all"
               >
                 <CameraIcon size={15} />
-                <span>{isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}</span>
+                <span>{"Photo Gallery"}</span>
               </Link>
 
               <Link
@@ -635,7 +622,7 @@ export default function PublicationsPage() {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all"
               >
                 <YoutubeIcon size={15} />
-                <span>{isGujarati ? "વિડીયો ગેલેરી" : "Video Gallery"}</span>
+                <span>{"Video Gallery"}</span>
               </Link>
             </div>
           </div>

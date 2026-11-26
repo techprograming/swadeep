@@ -197,9 +197,7 @@ export default function ContactPage() {
             Get In Touch
           </h1>
 
-          <p className="font-gujarati text-xl sm:text-2xl text-cream/90 font-medium">
-            અમારો સંપર્ક કરો — સહયોગ, માર્ગદર્શન અને પ્રશ્નો માટે
-          </p>
+          
 
           <p className="font-body text-cream/85 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
             Have questions about our programs, wish to collaborate, or want to
@@ -215,9 +213,7 @@ export default function ContactPage() {
             {/* Left Column: Contact Form */}
             <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-forest/10">
               <div className="mb-8 space-y-2">
-                <span className="font-gujarati text-saffron-dark text-sm font-semibold block">
-                  સંદેશ મોકલો
-                </span>
+                
                 <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-forest-dark">
                   SEND US AN EMAIL
                 </h2>
@@ -300,7 +296,7 @@ export default function ContactPage() {
                       htmlFor="contact-name"
                       className="block text-xs sm:text-sm font-semibold text-charcoal"
                     >
-                      {isGujarati ? "આપનું પૂરું નામ" : t("formName")} <span className="text-rose-500">*</span>
+                      {t("formName")} <span className="text-rose-500">*</span>
                     </label>
                     <input
                       id="contact-name"
@@ -308,7 +304,7 @@ export default function ContactPage() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder={isGujarati ? "દા.ત. રમેશ પટેલ" : "e.g. Ramesh Patel"}
+                      placeholder={"e.g. Ramesh Patel"}
                       className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 ${
                         errors.name
                           ? "border-rose-400 bg-rose-50/30 focus:ring-rose-400"
@@ -330,7 +326,7 @@ export default function ContactPage() {
                       htmlFor="contact-email"
                       className="block text-xs sm:text-sm font-semibold text-charcoal"
                     >
-                      {isGujarati ? "ઈમેલ સરનામું" : t("formEmail")} <span className="text-rose-500">*</span>
+                      {t("formEmail")} <span className="text-rose-500">*</span>
                     </label>
                     <input
                       id="contact-email"
@@ -363,7 +359,7 @@ export default function ContactPage() {
                       htmlFor="contact-phone"
                       className="block text-xs sm:text-sm font-semibold text-charcoal"
                     >
-                      {isGujarati ? "મોબાઈલ નંબર" : t("formPhone")} <span className="text-charcoal/40 font-normal">({isGujarati ? "વૈકલ્પિક" : "Optional"})</span>
+                      {t("formPhone")} <span className="text-charcoal/40 font-normal">({"Optional"})</span>
                     </label>
                     <input
                       id="contact-phone"
@@ -393,7 +389,7 @@ export default function ContactPage() {
                       htmlFor="contact-subject"
                       className="block text-xs sm:text-sm font-semibold text-charcoal"
                     >
-                      {isGujarati ? "વિષય" : t("formSubject")} <span className="text-rose-500">*</span>
+                      {t("formSubject")} <span className="text-rose-500">*</span>
                     </label>
                     <input
                       id="contact-subject"
@@ -401,7 +397,7 @@ export default function ContactPage() {
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      placeholder={isGujarati ? "દા.ત. CSR ભાગીદારી / સ્વયંસેવક" : "e.g. CSR Partnership / Volunteer Inquiry"}
+                      placeholder={"e.g. CSR Partnership / Volunteer Inquiry"}
                       className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 ${
                         errors.subject
                           ? "border-rose-400 bg-rose-50/30 focus:ring-rose-400"
@@ -425,7 +421,7 @@ export default function ContactPage() {
                       htmlFor="contact-message"
                       className="block text-xs sm:text-sm font-semibold text-charcoal"
                     >
-                      {isGujarati ? "આપનો સંદેશ" : t("formMessage")} <span className="text-rose-500">*</span>
+                      {t("formMessage")} <span className="text-rose-500">*</span>
                     </label>
                     <span className="text-xs text-charcoal/40">
                       {formData.message.length} / 2000
@@ -438,9 +434,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder={
-                      isGujarati
-                        ? "તમે સ્વદીપ સંસ્થા સાથે કેવી રીતે જોડાવવા માંગો છો તે વિશે લખો..."
-                        : "Tell us more about how you would like to connect with Swadeep..."
+                      "Tell us more about how you would like to connect with Swadeep..."
                     }
                     className={`w-full px-4 py-3 rounded-xl border text-sm transition-colors focus:outline-none focus:ring-2 resize-y ${
                       errors.message
@@ -514,9 +508,7 @@ export default function ContactPage() {
               {/* Info Card */}
               <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-forest/10 space-y-6">
                 <div>
-                  <span className="font-gujarati text-saffron-dark text-xs font-semibold block uppercase">
-                    સીધો સંપર્ક
-                  </span>
+                  
                   <h3 className="font-heading text-xl sm:text-2xl font-bold text-forest-dark mt-1">
                     Contact Information
                   </h3>

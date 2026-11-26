@@ -115,14 +115,10 @@ export default function Testimonials() {
           </div>
 
           <h2 className="font-heading text-2xl sm:text-4xl lg:text-5xl font-extrabold text-forest-dark tracking-tight leading-tight">
-            {isGujarati ? "ભાગીદાર સમીક્ષાઓ અને અનુભવો" : "Partner & Institutional Testimonials"}
+            {"Partner & Institutional Testimonials"}
           </h2>
 
-          <p className="font-gujarati text-sm sm:text-lg text-forest font-medium max-w-xl mx-auto">
-            {isGujarati
-              ? "અમારા સંસ્થાકીય, CSR અને સરકારી સહયોગીઓના પ્રત્યક્ષ અનુભવો"
-              : "Direct experiences from our funding, CSR, and government partners"}
-          </p>
+          
         </div>
 
         {/* Carousel Card */}

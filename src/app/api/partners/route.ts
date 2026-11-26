@@ -46,13 +46,13 @@ export async function POST(request: Request) {
     const newPartner = {
       id: `part-${Date.now()}`,
       name: sanitizeInput(name.trim()),
-      nameGu: nameGu ? sanitizeInput(String(nameGu).trim()) : undefined,
+      
       shortName: shortName ? sanitizeInput(String(shortName).trim()) : undefined,
       category: category ? sanitizeInput(String(category).trim()) : "Corporate CSR Partner",
       role: role ? sanitizeInput(String(role).trim()) : "CSR & Community Development Partner",
-      roleGu: roleGu ? sanitizeInput(String(roleGu).trim()) : undefined,
+      
       description: description ? sanitizeInput(String(description).trim()) : undefined,
-      descriptionGu: descriptionGu ? sanitizeInput(String(descriptionGu).trim()) : undefined,
+      
       logo: logo && typeof logo === "string" && logo.trim() ? sanitizeInput(logo.trim()) : "/images/partners/icds-gujarat.png",
     };
 

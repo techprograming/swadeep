@@ -138,16 +138,16 @@ export default function AdminPage() {
   // Entity Form States
   const [newTrustee, setNewTrustee] = useState({
     name: "",
-    nameGu: "",
+    
     role: "Trustee",
-    roleGu: "ટ્રસ્ટી",
+    
     category: "Trustee",
     description: "",
     image: "",
     highlight: false,
   });
   const [newPartner, setNewPartner] = useState({ name: "", role: "", logo: "" });
-  const [newReport, setNewReport] = useState({ title: "", titleGu: "", category: "Annual Report", year: "2024-2025", description: "", fileUrl: "" });
+  const [newReport, setNewReport] = useState({ title: "",  category: "Annual Report", year: "2024-2025", description: "", fileUrl: "" });
 
   // System status state
   const [isDbConnected, setIsDbConnected] = useState<boolean | null>(null);
@@ -376,9 +376,9 @@ export default function AdminPage() {
         setIsAddingTrustee(false);
         setNewTrustee({
           name: "",
-          nameGu: "",
+          
           role: "Trustee",
-          roleGu: "ટ્રસ્ટી",
+          
           category: "Trustee",
           description: "",
           image: "",
@@ -455,7 +455,7 @@ export default function AdminPage() {
       if (res.ok && data.success) {
         setReports((prev) => [data.report, ...prev]);
         setIsAddingReport(false);
-        setNewReport({ title: "", titleGu: "", category: "Annual Report", year: "2024-2025", description: "", fileUrl: "" });
+        setNewReport({ title: "",  category: "Annual Report", year: "2024-2025", description: "", fileUrl: "" });
         showFeedback("success", "Report published to website successfully!");
       } else {
         showFeedback("error", data.error || "Failed to publish report.");
@@ -1490,17 +1490,7 @@ export default function AdminPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-charcoal/80 mb-1">Name (Gujarati)</label>
-                        <input
-                          type="text"
-                          value={newTrustee.nameGu}
-                          onChange={(e) => setNewTrustee({ ...newTrustee, nameGu: e.target.value })}
-                          placeholder="દા.ત. રમેશ પટેલ"
-                          className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest focus:outline-none font-gujarati"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold text-charcoal/80 mb-1">Designation / Role (English)</label>
+                        <label className="block text-xs font-bold text-charcoal/80 mb-1">Designation / Role</label>
                         <input
                           type="text"
                           value={newTrustee.role}
@@ -1510,28 +1500,18 @@ export default function AdminPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-charcoal/80 mb-1">Role in Gujarati</label>
-                        <input
-                          type="text"
-                          value={newTrustee.roleGu}
-                          onChange={(e) => setNewTrustee({ ...newTrustee, roleGu: e.target.value })}
-                          placeholder="ટ્રસ્ટી / સલાહકાર / પ્રમુખ"
-                          className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest focus:outline-none font-gujarati"
-                        />
-                      </div>
-                      <div>
                         <label className="block text-xs font-bold text-charcoal/80 mb-1">Category / Role Type</label>
                         <select
                           value={newTrustee.category}
                           onChange={(e) => setNewTrustee({ ...newTrustee, category: e.target.value })}
                           className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest focus:outline-none bg-white"
                         >
-                          <option value="Trustee">Trustee (ટ્રસ્ટી)</option>
-                          <option value="Chairman">Chairman (પ્રમુખ)</option>
+                          <option value="Trustee">Trustee</option>
+                          <option value="Chairman">Chairman</option>
                           <option value="CEO">Chief Executive Officer (CEO)</option>
-                          <option value="Advisor">Advisor (સલાહકાર)</option>
-                          <option value="Treasurer">Treasurer (ખજાનચી)</option>
-                          <option value="Secretary">Secretary (મંત્રી)</option>
+                          <option value="Advisor">Advisor</option>
+                          <option value="Treasurer">Treasurer</option>
+                          <option value="Secretary">Secretary</option>
                         </select>
                       </div>
                       <div>
@@ -1650,11 +1630,6 @@ export default function AdminPage() {
                             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-forest-50 text-forest border border-forest/15 inline-block mt-0.5">
                               {t.role}
                             </span>
-                            {t.nameGu && (
-                              <span className="font-gujarati text-xs text-charcoal/60 block mt-1 truncate">
-                                {t.nameGu}
-                              </span>
-                            )}
                           </div>
                         </div>
 
@@ -1779,7 +1754,6 @@ export default function AdminPage() {
                             )}
                           </div>
                         </div>
-                        {p.nameGu && <span className="font-gujarati text-xs text-charcoal/60 block mb-1">{p.nameGu}</span>}
                         <span className="text-xs text-charcoal/80 block mt-1 line-clamp-2 font-medium">{p.role}</span>
                         {p.description && (
                           <p className="text-[11px] text-charcoal/60 line-clamp-2 mt-1.5 pt-1.5 border-t border-gray-100">
@@ -1838,16 +1812,6 @@ export default function AdminPage() {
                           onChange={(e) => setNewReport({ ...newReport, title: e.target.value })}
                           placeholder="e.g. Annual Activity Report 2024-25"
                           className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-xs font-bold text-charcoal/80 mb-1">Title (Gujarati)</label>
-                        <input
-                          type="text"
-                          value={newReport.titleGu}
-                          onChange={(e) => setNewReport({ ...newReport, titleGu: e.target.value })}
-                          placeholder="વાર્ષિક અહેવાલ ૨૦૨૪-૨૫"
-                          className="w-full px-3.5 py-2 text-xs rounded-xl border border-gray-300 focus:ring-2 focus:ring-forest focus:outline-none font-gujarati"
                         />
                       </div>
                       <div>
@@ -1925,7 +1889,6 @@ export default function AdminPage() {
                           <span className="text-xs font-bold text-charcoal/60">{r.year}</span>
                         </div>
                         <h4 className="font-heading font-bold text-sm text-[#0B3025] mt-2">{r.title}</h4>
-                        {r.titleGu && <span className="font-gujarati text-xs text-charcoal/60 block mt-0.5">{r.titleGu}</span>}
                         {r.description && <p className="text-xs text-charcoal/70 mt-2 line-clamp-2">{r.description}</p>}
                       </div>
                       <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between">

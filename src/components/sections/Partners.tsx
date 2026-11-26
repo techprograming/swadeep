@@ -127,12 +127,10 @@ export default function Partners() {
               id="partners-heading"
               className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-forest-dark tracking-tight"
             >
-              {isGujarati ? "અમારા સહયોગીઓ" : "Our Partners"}
+              {"Our Partners"}
             </h2>
             <p className="font-body text-xs sm:text-sm text-charcoal/70">
-              {isGujarati
-                ? "ટકાઉ સામાજિક પરિવર્તન અને ગ્રામીણ ઉત્થાન માટે સહયોગી સંસ્થાઓ"
-                : "Collaborating with leading CSR corporations, foundations, and government departments across Gujarat"}
+              {"Collaborating with leading CSR corporations, foundations, and government departments across Gujarat"}
             </p>
           </div>
 
@@ -174,7 +172,7 @@ export default function Partners() {
             }}
           >
             {partnersList.map((partner, index) => {
-              const displayName = isGujarati && partner.nameGu ? partner.nameGu : partner.name;
+              const displayName = partner.name;
 
               return (
                 <div
@@ -199,7 +197,7 @@ export default function Partners() {
                         {displayName}
                       </h3>
 
-                      {isGujarati && partner.name && (
+                      {false && (
                         <span className="text-[11px] text-charcoal/50 block mt-1 truncate text-center">
                           {partner.name}
                         </span>

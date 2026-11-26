@@ -61,24 +61,22 @@ export default function ProgramDetailPage() {
             </Link>
             <span>/</span>
             <span className="text-[#F47B2A] font-semibold">
-              {isGujarati ? program.titleGu : program.title}
+              {program.title}
             </span>
           </nav>
 
           <div className="space-y-3">
             <span className="inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/10 border border-white/20 text-[#F47B2A]">
-              {isGujarati ? program.eyebrowGu : program.eyebrow}
+              {program.eyebrow}
             </span>
             <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-              {isGujarati ? program.titleGu : program.title}
+              {program.title}
             </h1>
-            <p className="font-gujarati text-lg sm:text-xl text-white/90">
-              {program.titleGu}
-            </p>
+            
           </div>
 
           <p className="font-body text-base sm:text-lg text-white/90 max-w-3xl leading-relaxed">
-            {isGujarati ? program.summaryGu : program.summary}
+            {program.summary}
           </p>
 
           {/* Key Metric Snapshot Chips */}
@@ -89,7 +87,7 @@ export default function ProgramDetailPage() {
                   {stat.value}
                 </div>
                 <div className="text-xs text-white/80 font-medium mt-0.5">
-                  {isGujarati ? stat.labelGu : stat.label}
+                  {stat.label}
                 </div>
               </div>
             ))}
@@ -103,13 +101,13 @@ export default function ProgramDetailPage() {
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           <div className="lg:col-span-7 space-y-5">
             <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A] bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-              {isGujarati ? "વાસ્તવિક જરૂરિયાત" : "COMMUNITY NEED"}
+              {"COMMUNITY NEED"}
             </span>
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-              {isGujarati ? program.communityNeed.titleGu : program.communityNeed.title}
+              {program.communityNeed.title}
             </h2>
             <p className="font-body text-charcoal/85 text-base sm:text-lg leading-relaxed">
-              {isGujarati ? program.communityNeed.descriptionGu : program.communityNeed.description}
+              {program.communityNeed.description}
             </p>
 
             <ul className="space-y-3 pt-2">
@@ -119,7 +117,7 @@ export default function ProgramDetailPage() {
                     <CheckCircleIcon size={16} />
                   </div>
                   <span className="font-body text-sm sm:text-base text-charcoal/80">
-                    {isGujarati ? pt.gu : pt.en}
+                    {pt.en}
                   </span>
                 </li>
               ))}
@@ -143,13 +141,13 @@ export default function ProgramDetailPage() {
         <section className="space-y-8 bg-white p-6 sm:p-10 rounded-3xl shadow-sm border border-forest/10">
           <div className="max-w-3xl space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
-              {isGujarati ? "પદ્ધતિ અને અમલીકરણ" : "APPROACH & ACTIVITIES"}
+              {"APPROACH & ACTIVITIES"}
             </span>
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-              {isGujarati ? program.approachAndActivities.titleGu : program.approachAndActivities.title}
+              {program.approachAndActivities.title}
             </h2>
             <p className="font-body text-charcoal/80 text-sm sm:text-base">
-              {isGujarati ? program.approachAndActivities.descriptionGu : program.approachAndActivities.description}
+              {program.approachAndActivities.description}
             </p>
           </div>
 
@@ -163,10 +161,10 @@ export default function ProgramDetailPage() {
                   0{i + 1}
                 </div>
                 <h3 className="font-heading font-bold text-base text-[#0B3025]">
-                  {isGujarati ? act.titleGu : act.title}
+                  {act.title}
                 </h3>
                 <p className="font-body text-xs sm:text-sm text-charcoal/75 leading-relaxed">
-                  {isGujarati ? act.descGu : act.desc}
+                  {act.desc}
                 </p>
               </div>
             ))}
@@ -178,13 +176,13 @@ export default function ProgramDetailPage() {
           {/* Target Groups */}
           <div className="p-6 sm:p-8 rounded-3xl bg-forest-50/70 border border-forest/15 space-y-4">
             <h3 className="font-heading text-lg sm:text-xl font-bold text-[#0B3025]">
-              {isGujarati ? "લક્ષિત જૂથો" : "Target Beneficiary Groups"}
+              {"Target Beneficiary Groups"}
             </h3>
             <ul className="space-y-2.5">
               {program.targetGroupsAndScope.targetGroups.map((grp, i) => (
                 <li key={i} className="flex items-center space-x-3 text-sm text-charcoal/85">
                   <span className="w-2 h-2 rounded-full bg-[#F47B2A] shrink-0" />
-                  <span>{isGujarati ? grp.gu : grp.en}</span>
+                  <span>{grp.en}</span>
                 </li>
               ))}
             </ul>
@@ -193,19 +191,19 @@ export default function ProgramDetailPage() {
           {/* Locations */}
           <div className="p-6 sm:p-8 rounded-3xl bg-forest-50/70 border border-forest/15 space-y-4">
             <h3 className="font-heading text-lg sm:text-xl font-bold text-[#0B3025]">
-              {isGujarati ? "કાર્યક્ષેત્ર અને જિલ્લાઓ" : "Geographic Scope"}
+              {"Geographic Scope"}
             </h3>
             <ul className="space-y-2.5">
               {program.targetGroupsAndScope.locations.map((loc, i) => (
                 <li key={i} className="flex items-center space-x-3 text-sm text-charcoal/85">
                   <span className="w-2 h-2 rounded-full bg-[#174B38] shrink-0" />
-                  <span>{isGujarati ? loc.gu : loc.en}</span>
+                  <span>{loc.en}</span>
                 </li>
               ))}
             </ul>
             <div className="pt-2 text-xs text-charcoal/70">
               <span className="font-semibold text-[#0B3025]">
-                {isGujarati ? "અહેવાલ સમયગાળો:" : "Reporting Period:"}
+                {"Reporting Period:"}
               </span>{" "}
               {program.targetGroupsAndScope.reportingPeriod}
             </div>
@@ -216,10 +214,10 @@ export default function ProgramDetailPage() {
         <section className="space-y-6">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
-              {isGujarati ? "પરિણામો" : "VERIFIED FIELD IMPACT"}
+              {"VERIFIED FIELD IMPACT"}
             </span>
             <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-              {isGujarati ? "પ્રમાણિત સિદ્ધિઓ" : "Verified Outcomes & Milestones"}
+              {"Verified Outcomes & Milestones"}
             </h2>
           </div>
 
@@ -233,10 +231,10 @@ export default function ProgramDetailPage() {
                   {out.value}
                 </div>
                 <h4 className="font-heading font-bold text-base text-[#0B3025]">
-                  {isGujarati ? out.metricGu : out.metric}
+                  {out.metric}
                 </h4>
                 <p className="font-body text-xs sm:text-sm text-charcoal/70 leading-relaxed">
-                  {isGujarati ? out.detailsGu : out.details}
+                  {out.details}
                 </p>
               </div>
             ))}
@@ -249,10 +247,10 @@ export default function ProgramDetailPage() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
-                  {isGujarati ? "વીડિયો દસ્તાવેજીકરણ" : "FIELD DOCUMENTATION"}
+                  {"FIELD DOCUMENTATION"}
                 </span>
                 <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-[#0B3025]">
-                  {isGujarati ? "સંબંધિત યુટ્યુબ વીડિયો" : "Official Field Videos"}
+                  {"Official Field Videos"}
                 </h2>
               </div>
               <a
@@ -287,7 +285,7 @@ export default function ProgramDetailPage() {
                   <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                     <div>
                       <h4 className="font-heading font-bold text-sm text-[#0B3025] line-clamp-2">
-                        {isGujarati ? video.titleGu : video.title}
+                        {video.title}
                       </h4>
                       <p className="font-body text-xs text-charcoal/70 line-clamp-2 mt-1">
                         {video.description}
@@ -313,23 +311,23 @@ export default function ProgramDetailPage() {
         <section aria-label="Explore other programs" className="pt-8 border-t border-forest/15 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
-              {isGujarati ? "અન્ય કાર્યક્રમો જુઓ" : "EXPLORE ALL 5 PROGRAMS"}
+              {"EXPLORE ALL 5 PROGRAMS"}
             </span>
             <Link
               href="/programs"
               className="text-xs font-bold text-forest hover:text-[#F47B2A] transition-colors"
             >
-              {isGujarati ? "બધા પાંચેય કાર્યક્રમો પરિચય →" : "View All Five Programs Overview →"}
+              {"View All Five Programs Overview →"}
             </Link>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
             {[
-              { slug: "education", title: "Education", titleGu: "શિક્ષણ" },
-              { slug: "health", title: "Health", titleGu: "આરોગ્ય" },
-              { slug: "livelihood", title: "Livelihood", titleGu: "આજીવિકા" },
-              { slug: "infrastructure", title: "Rural Infrastructure", titleGu: "ગ્રામ વિકાસ" },
-              { slug: "disaster", title: "Disaster Management", titleGu: "આપત્તિ વ્યવસ્થાપન" },
+              { slug: "education", title: "Education",  },
+              { slug: "health", title: "Health",  },
+              { slug: "livelihood", title: "Livelihood",  },
+              { slug: "infrastructure", title: "Rural Infrastructure",  },
+              { slug: "disaster", title: "Disaster Management",  },
             ].map((p) => {
               const isCurrent = p.slug === normalizedSlug;
               return (
@@ -343,11 +341,11 @@ export default function ProgramDetailPage() {
                   }`}
                 >
                   <span className="block text-xs font-bold leading-tight">
-                    {isGujarati ? p.titleGu : p.title}
+                    {p.title}
                   </span>
                   {isCurrent && (
                     <span className="text-[10px] text-[#F47B2A] block mt-0.5 font-bold">
-                      {isGujarati ? "હાલમાં જોઈ રહ્યા છો" : "Current"}
+                      {"Current"}
                     </span>
                   )}
                 </Link>
@@ -360,14 +358,10 @@ export default function ProgramDetailPage() {
         <section className="rounded-3xl bg-gradient-to-r from-[#0B3025] to-[#174B38] text-white p-8 sm:p-12 text-center space-y-6 shadow-xl">
           <div className="max-w-2xl mx-auto space-y-3">
             <h3 className="font-heading text-2xl sm:text-3xl font-black">
-              {isGujarati
-                ? "આ પ્રકલ્પમાં સહભાગી બનો અથવા CSR સહયોગ કરો"
-                : "Collaborate or Support This Initiative"}
+              {"Collaborate or Support This Initiative"}
             </h3>
             <p className="font-body text-sm sm:text-base text-white/85">
-              {isGujarati
-                ? "અમે કોર્પોરેટ CSR, સંસ્થાઓ અને સ્વયંસેવકોને વંચિત સમુદાયોના સશક્તિકરણમાં સાથે જોડાવા આવકારીએ છીએ."
-                : "Partner with Swadeep through CSR programs, field volunteering, or direct contributions to scale this impact."}
+              {"Partner with Swadeep through CSR programs, field volunteering, or direct contributions to scale this impact."}
             </p>
           </div>
 

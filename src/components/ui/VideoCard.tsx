@@ -22,8 +22,7 @@ export default function VideoCard({
     `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`
   );
 
-  const displayTitle = isGujarati && video.titleGu ? video.titleGu : video.title;
-  const secondaryTitle = isGujarati && video.titleGu ? video.title : video.titleGu;
+  const displayTitle = video.title;
 
   return (
     <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-forest/10 shadow-xs hover:shadow-xl hover:border-forest/25 transition-all duration-300 hover:-translate-y-1">
@@ -89,12 +88,6 @@ export default function VideoCard({
             {displayTitle}
           </h3>
 
-          {secondaryTitle && (
-            <p className="text-xs text-charcoal/60 font-body line-clamp-1">
-              {secondaryTitle}
-            </p>
-          )}
-
           <p className="text-xs sm:text-sm text-charcoal/75 line-clamp-3 leading-relaxed pt-1">
             {video.description}
           </p>
@@ -108,7 +101,7 @@ export default function VideoCard({
             className="inline-flex items-center gap-1.5 font-bold text-[#0B3025] hover:text-[#F47B2A] transition-colors"
           >
             <PlayIcon size={14} className="text-[#F47B2A]" />
-            <span>{isGujarati ? "વિડીયો જુઓ" : "Play Video"}</span>
+            <span>{"Play Video"}</span>
           </button>
 
           <a

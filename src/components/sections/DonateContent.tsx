@@ -63,9 +63,7 @@ export default function DonateContent() {
         setFormStatus("success");
         setStatusMessage(
           data.message ||
-            (isGujarati
-              ? "આભાર! આપની દાન વિગતો સફળતાપૂર્વક નોંધાઈ છે. 80G રસીદ આપના ઈમેલ પર મોકલવામાં આવશે."
-              : "Thank you! Your donation details have been submitted successfully. Your 80G certificate will be emailed after bank verification.")
+            ("Thank you! Your donation details have been submitted successfully. Your 80G certificate will be emailed after bank verification.")
         );
         // Reset form
         setFormData({
@@ -339,15 +337,13 @@ export default function DonateContent() {
           <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-md border border-forest/15 space-y-6">
             <div className="text-center space-y-2">
               <span className="text-xs font-bold uppercase tracking-wider text-saffron bg-saffron-50 px-3.5 py-1.5 rounded-full border border-saffron-200">
-                {isGujarati ? "દાન કર્યા પછી" : "AFTER DONATION"}
+                {"AFTER DONATION"}
               </span>
               <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-forest-dark">
-                {isGujarati ? "દાનની વિગત અને UTR નંબર સબમિટ કરો" : "Submit UTR / Donation Details for 80G Receipt"}
+                {"Submit UTR / Donation Details for 80G Receipt"}
               </h3>
               <p className="font-body text-charcoal/75 text-sm sm:text-base max-w-xl mx-auto">
-                {isGujarati
-                  ? "દાન પૂર્ણ કર્યા પછી આપનો UTR / સંદર્ભ નંબર અને પાન કાર્ડ વિગતો સબમિટ કરો જેથી અમે આપની 80G ટેક્સ રસીદ જારી કરી શકીએ."
-                  : "After transferring funds, submit your transaction UTR reference and PAN details to receive your official Section 80G tax exemption certificate."}
+                {"After transferring funds, submit your transaction UTR reference and PAN details to receive your official Section 80G tax exemption certificate."}
               </p>
             </div>
 
@@ -357,7 +353,7 @@ export default function DonateContent() {
                   <CheckCircleIcon size={36} />
                 </div>
                 <h4 className="font-heading text-2xl font-bold text-forest-dark">
-                  {isGujarati ? "વિગતો સફળતાપૂર્વક સબમિટ થઈ!" : "Details Submitted Successfully!"}
+                  {"Details Submitted Successfully!"}
                 </h4>
                 <p className="font-body text-charcoal/80 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
                   {statusMessage}
@@ -368,7 +364,7 @@ export default function DonateContent() {
                     onClick={() => setFormStatus("idle")}
                     className="px-6 py-2.5 rounded-full text-sm font-bold text-forest border border-forest/30 hover:bg-forest/5 transition-colors"
                   >
-                    {isGujarati ? "બીજું ટ્રાન્ઝેક્શન નોંધો" : "Submit Another Contribution"}
+                    {"Submit Another Contribution"}
                   </button>
                 </div>
               </div>
@@ -394,7 +390,7 @@ export default function DonateContent() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
                     <label htmlFor="donor-name" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "દાતાનું પૂરું નામ *" : "Donor Full Name *"}
+                      {"Donor Full Name *"}
                     </label>
                     <input
                       id="donor-name"
@@ -409,7 +405,7 @@ export default function DonateContent() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="donor-email" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "ઈમેલ સરનામું (80G રસીદ માટે) *" : "Email Address (for 80G receipt) *"}
+                      {"Email Address (for 80G receipt) *"}
                     </label>
                     <input
                       id="donor-email"
@@ -424,7 +420,7 @@ export default function DonateContent() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="donor-phone" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "મોબાઈલ નંબર *" : "Mobile Phone Number *"}
+                      {"Mobile Phone Number *"}
                     </label>
                     <input
                       id="donor-phone"
@@ -439,7 +435,7 @@ export default function DonateContent() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="donor-pan" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "પાન કાર્ડ નંબર (80G મુક્તિ માટે ફરજિયાત) *" : "PAN Number (Mandatory for 80G) *"}
+                      {"PAN Number (Mandatory for 80G) *"}
                     </label>
                     <input
                       id="donor-pan"
@@ -455,7 +451,7 @@ export default function DonateContent() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="donor-amount" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "ટ્રાન્સફર કરેલી રકમ (₹) *" : "Donated Amount (INR ₹) *"}
+                      {"Donated Amount (INR ₹) *"}
                     </label>
                     <input
                       id="donor-amount"
@@ -471,7 +467,7 @@ export default function DonateContent() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="donor-utr" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "UTR / સંદર્ભ નંબર *" : "UTR / Transaction Reference No. *"}
+                      {"UTR / Transaction Reference No. *"}
                     </label>
                     <input
                       id="donor-utr"
@@ -486,7 +482,7 @@ export default function DonateContent() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="donor-mode" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "ટ્રાન્સફર મોડ" : "Payment / Transfer Mode"}
+                      {"Payment / Transfer Mode"}
                     </label>
                     <select
                       id="donor-mode"
@@ -503,7 +499,7 @@ export default function DonateContent() {
 
                   <div className="space-y-1.5">
                     <label htmlFor="donor-date" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                      {isGujarati ? "ટ્રાન્સફર તારીખ *" : "Date of Transfer *"}
+                      {"Date of Transfer *"}
                     </label>
                     <input
                       id="donor-date"
@@ -518,15 +514,13 @@ export default function DonateContent() {
 
                 <div className="space-y-1.5">
                   <label htmlFor="donor-notes" className="block text-xs font-bold uppercase tracking-wider text-charcoal/80">
-                    {isGujarati ? "કાર્યક્રમ પસંદગી અથવા વિશેષ નોંધ (વૈકલ્પિક)" : "Program Preference or Note (Optional)"}
+                    {"Program Preference or Note (Optional)"}
                   </label>
                   <textarea
                     id="donor-notes"
                     rows={2}
                     placeholder={
-                      isGujarati
-                        ? "ઉદાહરણ: બાળ શિક્ષણ, આરોગ્ય શિબિર અથવા આંગણવાડી વિકાસ માટે..."
-                        : "e.g., Preference for child education, dental health, or disaster relief..."
+                      "e.g., Preference for child education, dental health, or disaster relief..."
                     }
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -541,18 +535,16 @@ export default function DonateContent() {
                     className="w-full py-4 rounded-xl text-base font-extrabold text-white bg-[#174B38] hover:bg-[#0B3025] disabled:opacity-60 transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                   >
                     {formStatus === "submitting" ? (
-                      <span>{isGujarati ? "સબમિટ થઈ રહ્યું છે..." : "Submitting Details..."}</span>
+                      <span>{"Submitting Details..."}</span>
                     ) : (
                       <>
                         <CheckCircleIcon size={18} />
-                        <span>{isGujarati ? "દાનની વિગતો સબમિટ કરો" : "SUBMIT DETAILS"}</span>
+                        <span>{"SUBMIT DETAILS"}</span>
                       </>
                     )}
                   </button>
                   <p className="text-[11px] text-center text-charcoal/60 mt-2">
-                    {isGujarati
-                      ? "સબમિટ કર્યા પછી અમારી ફાયનાન્સ ટીમ બેંક સાથે વેરિફાઈ કરી આપને ઈમેલ દ્વારા 80G સર્ટિફિકેટ મોકલશે."
-                      : "Your information is secure. Our team verifies the transaction with the bank and emails your 80G certificate within 2-3 business days."}
+                    {"Your information is secure. Our team verifies the transaction with the bank and emails your 80G certificate within 2-3 business days."}
                   </p>
                 </div>
               </form>

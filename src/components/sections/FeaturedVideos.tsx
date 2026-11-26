@@ -26,7 +26,6 @@ export default function FeaturedVideos() {
             badge="Official Video Channel"
             title="Watch Our Work in Action"
             subtitle="Explore real grassroots activities, Anganwadi teacher trainings, nutrition awareness campaigns, and joyful classroom learning from our official YouTube channel."
-            gujaratiText="અમારા કાર્યોનો વિડીયો પરિચય - @swadeepindia2543"
             align="center"
           />
         </div>

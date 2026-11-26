@@ -22,9 +22,7 @@ interface NavItem {
   id: GetInvolvedTabId;
   href: string;
   labelEn: string;
-  labelGu: string;
   badgeEn?: string;
-  badgeGu?: string;
   icon: React.ComponentType<{ size?: number | string; className?: string }>;
 }
 
@@ -33,45 +31,45 @@ const NAV_ITEMS: NavItem[] = [
     id: "overview",
     href: "/get-involved",
     labelEn: "Get Involved",
-    labelGu: "સહભાગી બનો",
+    
     badgeEn: "Overview",
-    badgeGu: "ઝાંખી",
+    
     icon: SparklesIcon,
   },
   {
     id: "donation",
     href: "/donation",
     labelEn: "Donation",
-    labelGu: "દાન",
+    
     badgeEn: "80G / FCRA",
-    badgeGu: "૮૦G / FCRA",
+    
     icon: HeartIcon,
   },
   {
     id: "volunteer",
     href: "/become-a-volunteer",
     labelEn: "Become A Volunteer",
-    labelGu: "સ્વયંસેવક બનો",
+    
     badgeEn: "Join Us",
-    badgeGu: "જોડાઓ",
+    
     icon: UsersGroupIcon,
   },
   {
     id: "partner",
     href: "/partner-with-us",
     labelEn: "Partner With Us",
-    labelGu: "સહયોગી બનો",
+    
     badgeEn: "Collaboration",
-    badgeGu: "સહકાર્ય",
+    
     icon: HandshakeIcon,
   },
   {
     id: "career",
     href: "/career",
     labelEn: "Career",
-    labelGu: "કારકિર્દી",
+    
     badgeEn: "Openings",
-    badgeGu: "જગ્યાઓ",
+    
     icon: BriefcaseIcon,
   },
 ];
@@ -81,7 +79,7 @@ export default function GetInvolvedSubNav({ activeTab, className = "" }: GetInvo
 
   return (
     <nav
-      aria-label={isGujarati ? "ગેટ ઇન્વોલ્વ્ડ નેવિગેશન" : "Get Involved Sub Navigation"}
+      aria-label={"Get Involved Sub Navigation"}
       className={`w-full bg-[#061F17]/95 border-b border-white/10 backdrop-blur-md sticky top-16 sm:top-20 z-20 shadow-md ${className}`}
     >
       <div className="container-wide max-w-6xl mx-auto px-4 sm:px-6">
@@ -105,14 +103,14 @@ export default function GetInvolvedSubNav({ activeTab, className = "" }: GetInvo
                   size={15}
                   className={isActive ? "text-white" : "text-saffron-400"}
                 />
-                <span>{isGujarati ? item.labelGu : item.labelEn}</span>
+                <span>{item.labelEn}</span>
                 {item.badgeEn && (
                   <span
                     className={`hidden md:inline-block px-2 py-0.5 rounded-full text-[10px] font-mono tracking-tight font-bold ${
                       isActive ? "bg-black/20 text-white" : "bg-white/10 text-white/70"
                     }`}
                   >
-                    {isGujarati ? item.badgeGu : item.badgeEn}
+                    {item.badgeEn}
                   </span>
                 )}
               </Link>

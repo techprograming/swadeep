@@ -14,9 +14,7 @@ export default function NotFound() {
           Page Not Found
         </h1>
 
-        <p className="font-gujarati text-base text-forest">
-          માફ કરશો, તમે શોધતા હોવ તે પેજ ઉપલબ્ધ નથી.
-        </p>
+        
 
         <p className="font-body text-charcoal/80 text-sm sm:text-base leading-relaxed">
           The page you are looking for may have been moved, renamed, or is temporarily unavailable. Please explore one of our main sections below:

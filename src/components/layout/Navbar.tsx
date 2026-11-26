@@ -240,7 +240,7 @@ export default function Navbar() {
                 const isActive =
                   pathname === link.href ||
                   (link.href !== "/" && pathname?.startsWith(link.href));
-                const displayLabel = isGujarati ? link.labelGu : link.label;
+                const displayLabel = link.label;
 
                 return (
                   <div
@@ -300,8 +300,8 @@ export default function Navbar() {
                       >
                         <div className="bg-white rounded-2xl p-2.5 shadow-2xl border border-gray-200/90 ring-1 ring-black/5 space-y-1">
                           {link.dropdown?.map((item) => {
-                            const itemLabel = isGujarati ? item.labelGu : item.label;
-                            const itemDesc = isGujarati ? item.descriptionGu : item.description;
+                            const itemLabel = item.label;
+                            const itemDesc = item.description;
 
                             return (
                               <Link
@@ -459,7 +459,7 @@ export default function Navbar() {
           {NAV_LINKS.map((link, idx) => {
             const hasDropdown = Boolean(link.dropdown && link.dropdown.length > 0);
             const isExpanded = mobileExpandedIndex === idx;
-            const displayLabel = isGujarati ? link.labelGu : link.label;
+            const displayLabel = link.label;
 
             return (
               <div key={link.label} className="border-b border-forest/10 pb-2">
@@ -506,15 +506,15 @@ export default function Navbar() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="flex items-center justify-between p-2.5 rounded-xl bg-forest-50/70 hover:bg-forest-50 text-xs font-bold text-forest-dark transition-colors"
                     >
-                      <span>{isGujarati ? `તમામ ${displayLabel} જુઓ (Overview)` : `Explore All ${displayLabel} →`}</span>
+                      <span>{`Explore All ${displayLabel} →`}</span>
                       <svg className="w-3.5 h-3.5 text-[#F47B2A]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
 
                     {link.dropdown?.map((subItem) => {
-                      const subLabel = isGujarati ? subItem.labelGu : subItem.label;
-                      const subDesc = isGujarati ? subItem.descriptionGu : subItem.description;
+                      const subLabel = subItem.label;
+                      const subDesc = subItem.description;
                       return (
                         <Link
                           key={subItem.href}

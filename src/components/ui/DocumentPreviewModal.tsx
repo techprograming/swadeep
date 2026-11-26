@@ -76,9 +76,9 @@ export default function DocumentPreviewModal({
 
   if (!isOpen || !document) return null;
 
-  const displayTitle = isGujarati && document.titleGu ? document.titleGu : document.title;
-  const displayCategory = isGujarati && document.categoryGu ? document.categoryGu : document.category;
-  const displayDesc = isGujarati && document.descriptionGu ? document.descriptionGu : document.description;
+  const displayTitle = document.title;
+  const displayCategory = document.category;
+  const displayDesc = document.description;
 
   return (
     <div
@@ -130,7 +130,7 @@ export default function DocumentPreviewModal({
                 type="button"
                 onClick={onPrev}
                 className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
-                title={isGujarati ? "પાછલો દસ્તાવેજ (Arrow Left)" : "Previous Document (Arrow Left)"}
+                title={"Previous Document (Arrow Left)"}
                 aria-label="Previous Document"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -144,7 +144,7 @@ export default function DocumentPreviewModal({
                 type="button"
                 onClick={onNext}
                 className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all"
-                title={isGujarati ? "આગલો દસ્તાવેજ (Arrow Right)" : "Next Document (Arrow Right)"}
+                title={"Next Document (Arrow Right)"}
                 aria-label="Next Document"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -161,7 +161,7 @@ export default function DocumentPreviewModal({
               title="Open document in new browser tab"
             >
               <ExternalLinkIcon size={14} />
-              <span className="hidden md:inline">{isGujarati ? "નવી ટેબમાં ખોલો" : "Open in New Tab"}</span>
+              <span className="hidden md:inline">{"Open in New Tab"}</span>
             </a>
 
             <a
@@ -171,7 +171,7 @@ export default function DocumentPreviewModal({
               title="Download original PDF"
             >
               <DownloadIcon size={14} />
-              <span>{isGujarati ? "ડાઉનલોડ" : "Download"}</span>
+              <span>{"Download"}</span>
             </a>
 
             <button
@@ -201,7 +201,7 @@ export default function DocumentPreviewModal({
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-neutral-100 z-10">
               <div className="w-8 h-8 border-3 border-[#0B3025] border-t-transparent rounded-full animate-spin" />
               <p className="text-xs text-charcoal/70 font-medium">
-                {isGujarati ? "દસ્તાવેજ લોડ થઈ રહ્યો છે..." : "Loading PDF document preview..."}
+                {"Loading PDF document preview..."}
               </p>
             </div>
           )}
@@ -229,12 +229,10 @@ export default function DocumentPreviewModal({
               </div>
               <div className="max-w-md space-y-1">
                 <h4 className="font-heading font-bold text-base text-[#0B3025]">
-                  {isGujarati ? "ઇનલાઇન પ્રીવ્યૂ ઉપલબ્ધ નથી" : "Inline Preview Not Available"}
+                  {"Inline Preview Not Available"}
                 </h4>
                 <p className="text-xs text-charcoal/70">
-                  {isGujarati
-                    ? "તમારા બ્રાઉઝરમાં સીધો પીડીએફ પ્રીવ્યૂ સપોર્ટેડ નથી અથવા સુરક્ષા પ્રતિબંધો છે. કૃપા કરીને દસ્તાવેજ સીધો ડાઉનલોડ કરો અથવા નવી ટેબમાં ખોલો."
-                    : "Your browser does not support embedded PDF preview for this file. You can open it in a new tab or download it directly."}
+                  {"Your browser does not support embedded PDF preview for this file. You can open it in a new tab or download it directly."}
                 </p>
               </div>
               <div className="flex items-center gap-3 pt-2">
@@ -244,14 +242,14 @@ export default function DocumentPreviewModal({
                   rel="noopener noreferrer"
                   className="px-5 py-2.5 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-sm"
                 >
-                  {isGujarati ? "નવી ટેબમાં ખોલો" : "Open in New Tab"}
+                  {"Open in New Tab"}
                 </a>
                 <a
                   href={document.fileUrl}
                   download
                   className="px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs font-bold transition-all shadow-sm"
                 >
-                  {isGujarati ? "ડાઉનલોડ કરો" : "Download PDF"}
+                  {"Download PDF"}
                 </a>
               </div>
             </div>
@@ -278,7 +276,7 @@ export default function DocumentPreviewModal({
             onClick={onClose}
             className="text-xs font-bold text-[#0B3025] hover:text-[#F47B2A] transition-colors"
           >
-            {isGujarati ? "બંધ કરો (Esc)" : "Close Preview (Esc)"}
+            {"Close Preview (Esc)"}
           </button>
         </div>
       </div>

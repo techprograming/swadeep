@@ -176,7 +176,6 @@ const COUNTRIES = [
 ];
 
 export default function VolunteerContent() {
-  const { isGujarati } = useLanguage();
 
   const [formData, setFormData] = useState({
     firstName: "",

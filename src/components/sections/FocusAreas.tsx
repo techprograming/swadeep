@@ -66,19 +66,13 @@ export default function FocusAreas() {
             id="what-we-do-heading"
             className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-forest-dark tracking-tight"
           >
-            {isGujarati ? "અમારા મુખ્ય કાર્યક્ષેત્રો" : "What We Do"}
+            {"What We Do"}
           </h2>
 
-          <p className="font-gujarati text-lg sm:text-xl text-saffron-dark font-medium">
-            {isGujarati
-              ? "શિક્ષણ, આરોગ્ય, આજીવિકા, ગ્રામ વિકાસ અને આપત્તિ વ્યવસ્થાપન"
-              : "Five Core Thematic Programs for Sustainable Community Empowerment"}
-          </p>
+          
 
           <p className="font-body text-charcoal/85 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            {isGujarati
-              ? "સ્વદીપ પાયાના સ્તરે પાંચ મુખ્ય ક્ષેત્રોમાં સંકલિત રીતે કાર્ય કરે છે, જેનાથી છેવાડાના સમુદાયોમાં ટકાઉ સામાજિક-આર્થિક પરિવર્તન આવી શકે."
-              : "Swadeep concentrates its grassroots interventions on five thematic areas of rural development across Gujarat."}
+            {"Swadeep concentrates its grassroots interventions on five thematic areas of rural development across Gujarat."}
           </p>
         </div>
 
@@ -101,7 +95,7 @@ export default function FocusAreas() {
                 {/* Badge on Image */}
                 <div className="absolute top-5 left-5 z-10 flex flex-wrap gap-2">
                   <span className="bg-[#F47B2A] text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full shadow-md">
-                    ★ {isGujarati ? "મુખ્ય કાર્યક્ષેત્ર" : "01 • FEATURED PROGRAM"}
+                    ★ {"01 • FEATURED PROGRAM"}
                   </span>
                   <span className="bg-forest-dark/80 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/20">
                     {education.stats}
@@ -110,9 +104,7 @@ export default function FocusAreas() {
 
                 {/* Bottom Overlay on Image */}
                 <div className="absolute bottom-5 left-5 right-5 z-10 text-white">
-                  <span className="text-xs font-bold text-saffron uppercase tracking-widest block font-gujarati">
-                    {education.titleGu}
-                  </span>
+                  
                   <h3 className="font-heading font-extrabold text-2xl sm:text-3xl text-white">
                     {education.title}
                   </h3>
@@ -151,7 +143,7 @@ export default function FocusAreas() {
                     href={`/programs/${education.id}`}
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-forest hover:bg-forest-light transition-all shadow-md hover:shadow-lg group-hover:scale-102 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest"
                   >
-                    <span>{isGujarati ? "શિક્ષણ કાર્યક્રમ જુઓ" : "Explore Education Program"}</span>
+                    <span>{"Explore Education Program"}</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -206,9 +198,7 @@ export default function FocusAreas() {
                         {getProgramIcon(area.id)}
                       </div>
                       <div>
-                        <span className="text-[11px] font-gujarati text-[#F47B2A] font-bold block">
-                          {area.titleGu}
-                        </span>
+                        
                         <h4 className="font-heading font-extrabold text-lg text-forest-dark group-hover:text-forest transition-colors leading-snug">
                           {area.title}
                         </h4>
@@ -227,7 +217,7 @@ export default function FocusAreas() {
                     href={`/programs/${area.id}`}
                     className="w-full inline-flex items-center justify-between text-xs font-bold text-forest group-hover:text-[#F47B2A] py-2 border-t border-forest/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-forest rounded-lg px-1"
                   >
-                    <span>{isGujarati ? "વિગતવાર વાંચો" : "Explore Program"}</span>
+                    <span>{"Explore Program"}</span>
                     <span className="text-base font-bold transition-transform group-hover:translate-x-1">→</span>
                   </Link>
                 </div>
@@ -242,7 +232,7 @@ export default function FocusAreas() {
             href="/programs"
             className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-sm font-bold text-white bg-forest hover:bg-forest-light shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-forest"
           >
-            <span>{isGujarati ? "બધા પાંચેય કાર્યક્રમો જુઓ" : "Explore All Five Core Programs"}</span>
+            <span>{"Explore All Five Core Programs"}</span>
             <svg
               className="w-4 h-4 ml-2"
               fill="none"

@@ -15,9 +15,9 @@ export default function DocumentCard({
   onPreview,
   isGujarati = false,
 }: DocumentCardProps) {
-  const displayTitle = isGujarati && document.titleGu ? document.titleGu : document.title;
-  const displayCategory = isGujarati && document.categoryGu ? document.categoryGu : document.category;
-  const displayDesc = isGujarati && document.descriptionGu ? document.descriptionGu : document.description;
+  const displayTitle = document.title;
+  const displayCategory = document.category;
+  const displayDesc = document.description;
 
   // Visual category styling
   const getCategoryTheme = (cat: string) => {
@@ -99,7 +99,7 @@ export default function DocumentCard({
           <span>{document.size ? document.size : "Verified PDF Document"}</span>
           <span className="text-[11px] text-emerald-800 font-medium font-sans flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-            {isGujarati ? "પ્રમાણિત દસ્તાવેજ" : "Verified Official"}
+            {"Verified Official"}
           </span>
         </div>
 
@@ -111,7 +111,7 @@ export default function DocumentCard({
             className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-cream hover:bg-forest-50 text-[#0B3025] border border-forest/15 hover:border-forest/30 text-xs font-bold transition-all"
           >
             <ExternalLinkIcon size={13} />
-            <span>{isGujarati ? "વાંચો / જુઓ" : "Preview"}</span>
+            <span>{"Preview"}</span>
           </button>
 
           <a
@@ -120,7 +120,7 @@ export default function DocumentCard({
             className="w-full inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs"
           >
             <DownloadIcon size={13} />
-            <span>{isGujarati ? "ડાઉનલોડ" : "Download"}</span>
+            <span>{"Download"}</span>
           </a>
         </div>
       </div>

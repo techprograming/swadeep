@@ -19,25 +19,25 @@ const HERO_BACKGROUND_IMAGES = [
     src: "/img/466662985_9406865389340993_2185090257753639784_n.jpg",
     alt: "Swadeep community mobilization and social development in rural Gujarat",
     caption: "Grassroots Community Mobilization",
-    captionGu: "સમુદાય સંગઠન અને સહભાગી વિકાસ",
+    
   },
   {
     src: "/img/466678542_9406865382674327_1595720136936869927_n.jpg",
     alt: "Swadeep educational empowerment and children's classroom initiative",
     caption: "Children's Improved Education & Life Skills",
-    captionGu: "બાળ શિક્ષણ અને સર્વાંગી ક્ષમતાવર્ધન",
+    
   },
   {
     src: "/img/475792725_1034820738680952_9169000876501581246_n.jpg",
     alt: "Swadeep health and community welfare program in Bhavnagar district",
     caption: "Health Awareness & Medical Camps",
-    captionGu: "આરોગ્ય જાગૃતિ અને તબીબી સેવા શિબિરો",
+    
   },
   {
     src: "/img/476239017_1038367758326250_9107735841149966113_n.jpg",
     alt: "Swadeep women empowerment and livelihood self-reliance program",
     caption: "Livelihood & Women Self-Reliance",
-    captionGu: "આજીવિકા પ્રોત્સાહન અને મહિલા સશક્તિકરણ",
+    
   },
 ] as const;
 
@@ -105,7 +105,7 @@ export default function Hero() {
             {/* Top Introductory Badge */}
             <div className="inline-flex items-center space-x-2 bg-black/40 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 text-xs sm:text-sm font-medium text-white shadow-xs">
               <span className="w-2 h-2 rounded-full bg-[#F47B2A] shrink-0" />
-              <span>{isGujarati ? SITE_CONFIG.subtitle : "Non-profit organization in Ahmedabad, Gujarat"}</span>
+              <span>{"Non-profit organization in Ahmedabad, Gujarat"}</span>
             </div>
 
             {/* Eyebrow & Main Headings */}
@@ -122,9 +122,7 @@ export default function Hero() {
             </div>
 
             {/* Gujarati Subheading */}
-            <p className="font-gujarati text-lg sm:text-xl md:text-2xl text-white font-medium tracking-wide drop-shadow-sm">
-              {SITE_CONFIG.nameGujarati}
-            </p>
+            
 
             {/* Professional Mission Statement */}
             <p className="font-body text-white/95 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed drop-shadow-sm">
@@ -213,7 +211,7 @@ export default function Hero() {
                 <div className="space-y-1 border-b border-white/15 pb-4">
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#F47B2A] bg-white/10 px-3 py-1 rounded-full border border-white/15 inline-block">
-                      {isGujarati ? "સ્થાપના ૨૦૦૫" : "ESTABLISHED 2005"}
+                      {"ESTABLISHED 2005"}
                     </span>
                     <span className="text-xs text-white/70 font-semibold">
                       Ahmedabad, Gujarat
@@ -240,7 +238,7 @@ export default function Hero() {
                       </div>
                       <div>
                         <div className="text-sm font-bold text-white group-hover/item:text-[#F47B2A] transition-colors">
-                          {isGujarati ? "શિક્ષણ" : "Education"}
+                          {"Education"}
                         </div>
                         <div className="text-xs text-white/75">
                           {t("heroEduStats")}
@@ -268,7 +266,7 @@ export default function Hero() {
                       </div>
                       <div>
                         <div className="text-sm font-bold text-white group-hover/item:text-[#F47B2A] transition-colors">
-                          {isGujarati ? "આરોગ્ય" : "Health"}
+                          {"Health"}
                         </div>
                         <div className="text-xs text-white/75">
                           {t("heroHealthStats")}
@@ -296,7 +294,7 @@ export default function Hero() {
                       </div>
                       <div>
                         <div className="text-sm font-bold text-white group-hover/item:text-[#F47B2A] transition-colors">
-                          {isGujarati ? "આજીવિકા અને માળખું" : "Livelihood & Infrastructure"}
+                          {"Livelihood & Infrastructure"}
                         </div>
                         <div className="text-xs text-white/75">
                           {t("heroLivelihoodStats")}
@@ -323,7 +321,7 @@ export default function Hero() {
                   </div>
                   <div className="leading-tight">
                     <span className="block text-[9px] font-bold text-[#F47B2A] uppercase tracking-wider">
-                      {isGujarati ? "સન્માન એવોર્ડ" : "AWARD"}
+                      {"AWARD"}
                     </span>
                     <span className="block text-xs font-extrabold text-[#0B3025]">
                       CSR Conclave 2019

@@ -166,11 +166,6 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({
           >
             {label}
           </p>
-          {labelGu && (
-            <p className="font-gujarati text-forest/90 text-sm sm:text-base font-semibold">
-              {labelGu}
-            </p>
-          )}
         </div>
       </div>
     </div>

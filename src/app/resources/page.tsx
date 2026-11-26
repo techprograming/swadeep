@@ -24,11 +24,11 @@ const CATEGORY_CONFIG = {
   "Annual Report": {
     key: "Annual Report",
     labelEn: "Annual Reports",
-    labelGu: "વાર્ષિક અહેવાલો",
+    
     subtitleEn: "13 Published Editions (2012–2025)",
-    subtitleGu: "૧૩ પ્રકાશિત આવૃત્તિઓ (૨૦૧૨–૨૦૨૫)",
+    
     descEn: "Comprehensive yearly activity and impact reports documenting Swadeep's grassroots interventions across 200+ villages.",
-    descGu: "ગુજરાતના ૨૦૦+ ગામોમાં શિક્ષણ, આરોગ્ય, આજીવિકા અને ગ્રામ વિકાસ કાર્યક્રમોની વાર્ષિક પ્રગતિ અને પ્રભાવ અહેવાલો.",
+    
     badgeClass: "bg-emerald-100 text-emerald-800 border-emerald-300",
     pillClass: "border-emerald-500/30 text-emerald-700 bg-emerald-50",
     coverGradient: "from-[#0d4533] via-[#0B3025] to-[#062018]",
@@ -45,11 +45,11 @@ const CATEGORY_CONFIG = {
   "Audit Report": {
     key: "Audit Report",
     labelEn: "Audit Reports",
-    labelGu: "ઓડિટ અહેવાલો",
+    
     subtitleEn: "9 Verified Statements (2015–2024)",
-    subtitleGu: "૯ ચકાસાયેલ હિસાબો (૨૦૧૫–૨૦૨૪)",
+    
     descEn: "Independent chartered accountant balance sheets, income statements, and statutory financial disclosures.",
-    descGu: "સનદી હિસાબી (ચાર્ટર્ડ એકાઉન્ટન્ટ) દ્વારા સ્વતંત્ર રીતે પ્રમાણિત વાર્ષિક બેલેન્સ શીટ અને વૈધાનિક હિસાબો.",
+    
     badgeClass: "bg-blue-100 text-blue-800 border-blue-300",
     pillClass: "border-blue-500/30 text-blue-700 bg-blue-50",
     coverGradient: "from-[#103a60] via-[#0c2c4d] to-[#071d34]",
@@ -66,11 +66,11 @@ const CATEGORY_CONFIG = {
   "FC Accounts": {
     key: "FC Accounts",
     labelEn: "FCRA Accounts",
-    labelGu: "એફસીઆરએ હિસાબ",
+    
     subtitleEn: "10 Annual Submissions (2015–2024)",
-    subtitleGu: "૧૦ વાર્ષિક રજૂઆતો (૨૦૧૫–૨૦૨૪)",
+    
     descEn: "Foreign Contribution Regulation Act returns and dedicated foreign contribution bank statements filed with MHA.",
-    descGu: "ભારત સરકારના ગૃહ મંત્રાલય (MHA) સમક્ષ દર વર્ષે રજૂ કરાતા વિદેશી અનુદાન નિયમન અધિનિયમ હિસાબો.",
+    
     badgeClass: "bg-purple-100 text-purple-800 border-purple-300",
     pillClass: "border-purple-500/30 text-purple-700 bg-purple-50",
     coverGradient: "from-[#3b1d5a] via-[#2d1445] to-[#1c0c2c]",
@@ -98,7 +98,7 @@ function EditorialDocumentCard({
   onPreview: (doc: PreviewDocument) => void;
   isGujarati: boolean;
 }) {
-  const displayTitle = isGujarati && doc.titleGu ? doc.titleGu : doc.title;
+  const displayTitle = doc.title;
   const config = CATEGORY_CONFIG[doc.category as CategoryKey];
 
   return (
@@ -133,7 +133,7 @@ function EditorialDocumentCard({
               className="text-[11px] font-bold uppercase tracking-wider block"
               style={{ color: config?.accentColor || "#F47B2A" }}
             >
-              {isGujarati && doc.categoryGu ? doc.categoryGu : doc.category}
+              {doc.category}
             </span>
           </div>
 
@@ -169,7 +169,7 @@ function EditorialDocumentCard({
             className="px-4 py-2 rounded-full bg-white text-[#0B3025] hover:bg-[#F47B2A] hover:text-white text-xs font-bold shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-1.5"
           >
             <ExternalLinkIcon size={13} />
-            <span>{isGujarati ? "વાંચો / પ્રીવ્યૂ" : "Quick Preview"}</span>
+            <span>{"Quick Preview"}</span>
           </button>
         </div>
       </div>
@@ -183,7 +183,7 @@ function EditorialDocumentCard({
                 config?.badgeClass || "bg-neutral-100 text-neutral-700 border-neutral-200"
               }`}
             >
-              {isGujarati && doc.categoryGu ? doc.categoryGu : doc.category}
+              {doc.category}
             </span>
             <span className="text-[11px] text-neutral-500 font-mono">{doc.year}</span>
           </div>
@@ -197,7 +197,7 @@ function EditorialDocumentCard({
 
           {doc.description && (
             <p className="text-xs text-neutral-500 line-clamp-2 leading-relaxed font-body">
-              {isGujarati && doc.descriptionGu ? doc.descriptionGu : doc.description}
+              {doc.description}
             </p>
           )}
         </div>
@@ -210,7 +210,7 @@ function EditorialDocumentCard({
             className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-neutral-50 hover:bg-neutral-100 text-[#0B3025] border border-neutral-200 hover:border-neutral-300 text-xs font-semibold transition-all"
           >
             <ExternalLinkIcon size={12} />
-            <span>{isGujarati ? "વાંચો" : "Preview"}</span>
+            <span>{"Preview"}</span>
           </button>
 
           <a
@@ -219,7 +219,7 @@ function EditorialDocumentCard({
             className="inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-semibold transition-all shadow-xs"
           >
             <DownloadIcon size={12} />
-            <span>{isGujarati ? "ડાઉનલોડ" : "Download"}</span>
+            <span>{"Download"}</span>
           </a>
         </div>
       </div>
@@ -286,14 +286,14 @@ function ReportRowSlider({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-[#0B3025]">
-                {isGujarati ? config.labelGu : config.labelEn}
+                {config.labelEn}
               </h3>
               <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-neutral-100 text-[#0B3025] border border-neutral-200">
-                {documents.length} {isGujarati ? "અહેવાલો" : "Reports"}
+                {documents.length} {"Reports"}
               </span>
             </div>
             <p className="font-mono text-xs text-neutral-500 font-semibold hidden sm:block">
-              {isGujarati ? config.subtitleGu : config.subtitleEn}
+              {config.subtitleEn}
             </p>
           </div>
         </div>
@@ -378,21 +378,14 @@ export default function ResourcesPage() {
             const mapped: PreviewDocument[] = data.reports.map((r: any) => ({
               id: r.id,
               title: r.title,
-              titleGu: r.titleGu,
+              
               category: r.category,
-              categoryGu:
-                r.category === "Annual Report"
-                  ? "વાર્ષિક અહેવાલ"
-                  : r.category === "Audit Report"
-                  ? "ઓડિટ અહેવાલ"
-                  : r.category === "FC Accounts"
-                  ? "એફસીઆરએ હિસાબ"
-                  : r.category,
+              
               year: r.year,
               size: r.size,
               fileUrl: r.fileUrl,
               description: r.description,
-              descriptionGu: r.descriptionGu,
+              
             }));
             setReports(mapped);
           }
@@ -461,9 +454,7 @@ export default function ResourcesPage() {
               Reports
             </h1>
             <p className="font-body text-xs sm:text-sm text-white/85 leading-relaxed max-w-2xl">
-              {isGujarati
-                ? "સ્વદીપના છેલ્લા ૧૩ વર્ષના પ્રમાણિત વાર્ષિક અહેવાલો (૨૦૧૨-૨૫), સનદી હિસાબી ઓડિટ રિપોર્ટ્સ, એફસીઆરએ વિદેશી અનુદાન ખાતાઓ અને સંસ્થાકીય પરિચય બ્રોશર."
-                : "Explore audited statutory annual reports, chartered accountant balance sheets, foreign contribution (FCRA) accounts, and brochure."}
+              {"Explore audited statutory annual reports, chartered accountant balance sheets, foreign contribution (FCRA) accounts, and brochure."}
             </p>
           </div>
 
@@ -509,7 +500,7 @@ export default function ResourcesPage() {
                 </div>
 
                 <span className="text-[#F47B2A] text-[11px] font-bold uppercase tracking-widest mb-1">
-                  {isGujarati ? "બ્રોશર" : "Brochure"}
+                  {"Brochure"}
                 </span>
 
                 <span className="text-white font-heading font-extrabold text-lg sm:text-xl leading-tight text-center">
@@ -525,15 +516,15 @@ export default function ResourcesPage() {
               <div className="flex-1 p-6 sm:p-8 flex flex-col justify-center space-y-4">
                 <div className="space-y-1.5">
                   <span className="text-xs font-bold uppercase tracking-wider text-[#F47B2A]">
-                    {isGujarati ? "સંસ્થાકીય પરિચય દસ્તાવેજ" : "Institutional Presentation"}
+                    {"Institutional Presentation"}
                   </span>
                   <h2 className="font-heading text-lg sm:text-xl md:text-2xl font-extrabold text-[#0B3025] leading-snug">
-                    {isGujarati ? OFFICIAL_BROCHURE.titleGu : OFFICIAL_BROCHURE.title}
+                    {OFFICIAL_BROCHURE.title}
                   </h2>
                 </div>
 
                 <p className="font-body text-xs sm:text-sm text-neutral-600 leading-relaxed">
-                  {isGujarati ? OFFICIAL_BROCHURE.descriptionGu : OFFICIAL_BROCHURE.description}
+                  {OFFICIAL_BROCHURE.description}
                 </p>
 
                 <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -543,7 +534,7 @@ export default function ResourcesPage() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
                   >
                     <ExternalLinkIcon size={14} />
-                    <span>{isGujarati ? "બ્રોશર વાંચો (Preview)" : "Read Brochure (Preview)"}</span>
+                    <span>{"Read Brochure (Preview)"}</span>
                   </button>
 
                   <a
@@ -552,12 +543,12 @@ export default function ResourcesPage() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
                   >
                     <DownloadIcon size={14} />
-                    <span>{isGujarati ? "ડાઉનલોડ PDF" : "Download PDF"}</span>
+                    <span>{"Download PDF"}</span>
                   </a>
 
                   <span className="text-xs text-emerald-700 font-medium flex items-center gap-1.5 font-mono">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                    {isGujarati ? "સત્તાવાર સંસ્થાકીય દસ્તાવેજ" : "Verified Official Publication"}
+                    {"Verified Official Publication"}
                   </span>
                 </div>
               </div>
@@ -600,15 +591,13 @@ export default function ResourcesPage() {
         <section className="p-7 sm:p-9 rounded-2xl bg-[#0B3025] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg border border-white/10">
           <div className="space-y-2 max-w-lg">
             <span className="text-[11px] uppercase tracking-wider text-[#F47B2A] font-bold">
-              {isGujarati ? "સ્વદીપ ડિજિટલ જ્ઞાન કેન્દ્ર" : "Swadeep Digital Knowledge Center"}
+              {"Swadeep Digital Knowledge Center"}
             </span>
             <h3 className="font-heading text-lg sm:text-xl font-bold text-white">
-              {isGujarati ? "શૈક્ષણિક પ્રકાશનો, ક્ષેત્રીય તસ્વીરો અને વિડીયો" : "Looking for Publications, Photos or Videos?"}
+              {"Looking for Publications, Photos or Videos?"}
             </h3>
             <p className="text-xs sm:text-sm text-white/75 leading-relaxed font-body">
-              {isGujarati
-                ? "બાળકો માટે ડેન્ટલ હાઇજીન વાર્તાપુસ્તકો, ૮૬+ ક્ષેત્રીય તસ્વીરો અને ૧૨ સત્તાવાર કાર્યક્રમ વિડીયો ઉપલબ્ધ છે."
-                : "Explore illustrated children's storybooks, 86+ high-resolution field photographs, and 12 YouTube activity videos."}
+              {"Explore illustrated children's storybooks, 86+ high-resolution field photographs, and 12 YouTube activity videos."}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
@@ -617,21 +606,21 @@ export default function ResourcesPage() {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs font-bold shadow-md transition-all"
             >
               <BookOpenIcon size={14} />
-              <span>{isGujarati ? "પ્રકાશનો" : "Publications"}</span>
+              <span>{"Publications"}</span>
             </Link>
             <Link
               href="/gallery"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold border border-white/15 transition-all"
             >
               <CameraIcon size={14} />
-              <span>{isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}</span>
+              <span>{"Photo Gallery"}</span>
             </Link>
             <Link
               href="/videos"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold border border-white/15 transition-all"
             >
               <YoutubeIcon size={14} />
-              <span>{isGujarati ? "વિડીયો ગેલેરી" : "Video Gallery"}</span>
+              <span>{"Video Gallery"}</span>
             </Link>
           </div>
         </section>

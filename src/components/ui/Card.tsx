@@ -154,13 +154,6 @@ export const Card: React.FC<CardProps> = ({
           </div>
         )}
 
-        {/* Gujarati Subtitle/Tag */}
-        {titleGu && (
-          <span className="font-gujarati text-saffron text-xs sm:text-sm font-semibold mb-1 block">
-            {titleGu}
-          </span>
-        )}
-
         {/* Title */}
         {title && (
           <h3 className="font-heading font-bold text-lg sm:text-xl text-forest group-hover:text-forest-light transition-colors duration-200 line-clamp-2 mb-2">

@@ -2,21 +2,19 @@
 
 import React, { useState } from "react";
 import { ACHIEVEMENTS } from "@/lib/constants";
-import { useLanguage } from "@/context/LanguageContext";
 import { cn } from "@/lib/utils";
 
 type CategoryKey = keyof typeof ACHIEVEMENTS;
 
 export default function ImpactStats() {
-  const { isGujarati } = useLanguage();
   const [activeTab, setActiveTab] = useState<CategoryKey>("education");
 
-  const categories: { key: CategoryKey; label: string; labelGu: string }[] = [
-    { key: "education", label: "Education", labelGu: "શિક્ષણ" },
-    { key: "health", label: "Health", labelGu: "આરોગ્ય" },
-    { key: "livelihood", label: "Livelihood", labelGu: "આજીવિકા" },
-    { key: "infrastructure", label: "Rural Infrastructure", labelGu: "ગ્રામીણ માળખાકીય વિકાસ" },
-    { key: "disaster", label: "Disaster Management", labelGu: "આપત્તિ વ્યવસ્થાપન" },
+  const categories: { key: CategoryKey; label: string }[] = [
+    { key: "education", label: "Education",  },
+    { key: "health", label: "Health",  },
+    { key: "livelihood", label: "Livelihood",  },
+    { key: "infrastructure", label: "Rural Infrastructure",  },
+    { key: "disaster", label: "Disaster Management",  },
   ];
 
   const currentCategory = ACHIEVEMENTS[activeTab];
@@ -56,13 +54,11 @@ export default function ImpactStats() {
             id="impact-stats-heading"
             className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight"
           >
-            {isGujarati ? "અમારી સિદ્ધિઓ" : "Our Achievements"}
+            {"Our Achievements"}
           </h2>
 
           <p className="text-xs sm:text-base md:text-lg text-cream/80 max-w-xl mx-auto leading-relaxed">
-            {isGujarati
-              ? "પાયાના સ્તરે નોંધાયેલ વાસ્તવિક અને પ્રમાણિત વિકાસ પરિણામો"
-              : "Verifiable grassroots impact across education, community health, coastal livelihoods, infrastructure, and relief."}
+            {"Verifiable grassroots impact across education, community health, coastal livelihoods, infrastructure, and relief."}
           </p>
         </div>
 
@@ -73,10 +69,10 @@ export default function ImpactStats() {
               60,000+
             </div>
             <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
-              {isGujarati ? "બાળકો સુધી પહોંચ" : "Children Reached"}
+              {"Children Reached"}
             </div>
             <div className="text-[11px] text-cream/70 mt-0.5">
-              {isGujarati ? "૨૭૭ આંગણવાડી અને શાળાઓ" : "Across 200+ Villages"}
+              {"Across 200+ Villages"}
             </div>
           </div>
 
@@ -85,10 +81,10 @@ export default function ImpactStats() {
               200+
             </div>
             <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
-              {isGujarati ? "ગામોમાં કાર્યક્ષેત્ર" : "Villages Covered"}
+              {"Villages Covered"}
             </div>
             <div className="text-[11px] text-cream/70 mt-0.5">
-              {isGujarati ? "ગુજરાતના વિવિધ જિલ્લાઓ" : "Gujarat Rural Footprint"}
+              {"Gujarat Rural Footprint"}
             </div>
           </div>
 
@@ -97,10 +93,10 @@ export default function ImpactStats() {
               500+
             </div>
             <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
-              {isGujarati ? "માછીમારોને સહાય" : "Fishermen Supported"}
+              {"Fishermen Supported"}
             </div>
             <div className="text-[11px] text-cream/70 mt-0.5">
-              {isGujarati ? "૧૦ દરિયાકાંઠાના ગામો" : "Across 10 Coastal Villages"}
+              {"Across 10 Coastal Villages"}
             </div>
           </div>
 
@@ -109,10 +105,10 @@ export default function ImpactStats() {
               20+
             </div>
             <div className="font-body text-xs sm:text-sm font-semibold text-white mt-1">
-              {isGujarati ? "વર્ષોની અવિરત સેવા" : "Years of Grassroots Work"}
+              {"Years of Grassroots Work"}
             </div>
             <div className="text-[11px] text-cream/70 mt-0.5">
-              {isGujarati ? "૨૦૦૫ થી સતત સમર્પણ" : "Serving Since 2005"}
+              {"Serving Since 2005"}
             </div>
           </div>
         </div>
@@ -138,7 +134,7 @@ export default function ImpactStats() {
                     : "bg-white/10 text-cream/90 hover:bg-white/20 border border-white/15"
                 }`}
               >
-                {isGujarati ? cat.labelGu : cat.label}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -153,7 +149,7 @@ export default function ImpactStats() {
         >
           <div className="text-center mb-4 xs:mb-5 sm:mb-8">
             <h3 className="font-heading text-base xs:text-lg sm:text-2xl md:text-3xl font-extrabold text-saffron-light">
-              {isGujarati ? currentCategory.titleGu : currentCategory.title}
+              {currentCategory.title}
             </h3>
           </div>
 
@@ -186,7 +182,7 @@ export default function ImpactStats() {
                     {item.count}
                   </div>
                   <div className="w-full font-body text-[10.5px] xs:text-[11.5px] sm:text-sm text-cream/85 font-medium leading-snug line-clamp-2 mt-1 sm:mt-2 text-center break-words">
-                    {isGujarati ? item.labelGu : item.label}
+                    {item.label}
                   </div>
                 </div>
               );

@@ -82,10 +82,10 @@ export default function ReportsSection({
   }, [reports, activeCategory, searchQuery]);
 
   const categories = [
-    { key: "all", labelEn: "All Reports", labelGu: "તમામ અહેવાલો" },
-    { key: "Annual Report", labelEn: "Annual Reports", labelGu: "વાર્ષિક અહેવાલો" },
-    { key: "Audit Report", labelEn: "Audit Reports", labelGu: "ઓડિટ અહેવાલો" },
-    { key: "FC Accounts", labelEn: "FC Accounts", labelGu: "એફસીઆરએ હિસાબ" },
+    { key: "all", labelEn: "All Reports",  },
+    { key: "Annual Report", labelEn: "Annual Reports",  },
+    { key: "Audit Report", labelEn: "Audit Reports",  },
+    { key: "FC Accounts", labelEn: "FC Accounts",  },
   ];
 
   return (
@@ -95,21 +95,19 @@ export default function ReportsSection({
           <div className="space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-forest-50 text-forest border border-forest/15">
               <ShieldCheckIcon className="w-3.5 h-3.5 text-forest" />
-              <span>{isGujarati ? "પારદર્શિતા અને નિયમપાલન" : "STATUTORY TRANSPARENCY"}</span>
+              <span>{"STATUTORY TRANSPARENCY"}</span>
             </div>
             <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0B3025]">
-              {title ? title : isGujarati ? "સત્તાવાર અહેવાલો (Reports)" : "Reports — All Statutory & Project Documentation"}
+              {title ? title : "Reports — All Statutory & Project Documentation"}
             </h2>
             <p className="font-body text-xs sm:text-sm text-charcoal/75 max-w-2xl">
-              {subtitle ? subtitle : isGujarati
-                ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થાના વાર્ષિક અહેવાલો, ઓડિટ હિસાબ અને FCRA હિસાબોની પીડીએફ નકલ."
-                : "Complete collection of Swadeep Shikshan Vikas Sanstha's Annual Reports, Statutory Audit Reports, and FCRA Accounts."}
+              {subtitle ? subtitle : "Complete collection of Swadeep Shikshan Vikas Sanstha's Annual Reports, Statutory Audit Reports, and FCRA Accounts."}
             </p>
           </div>
 
           <div className="flex items-center gap-3 text-xs font-medium text-charcoal/70 bg-white px-4 py-2 rounded-2xl border border-forest/10 shadow-xs shrink-0">
             <CheckCircleIcon className="w-4 h-4 text-forest" />
-            <span>{isGujarati ? "કુલ પ્રમાણિત દસ્તાવેજો: " : "Verified Documents: "}</span>
+            <span>{"Verified Documents: "}</span>
             <strong className="text-forest font-bold font-mono">{reports.length || 32}</strong>
           </div>
         </div>
@@ -133,7 +131,7 @@ export default function ReportsSection({
                     : "bg-white text-charcoal/70 hover:bg-forest/5 hover:text-forest border border-forest/10"
                 }`}
               >
-                <span>{isGujarati ? cat.labelGu : cat.labelEn}</span>
+                <span>{cat.labelEn}</span>
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                     isActive ? "bg-white/20 text-white" : "bg-forest/5 text-forest"
@@ -152,7 +150,7 @@ export default function ReportsSection({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={isGujarati ? "વર્ષ અથવા નામથી શોધો..." : "Search by year or title..."}
+            placeholder={"Search by year or title..."}
             className="w-full pl-8 pr-3 py-1.5 text-xs rounded-xl bg-white border border-forest/15 focus:outline-none focus:ring-2 focus:ring-forest text-charcoal"
           />
           <svg
@@ -177,15 +175,15 @@ export default function ReportsSection({
       {/* Reports Grid */}
       {loading ? (
         <div className="py-12 text-center text-charcoal/60 text-sm">
-          {isGujarati ? "અહેવાલો લોડ થઈ રહ્યા છે..." : "Loading reports repository..."}
+          {"Loading reports repository..."}
         </div>
       ) : filteredReports.length === 0 ? (
         <div className="p-8 text-center bg-white rounded-3xl border border-forest/10 space-y-2">
           <p className="font-heading font-bold text-base text-[#0B3025]">
-            {isGujarati ? "કોઈ અહેવાલ મળ્યો નથી" : "No matching reports found"}
+            {"No matching reports found"}
           </p>
           <p className="text-xs text-charcoal/60">
-            {isGujarati ? "કૃપા કરીને અલગ શોધ શબ્દ વાપરો." : "Try adjusting your search query or selected filter."}
+            {"Try adjusting your search query or selected filter."}
           </p>
         </div>
       ) : (
@@ -207,13 +205,8 @@ export default function ReportsSection({
 
                 <div>
                   <h3 className="font-heading font-bold text-forest-dark text-base group-hover:text-forest transition-colors leading-snug">
-                    {isGujarati && item.titleGu ? item.titleGu : item.title}
+                    {item.title}
                   </h3>
-                  {item.titleGu && !isGujarati && (
-                    <p className="font-gujarati text-xs text-charcoal/60 mt-0.5">
-                      {item.titleGu}
-                    </p>
-                  )}
                 </div>
 
                 {item.size && (
@@ -231,7 +224,7 @@ export default function ReportsSection({
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-forest group-hover:text-[#F47B2A] transition-colors"
                 >
                   <BookOpenIcon className="w-3.5 h-3.5" />
-                  <span>{isGujarati ? "અહેવાલ ડાઉનલોડ ↗" : "Download PDF ↗"}</span>
+                  <span>{"Download PDF ↗"}</span>
                 </a>
                 <span className="text-[10px] text-forest/70 font-semibold bg-forest/5 px-2 py-0.5 rounded-full">
                   Official

@@ -34,7 +34,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, nameGu, role, roleGu, category, description, image, highlight } = body;
+    const { name, role, category, description, image, highlight } = body;
 
     if (!name || typeof name !== "string" || name.trim().length < 2) {
       return NextResponse.json(
@@ -46,9 +46,7 @@ export async function POST(request: Request) {
     const newTrustee = {
       id: `tr-${Date.now()}`,
       name: sanitizeInput(name.trim()),
-      nameGu: nameGu ? sanitizeInput(String(nameGu).trim()) : sanitizeInput(name.trim()),
       role: role ? sanitizeInput(String(role).trim()) : "Trustee",
-      roleGu: roleGu ? sanitizeInput(String(roleGu).trim()) : "ટ્રસ્ટી",
       category: category ? sanitizeInput(String(category).trim()) : "Trustee",
       description: description ? sanitizeInput(String(description).trim()) : "",
       image: image && typeof image === "string" && image.trim() ? sanitizeInput(image.trim()) : undefined,

@@ -118,12 +118,6 @@ export const BentoCard: React.FC<BentoCardProps> = ({
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {titleGu && (
-          <span className="font-gujarati text-saffron text-xs sm:text-sm font-semibold mb-1 block">
-            {titleGu}
-          </span>
-        )}
-
         <h3 className="font-heading font-bold text-xl sm:text-2xl text-forest group-hover:text-forest-light transition-colors mb-2">
           {title}
         </h3>

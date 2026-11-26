@@ -32,9 +32,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy &amp; Data Protection
           </h1>
 
-          <p className="font-gujarati text-lg sm:text-xl text-cream/90 font-medium">
-            ગોપનીયતા નીતિ અને ડેટા સુરક્ષા — પારદર્શક અને સુરક્ષિત વ્યવસ્થા
-          </p>
+          
 
           <p className="font-body text-xs sm:text-sm text-cream/70 pt-2">
             Last Updated: October 2026 • Effective for all Swadeep website visitors, donors, and partners

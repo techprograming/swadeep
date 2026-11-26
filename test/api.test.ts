@@ -11,26 +11,11 @@ import fs from "fs";
 import path from "path";
 
 describe("Swadeep Shikshan Vikas Sanstha — Test Suite", () => {
-  describe("Bilingual Dictionary Integrity", () => {
-    test("English and Gujarati dictionaries have matching keys", () => {
-      const enKeys = Object.keys(translations.en).sort();
-      const guKeys = Object.keys(translations.gu).sort();
-
-      assert.deepStrictEqual(
-        enKeys,
-        guKeys,
-        "English and Gujarati dictionaries must have identical key coverage"
-      );
-    });
-
+  describe("Dictionary Integrity", () => {
     test("Critical organization identity strings are accurate", () => {
       assert.strictEqual(
         translations.en.orgName,
         "Swadeep Shikshan Vikas Sanstha"
-      );
-      assert.strictEqual(
-        translations.gu.orgName,
-        "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા"
       );
       assert.strictEqual(
         translations.en.panNo,

@@ -33,27 +33,27 @@ const CATEGORIES = [
   "Culture & Community",
 ] as const;
 
-const VIDEO_CATEGORY_LABELS: Record<string, { en: string; gu: string }> = {
-  All: { en: "All Videos", gu: "તમામ વિડીયો" },
+const VIDEO_CATEGORY_LABELS: Record<string, { en: string }> = {
+  All: { en: "All Videos",  },
   "Education & Foundational Literacy": {
     en: "Education & Literacy",
-    gu: "શિક્ષણ અને સાક્ષરતા",
+    
   },
   "Anganwadi & ICDS Training": {
     en: "Anganwadi & ICDS",
-    gu: "આંગણવાડી તાલીમ",
+    
   },
   "Health & Nutrition": {
     en: "Health & Nutrition",
-    gu: "આરોગ્ય અને પોષણ",
+    
   },
   "Child Development & Activities": {
     en: "Child Activities",
-    gu: "બાળ પ્રવૃત્તિઓ",
+    
   },
   "Culture & Community": {
     en: "Culture & Community",
-    gu: "સંસ્કૃતિ અને સમુદાય",
+    
   },
 };
 
@@ -81,7 +81,6 @@ export default function VideosPage() {
       const matchesSearch =
         !q ||
         video.title.toLowerCase().includes(q) ||
-        (video.titleGu && video.titleGu.toLowerCase().includes(q)) ||
         video.description.toLowerCase().includes(q) ||
         video.category.toLowerCase().includes(q);
 
@@ -107,12 +106,10 @@ export default function VideosPage() {
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 space-y-4">
           <div className="max-w-3xl space-y-2">
             <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-              {isGujarati ? "પ્રવૃત્તિ વિડીયો ગેલેરી" : "Activity Video Gallery"}
+              {"Activity Video Gallery"}
             </h1>
             <p className="font-body text-xs sm:text-sm text-white/85 leading-relaxed max-w-2xl">
-              {isGujarati
-                ? "ગ્રામીણ ગુજરાતમાં પ્રાથમિક શિક્ષણ, આંગણવાડી કાર્યકર તાલીમ, બાળ આરોગ્ય શિબિરો અને સમુદાય સશક્તિકરણની જીવંત ક્ષેત્રીય પ્રવૃત્તિઓના સત્તાવાર વિડીયો દસ્તાવેજીકરણ."
-                : "Experience authentic on-ground moments from rural Gujarat: classroom innovations, Anganwadi capacity building workshops, child health check-ups, and community empowerment sessions."}
+              {"Experience authentic on-ground moments from rural Gujarat: classroom innovations, Anganwadi capacity building workshops, child health check-ups, and community empowerment sessions."}
             </p>
           </div>
 
@@ -125,7 +122,7 @@ export default function VideosPage() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
             >
               <YoutubeIcon size={16} />
-              <span>{isGujarati ? "YouTube પર સબ્સ્ક્રાઇબ કરો" : "Subscribe on YouTube"}</span>
+              <span>{"Subscribe on YouTube"}</span>
               <ExternalLinkIcon size={13} className="opacity-80" />
             </a>
 
@@ -134,7 +131,7 @@ export default function VideosPage() {
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-bold border border-white/20 transition-all"
             >
               <CameraIcon size={15} />
-              <span>{isGujarati ? "ફોટો ગેલેરી જુઓ" : "Photo Gallery (86 Photos)"}</span>
+              <span>{"Photo Gallery (86 Photos)"}</span>
             </Link>
           </div>
         </div>
@@ -181,7 +178,7 @@ export default function VideosPage() {
                 {/* Featured Badge */}
                 <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
                   <span className="px-3 py-1 rounded-full bg-[#F47B2A] text-white text-xs font-bold uppercase tracking-wider shadow-sm">
-                    {isGujarati ? "મુખ્ય વિડીયો" : "Featured Spotlight"}
+                    {"Featured Spotlight"}
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-sm text-white text-[11px] font-mono font-bold">
                     {featuredVideo.duration}
@@ -206,13 +203,8 @@ export default function VideosPage() {
                     {featuredVideo.category}
                   </span>
                   <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-[#0B3025] leading-snug">
-                    {isGujarati && featuredVideo.titleGu ? featuredVideo.titleGu : featuredVideo.title}
+                    {featuredVideo.title}
                   </h2>
-                  {featuredVideo.titleGu && (
-                    <p className="text-xs text-charcoal/60 font-body">
-                      {isGujarati ? featuredVideo.title : featuredVideo.titleGu}
-                    </p>
-                  )}
                   <p className="font-body text-xs sm:text-sm text-charcoal/75 leading-relaxed pt-2">
                     {featuredVideo.description}
                   </p>
@@ -225,7 +217,7 @@ export default function VideosPage() {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all"
                   >
                     <PlayIcon size={16} />
-                    <span>{isGujarati ? "વિડીયો ચલાવો" : "Play Featured Video"}</span>
+                    <span>{"Play Featured Video"}</span>
                   </button>
 
                   <a
@@ -251,14 +243,14 @@ export default function VideosPage() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <div>
               <span className="text-[#F47B2A] font-bold text-xs uppercase tracking-widest block mb-1">
-                {isGujarati ? "વિડીયો ભંડાર" : "Video Repository"}
+                {"Video Repository"}
               </span>
               <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0B3025]">
-                {isGujarati ? "શ્રેણી મુજબ વિડીયો જુઓ" : "Browse by Program Area"}
+                {"Browse by Program Area"}
               </h2>
             </div>
             <div className="text-xs text-neutral-500 font-medium">
-              <span>{isGujarati ? "દર્શાવેલ: " : "Showing: "}</span>
+              <span>{"Showing: "}</span>
               <strong className="text-[#0B3025] font-bold">{filteredVideos.length}</strong>
               <span> of {YOUTUBE_VIDEOS.length} videos</span>
             </div>
@@ -275,7 +267,7 @@ export default function VideosPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isGujarati ? "વિડીયો શીર્ષક, વિષય અથવા શ્રેણી શોધો..." : "Search videos by title, topic, or category..."}
+                placeholder={"Search videos by title, topic, or category..."}
                 className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-neutral-50 border border-neutral-200 text-xs sm:text-sm text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#F47B2A]/40 focus:border-[#F47B2A] transition-all"
               />
               {searchQuery && (
@@ -298,7 +290,7 @@ export default function VideosPage() {
             >
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
-                const labelObj = VIDEO_CATEGORY_LABELS[cat] || { en: cat, gu: cat };
+                const labelObj = VIDEO_CATEGORY_LABELS[cat] || { en: cat,  };
                 const count = categoryCounts[cat] || 0;
 
                 return (
@@ -313,7 +305,7 @@ export default function VideosPage() {
                         : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
                     }`}
                   >
-                    <span>{isGujarati ? labelObj.gu : labelObj.en}</span>
+                    <span>{labelObj.en}</span>
                     <span
                       className={`text-[10px] rounded-full px-1.5 py-0.2 font-mono font-bold ${
                         isActive ? "bg-white/20 text-white" : "bg-white text-neutral-600"
@@ -334,7 +326,7 @@ export default function VideosPage() {
                   }}
                   className="px-3 py-1.5 rounded-full text-xs font-semibold text-[#F47B2A] hover:bg-amber-50 transition-colors shrink-0"
                 >
-                  {isGujarati ? "ફિલ્ટર્સ સાફ કરો" : "Clear Filters"}
+                  {"Clear Filters"}
                 </button>
               )}
             </div>
@@ -351,12 +343,10 @@ export default function VideosPage() {
                 <SearchIcon size={24} />
               </div>
               <h3 className="font-heading font-bold text-base text-[#0B3025]">
-                {isGujarati ? "કોઈ વિડીયો મળ્યો નથી" : "No Videos Found"}
+                {"No Videos Found"}
               </h3>
               <p className="text-xs text-neutral-500 max-w-sm mx-auto">
-                {isGujarati
-                  ? `તમારી શોધ "${searchQuery || selectedCategory}" માટે કોઈ વિડીયો મળ્યો નથી.`
-                  : `No videos match your filter "${searchQuery || selectedCategory}". Try another search term or reset filters.`}
+                {`No videos match your filter "${searchQuery || selectedCategory}". Try another search term or reset filters.`}
               </p>
               <button
                 type="button"
@@ -366,7 +356,7 @@ export default function VideosPage() {
                 }}
                 className="px-4 py-2 rounded-xl bg-[#0B3025] hover:bg-[#174B38] text-white text-xs font-bold transition-all shadow-xs"
               >
-                {isGujarati ? "બધા વિડીયો જુઓ" : "Reset All Filters"}
+                {"Reset All Filters"}
               </button>
             </div>
           ) : (
@@ -394,15 +384,13 @@ export default function VideosPage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8">
             <div className="space-y-2 max-w-xl text-center md:text-left">
               <span className="text-[11px] uppercase tracking-wider text-[#F47B2A] font-bold">
-                {isGujarati ? "અમારી સાથે જોડાઓ" : "Stay Connected & Support"}
+                {"Stay Connected & Support"}
               </span>
               <h3 id="video-closing-heading" className="font-heading text-xl sm:text-2xl font-bold text-white">
-                {isGujarati ? "સ્વદીપના કાર્યોને ટેકો આપો" : "Support Swadeep's Grassroots Mission"}
+                {"Support Swadeep's Grassroots Mission"}
               </h3>
               <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-body">
-                {isGujarati
-                  ? "અમારી YouTube ચેનલ સબ્સ્ક્રાઇબ કરો, ૮૬+ ક્ષેત્રીય તસ્વીરો જુઓ અથવા ગ્રામીણ બાળકો અને મહિલાઓના કલ્યાણ માટે દાન આપો."
-                  : "Subscribe to our YouTube channel for updates, explore our 86+ field photos, or support our 5 core programs across Gujarat."}
+                {"Subscribe to our YouTube channel for updates, explore our 86+ field photos, or support our 5 core programs across Gujarat."}
               </p>
             </div>
 
@@ -414,7 +402,7 @@ export default function VideosPage() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
               >
                 <YoutubeIcon size={16} />
-                <span>{isGujarati ? "સબ્સ્ક્રાઇબ કરો" : "Subscribe on YouTube"}</span>
+                <span>{"Subscribe on YouTube"}</span>
               </a>
 
               <Link
@@ -422,7 +410,7 @@ export default function VideosPage() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all"
               >
                 <CameraIcon size={15} />
-                <span>{isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}</span>
+                <span>{"Photo Gallery"}</span>
               </Link>
 
               <Link
@@ -430,7 +418,7 @@ export default function VideosPage() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
               >
                 <HeartIcon size={15} />
-                <span>{isGujarati ? "દાન આપો" : "Support Our Cause"}</span>
+                <span>{"Support Our Cause"}</span>
               </Link>
             </div>
           </div>

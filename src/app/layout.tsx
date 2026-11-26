@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Source_Sans_3, Noto_Sans_Gujarati } from "next/font/google";
+import { Inter, Source_Sans_3 } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Providers } from "@/components/layout/Providers";
@@ -15,12 +15,6 @@ const inter = Inter({
 const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   variable: "--font-source-sans",
-  display: "swap",
-});
-
-const notoSansGujarati = Noto_Sans_Gujarati({
-  subsets: ["gujarati", "latin"],
-  variable: "--font-noto-gujarati",
   display: "swap",
 });
 
@@ -63,7 +57,6 @@ export const metadata: Metadata = {
     canonical: SITE_CONFIG.url,
     languages: {
       "en-IN": SITE_CONFIG.url,
-      "gu-IN": SITE_CONFIG.url,
       "x-default": SITE_CONFIG.url,
     },
   },
@@ -114,7 +107,6 @@ export default function RootLayout({
         "@type": "NGO",
         "@id": `${SITE_CONFIG.url}/#organization`,
         name: "Swadeep Shikshan Vikas Sanstha",
-        alternateName: "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા",
         url: SITE_CONFIG.url,
         logo: `${SITE_CONFIG.url}/images/favicon.png`,
         description: SITE_CONFIG.description,
@@ -134,7 +126,7 @@ export default function RootLayout({
           telephone: "+91-942-830-9408",
           contactType: "customer service",
           email: SITE_CONFIG.email,
-          availableLanguage: ["English", "Gujarati"],
+          availableLanguage: ["English"],
         },
         sameAs: [
           SITE_CONFIG.social.facebook,
@@ -151,7 +143,7 @@ export default function RootLayout({
         publisher: {
           "@id": `${SITE_CONFIG.url}/#organization`,
         },
-        inLanguage: ["en-IN", "gu-IN"],
+        inLanguage: ["en-IN"],
       },
     ],
   };
@@ -159,7 +151,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sourceSans.variable} ${notoSansGujarati.variable} scroll-smooth`}
+      className={`${inter.variable} ${sourceSans.variable} scroll-smooth`}
     >
       <head>
         <script

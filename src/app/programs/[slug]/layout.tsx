@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const desc = program.summary.slice(0, 160);
 
   return {
-    title: `${program.title} (${program.titleGu}) | Swadeep Shikshan Vikas Sanstha`,
+    title: `${program.title} | Swadeep Shikshan Vikas Sanstha`,
     description: desc,
     alternates: {
       canonical: `/programs/${params.slug}`,

@@ -14,9 +14,7 @@ const OFFICIAL_REVIEWS = [
   {
     id: "rev-official-1",
     name: "Pradeep Kumar Ghosal",
-    nameGu: "પ્રદીપ કુમાર ઘોષાલ",
     role: "Head – Environment, CR & Sustainability, Coastal Gujarat Power Ltd. (TATA Power)",
-    roleGu: "હેડ – પર્યાવરણ, CR અને ટકાઉપણું, કોસ્ટલ ગુજરાત પાવર લિ. (ટાટા પાવર)",
     category: "Funding Partners",
     rating: 5,
     quote: "Coastal Gujarat Power Limited (Tata Power) – CGPL’s partnership with SWADEEP is based on Specific Community Development Principle which is further aligned with the Social Sustainability Strategic intents to serve the community in a systematic manner through co-creation, effective planning, bridging the gap, Unique innovations, and Participatory learning in an Inclusive approach for getting the desired results in the field. Together, we aspire to bring the desired transformation through effective partnership and continued collaboration. It is always a matter of privilege to have been associated with SWADEEP and its efforts in the field. Our association with SWADEEP has only grown stronger over the years and has become an integral part of CGPL’s Integrated Fishermen Development Program titled 'Sagarbandhu'.",
@@ -27,9 +25,7 @@ const OFFICIAL_REVIEWS = [
   {
     id: "rev-official-2",
     name: "American India Foundation (AIF)",
-    nameGu: "અમેરિકન ઇન્ડિયા ફાઉન્ડેશન (AIF)",
     role: "Funding & Implementation Partner",
-    roleGu: "સહયોગી અને અમલીકરણ ભાગીદાર",
     category: "Funding Partners",
     rating: 5,
     quote: "Working with an NGO like Swadeep which has a vast & logical understanding of communities and smart solutions for the problems of the region they serve is great. American India Foundation always appreciates the pure and honest efforts made towards lifting up the livelihoods of people and surely Swadeep is one of those who deserve one.",
@@ -40,9 +36,7 @@ const OFFICIAL_REVIEWS = [
   {
     id: "rev-official-3",
     name: "U.T. Administration of Dadra and Nagar Haveli and Daman and Diu",
-    nameGu: "કેન્દ્રશાસિત પ્રદેશ દાદરા અને નગર હવેલી અને દમણ અને દીવ વહીવટીતંત્ર",
     role: "Government of India",
-    roleGu: "ભારત સરકાર",
     category: "Government Partner",
     rating: 5,
     quote: "We have worked with the Swadeep on the projects of Education and Community Development for a long time and have been able to see a clear impact on the community through tangible deliverables. We would love to applaud for team Swadeep for their incredible efforts in the betterment of the U/T Dadra and Nagar Haveli.",

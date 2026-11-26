@@ -39,11 +39,6 @@ export default function CallToAction() {
           Together, We Can Make a Difference
         </h2>
 
-        {/* Gujarati Subtitle */}
-        <p className="font-gujarati text-xl sm:text-2xl md:text-3xl text-white/95 font-medium tracking-wide">
-          સાથે મળીને, આપણે ફરક લાવી શકીએ છીએ
-        </p>
-
         {/* Supporting description */}
         <p className="font-body text-white/90 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed pt-2">
           Whether you contribute your time, partner with our grassroots programs,

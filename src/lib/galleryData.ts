@@ -14,7 +14,6 @@ export type GalleryCategory =
 export interface GalleryItem {
   id: number;
   title: string;
-  titleGu: string;
   category: "Education" | "Health" | "Livelihood" | "Infrastructure" | "Relief" | "Media";
   location: string;
   date: string;
@@ -33,21 +32,21 @@ export const CATEGORIES: GalleryCategory[] = [
   "Media",
 ];
 
-export const CATEGORY_LABELS: Record<GalleryCategory, { en: string; gu: string }> = {
-  All: { en: "All Photos", gu: "બધા ફોટો" },
-  Education: { en: "Education", gu: "શિક્ષણ" },
-  Health: { en: "Health", gu: "આરોગ્ય" },
-  Livelihood: { en: "Livelihood", gu: "આજીવિકા" },
-  Infrastructure: { en: "Rural Infrastructure", gu: "ગ્રામીણ માળખા" },
-  Relief: { en: "Disaster", gu: "આપત્તિ રાહત" },
-  Media: { en: "Media", gu: "મીડિયા" },
+export const CATEGORY_LABELS: Record<GalleryCategory, { en: string }> = {
+  All: { en: "All Photos",  },
+  Education: { en: "Education",  },
+  Health: { en: "Health",  },
+  Livelihood: { en: "Livelihood",  },
+  Infrastructure: { en: "Rural Infrastructure",  },
+  Relief: { en: "Disaster",  },
+  Media: { en: "Media",  },
 };
 
 export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 1,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -58,7 +57,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 2,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -69,7 +68,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 3,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -80,7 +79,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 4,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -91,7 +90,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 5,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -102,7 +101,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 6,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -113,7 +112,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 7,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -124,7 +123,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 8,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -135,7 +134,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 9,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -146,7 +145,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 10,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -157,7 +156,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 11,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -168,7 +167,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 12,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -179,7 +178,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 13,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -190,7 +189,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 14,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -201,7 +200,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 15,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -212,7 +211,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 16,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -223,7 +222,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 17,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -234,7 +233,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 18,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -245,7 +244,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 19,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -256,7 +255,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 20,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -267,7 +266,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 21,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -278,7 +277,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 22,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -289,7 +288,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 23,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -300,7 +299,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 24,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -311,7 +310,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 25,
     "title": "Education Initiative",
-    "titleGu": "શૈક્ષણિક પ્રવૃત્તિ",
+    
     "category": "Education",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -322,7 +321,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 26,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -333,7 +332,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 27,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -344,7 +343,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 28,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -355,7 +354,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 29,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -366,7 +365,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 30,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -377,7 +376,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 31,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -388,7 +387,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 32,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -399,7 +398,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 33,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -410,7 +409,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 34,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -421,7 +420,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 35,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -432,7 +431,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 36,
     "title": "Health Program",
-    "titleGu": "આરોગ્ય કાર્યક્રમ",
+    
     "category": "Health",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -443,7 +442,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 37,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -454,7 +453,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 38,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -465,7 +464,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 39,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -476,7 +475,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 40,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -487,7 +486,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 41,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -498,7 +497,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 42,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -509,7 +508,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 43,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -520,7 +519,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 44,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -531,7 +530,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 45,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -542,7 +541,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 46,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -553,7 +552,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 47,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -564,7 +563,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 48,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -575,7 +574,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 49,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -586,7 +585,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 50,
     "title": "Livelihood & Fisheries",
-    "titleGu": "આજીવિકા અને મત્સ્ય ઉદ્યોગ",
+    
     "category": "Livelihood",
     "location": "Coastal Gujarat",
     "date": "Field Documentation",
@@ -597,7 +596,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 51,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -608,7 +607,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 52,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -619,7 +618,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 53,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -630,7 +629,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 54,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -641,7 +640,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 55,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -652,7 +651,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 56,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -663,7 +662,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 57,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -674,7 +673,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 58,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -685,7 +684,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 59,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -696,7 +695,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 60,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -707,7 +706,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 61,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -718,7 +717,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 62,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -729,7 +728,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 63,
     "title": "Rural Infrastructure",
-    "titleGu": "ગ્રામીણ ઈન્ફ્રાસ્ટ્રક્ચર",
+    
     "category": "Infrastructure",
     "location": "Rural Gujarat",
     "date": "Field Documentation",
@@ -740,7 +739,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 64,
     "title": "Disaster Relief",
-    "titleGu": "આપત્તિ રાહત",
+    
     "category": "Relief",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -751,7 +750,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 65,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -762,7 +761,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 66,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -773,7 +772,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 67,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -784,7 +783,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 68,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -795,7 +794,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 69,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -806,7 +805,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 70,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -817,7 +816,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 71,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -828,7 +827,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 72,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -839,7 +838,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 73,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -850,7 +849,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 74,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -861,7 +860,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 75,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -872,7 +871,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 76,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -883,7 +882,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 77,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -894,7 +893,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 78,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -905,7 +904,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 79,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -916,7 +915,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 80,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -927,7 +926,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 81,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -938,7 +937,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 82,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -949,7 +948,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 83,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -960,7 +959,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 84,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -971,7 +970,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 85,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",
@@ -982,7 +981,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
   {
     "id": 86,
     "title": "Media Coverage",
-    "titleGu": "મીડિયા અને પ્રેસ",
+    
     "category": "Media",
     "location": "Gujarat, India",
     "date": "Field Documentation",

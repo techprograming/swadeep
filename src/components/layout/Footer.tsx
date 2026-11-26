@@ -36,9 +36,7 @@ export default function Footer() {
                 <span className="font-heading text-2xl font-extrabold tracking-tight text-white leading-none">
                   <span className="text-[#F47B2A]">S</span>wadeep
                 </span>
-                <span className="font-gujarati text-xs sm:text-sm text-cream/90 font-medium mt-1 leading-none">
-                  {SITE_CONFIG.nameGujarati}
-                </span>
+                
               </div>
             </Link>
 
@@ -62,7 +60,7 @@ export default function Footer() {
             {/* Social Media Links */}
             <div className="pt-3">
               <span className="block text-xs font-semibold uppercase tracking-wider text-cream/60 mb-2.5">
-                {isGujarati ? "સોશિયલ મીડિયા પર જોડાઓ" : "Official Channels"}
+                {"Official Channels"}
               </span>
               <div className="flex items-center space-x-3">
                 {/* Facebook */}
@@ -114,7 +112,7 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 text-xs sm:text-sm" role="list">
               {NAV_LINKS.map((link) => {
-                const label = isGujarati ? link.labelGu : link.label;
+                const label = link.label;
                 return (
                   <li key={link.href}>
                     <Link
@@ -144,7 +142,7 @@ export default function Footer() {
                   >
                     <span className="flex items-center">
                       <DynamicIcon name={area.icon} size={14} className="mr-2 text-[#F47B2A] shrink-0" />
-                      <span>{isGujarati ? area.titleGu : area.title}</span>
+                      <span>{area.title}</span>
                     </span>
                   </Link>
                 </li>
@@ -160,20 +158,20 @@ export default function Footer() {
             <address className="not-italic space-y-3 text-xs text-cream/80">
               <div>
                 <span className="block font-bold text-white text-[11px] uppercase text-[#F47B2A]">
-                  {isGujarati ? OFFICE_LOCATIONS.operating.labelGu : "Headquarters & Office"}
+                  {"Headquarters & Office"}
                 </span>
                 <p className="mt-0.5 leading-relaxed">{OFFICE_LOCATIONS.operating.fullAddress}</p>
               </div>
 
               <div className="pt-1 space-y-1">
                 <p>
-                  <span className="font-semibold text-white">{isGujarati ? "ફોન:" : "Phone:"}</span>{" "}
+                  <span className="font-semibold text-white">{"Phone:"}</span>{" "}
                   <a href={`tel:${SITE_CONFIG.phone}`} className="hover:text-[#F47B2A] transition-colors">
                     {SITE_CONFIG.phone}
                   </a>
                 </p>
                 <p>
-                  <span className="font-semibold text-white">{isGujarati ? "ઈમેલ:" : "Email:"}</span>{" "}
+                  <span className="font-semibold text-white">{"Email:"}</span>{" "}
                   <a href={`mailto:${SITE_CONFIG.email}`} className="hover:text-[#F47B2A] transition-colors">
                     {SITE_CONFIG.email}
                   </a>

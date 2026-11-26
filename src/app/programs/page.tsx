@@ -58,9 +58,7 @@ export default function ProgramsPage() {
             What We Do?
           </h1>
 
-          <p className="font-gujarati text-xl sm:text-2xl text-saffron-light font-medium">
-            અમારા કાર્યક્ષેત્રો — પાયાના સ્તરે પરિણામલક્ષી વિકાસ
-          </p>
+          
 
           <p className="font-body text-cream/90 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto pt-2">
             At Swadeep, we concentrate our efforts on deprived communities by working on thematic areas of Development.

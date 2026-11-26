@@ -44,12 +44,12 @@ function XIcon({ className }: { className?: string }) {
 function getCategoryLabel(category: GalleryCategory, isGujarati: boolean): string {
   const entry = CATEGORY_LABELS[category];
   if (!entry) return category;
-  return isGujarati ? entry.gu : entry.en;
+  return entry.en;
 }
 
 function getPhotoAltText(item: GalleryItem, index: number, isGujarati: boolean): string {
   const categoryLabel = getCategoryLabel(item.category, isGujarati);
-  const org = isGujarati ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા" : "Swadeep Shikshan Vikas Sanstha";
+  const org = "Swadeep Shikshan Vikas Sanstha";
   return `${categoryLabel} — ${org} (${index + 1})`;
 }
 
@@ -141,7 +141,7 @@ function Lightbox({
           type="button"
           onClick={onClose}
           className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]"
-          aria-label={isGujarati ? "ફોટો બંધ કરો (Esc)" : "Close photo viewer (Esc)"}
+          aria-label={"Close photo viewer (Esc)"}
         >
           <XIcon className="w-5 h-5" />
         </button>
@@ -168,7 +168,7 @@ function Lightbox({
           type="button"
           onClick={onPrev}
           className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 hover:bg-white/20 text-white flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]"
-          aria-label={isGujarati ? "પાછલો ફોટો" : "Previous photo"}
+          aria-label={"Previous photo"}
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
@@ -178,7 +178,7 @@ function Lightbox({
           type="button"
           onClick={onNext}
           className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/50 hover:bg-white/20 text-white flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]"
-          aria-label={isGujarati ? "આગલો ફોટો" : "Next photo"}
+          aria-label={"Next photo"}
         >
           <ChevronRight className="w-6 h-6" />
         </button>
@@ -217,14 +217,11 @@ export default function GalleryPage() {
       if (!q) return true;
 
       const catEn = CATEGORY_LABELS[item.category]?.en.toLowerCase() ?? "";
-      const catGu = CATEGORY_LABELS[item.category]?.gu.toLowerCase() ?? "";
       return (
         item.title.toLowerCase().includes(q) ||
-        (item.titleGu && item.titleGu.toLowerCase().includes(q)) ||
         (item.location && item.location.toLowerCase().includes(q)) ||
         item.category.toLowerCase().includes(q) ||
         catEn.includes(q) ||
-        catGu.includes(q) ||
         (item.description && item.description.toLowerCase().includes(q))
       );
     });
@@ -258,13 +255,13 @@ export default function GalleryPage() {
       >
         <div className="container-wide max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-xs font-semibold tracking-[0.18em] uppercase text-[#F47B2A] mb-2">
-            {isGujarati ? "સ્વદીપ શિક્ષણ વિકાસ સંસ્થા" : "Swadeep Shikshan Vikas Sanstha"}
+            {"Swadeep Shikshan Vikas Sanstha"}
           </p>
           <h1
             id="gallery-hero-heading"
             className="font-heading text-3xl sm:text-5xl font-extrabold tracking-tight text-[#0B3025] leading-tight"
           >
-            {isGujarati ? "ફોટો ગેલેરી" : "Photo Gallery"}
+            {"Photo Gallery"}
           </h1>
         </div>
       </header>
@@ -316,8 +313,8 @@ export default function GalleryPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  aria-label={isGujarati ? "ફોટો શોધો" : "Search photos"}
-                  placeholder={isGujarati ? "ફોટો શોધો..." : "Search..."}
+                  aria-label={"Search photos"}
+                  placeholder={"Search..."}
                   className="w-full pl-6 pr-6 py-1.5 bg-transparent border-b border-forest/15 focus:border-[#0B3025] text-xs sm:text-sm text-[#0B3025] placeholder:text-charcoal/40 focus:outline-none transition-colors"
                 />
                 {searchQuery && (
@@ -344,7 +341,7 @@ export default function GalleryPage() {
           {displayedItems.length === 0 ? (
             <div className="text-center py-20 space-y-4">
               <p className="font-heading font-semibold text-base text-[#0B3025]">
-                {isGujarati ? "કોઈ ફોટો મળ્યો નથી" : "No photos found"}
+                {"No photos found"}
               </p>
               <button
                 type="button"
@@ -354,7 +351,7 @@ export default function GalleryPage() {
                 }}
                 className="px-5 py-2 rounded-full border border-[#0B3025]/25 text-[#0B3025] hover:bg-[#0B3025] hover:text-white text-xs font-semibold transition-colors"
               >
-                {isGujarati ? "બધા ફોટો બતાવો" : "All Photos"}
+                {"All Photos"}
               </button>
             </div>
           ) : (
@@ -399,7 +396,7 @@ export default function GalleryPage() {
                     onClick={() => setDisplayLimit((prev) => prev + PAGE_SIZE)}
                     className="inline-flex items-center gap-2 border border-[#0B3025] text-[#0B3025] hover:bg-[#0B3025] hover:text-white font-semibold px-8 py-2.5 rounded-full text-xs sm:text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F47B2A]"
                   >
-                    <span>{isGujarati ? "વધુ જુઓ" : "Load More"}</span>
+                    <span>{"Load More"}</span>
                   </button>
                 </div>
               )}
@@ -417,14 +414,14 @@ export default function GalleryPage() {
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white hover:bg-neutral-50 text-[#0B3025] border border-forest/15 text-xs sm:text-sm font-semibold transition-colors"
           >
             <YoutubeIcon size={16} className="text-[#FF0000]" />
-            <span>{isGujarati ? "વીડિયો" : "Videos"}</span>
+            <span>{"Videos"}</span>
           </Link>
           <Link
             href="/donate"
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#F47B2A] hover:bg-[#E06A1B] text-white text-xs sm:text-sm font-semibold transition-colors"
           >
             <HeartIcon size={15} />
-            <span>{isGujarati ? "દાન કરો" : "Donate Now"}</span>
+            <span>{"Donate Now"}</span>
           </Link>
         </section>
       </div>

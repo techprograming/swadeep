@@ -59,18 +59,15 @@ export default function VideoModal({ video, onClose, isGujarati = false }: Video
                 id="video-modal-title"
                 className="text-base sm:text-lg font-heading font-bold text-[#0B3025] truncate"
               >
-                {isGujarati && video.titleGu ? video.titleGu : video.title}
+                {video.title}
               </h3>
-              <p className="text-xs text-charcoal/60 truncate">
-                {isGujarati && video.titleGu ? video.title : video.titleGu}
-              </p>
             </div>
           </div>
 
           <button
             type="button"
             onClick={onClose}
-            aria-label={isGujarati ? "વિડીયો પ્લેયર બંધ કરો (Esc)" : "Close video player (Esc)"}
+            aria-label={"Close video player (Esc)"}
             className="w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 text-charcoal flex items-center justify-center transition-colors shrink-0"
           >
             <svg
@@ -120,7 +117,7 @@ export default function VideoModal({ video, onClose, isGujarati = false }: Video
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-all shadow-sm"
             >
               <YoutubeIcon size={16} />
-              <span>{isGujarati ? "YouTube પર જુઓ" : "Open on YouTube"}</span>
+              <span>{"Open on YouTube"}</span>
               <ExternalLinkIcon size={12} />
             </a>
 
@@ -129,7 +126,7 @@ export default function VideoModal({ video, onClose, isGujarati = false }: Video
               onClick={onClose}
               className="px-3.5 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-charcoal text-xs font-semibold transition-colors"
             >
-              {isGujarati ? "બંધ કરો (Esc)" : "Close"}
+              {"Close"}
             </button>
           </div>
         </div>

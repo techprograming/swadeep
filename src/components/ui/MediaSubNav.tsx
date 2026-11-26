@@ -21,9 +21,7 @@ interface NavItem {
   id: MediaTabId;
   href: string;
   labelEn: string;
-  labelGu: string;
   badgeEn: string;
-  badgeGu: string;
   icon: React.ComponentType<{ size?: number | string; className?: string }>;
 }
 
@@ -32,36 +30,36 @@ const NAV_ITEMS: NavItem[] = [
     id: "resources",
     href: "/resources",
     labelEn: "Reports",
-    labelGu: "અહેવાલો",
+    
     badgeEn: "33 Documents",
-    badgeGu: "૩૩ દસ્તાવેજો",
+    
     icon: ReceiptTextIcon,
   },
   {
     id: "publications",
     href: "/publications",
     labelEn: "Publications",
-    labelGu: "પ્રકાશનો",
+    
     badgeEn: "5 Books & Guides",
-    badgeGu: "૫ પુસ્તિકાઓ",
+    
     icon: BookOpenIcon,
   },
   {
     id: "gallery",
     href: "/gallery",
     labelEn: "Photo Gallery",
-    labelGu: "ફોટો ગેલેરી",
+    
     badgeEn: "86 Field Photos",
-    badgeGu: "૮૬ તસ્વીરો",
+    
     icon: CameraIcon,
   },
   {
     id: "videos",
     href: "/videos",
     labelEn: "Video Gallery",
-    labelGu: "વિડીયો ગેલેરી",
+    
     badgeEn: "12 YouTube Videos",
-    badgeGu: "૧૨ વિડીયો",
+    
     icon: YoutubeIcon,
   },
 ];
@@ -71,7 +69,7 @@ export default function MediaSubNav({ activeTab, className = "" }: MediaSubNavPr
 
   return (
     <nav
-      aria-label={isGujarati ? "સંસાધન અને મીડિયા નેવિગેશન" : "Media & Knowledge Library Navigation"}
+      aria-label={"Media & Knowledge Library Navigation"}
       className={`w-full bg-[#061F17]/95 border-b border-white/10 backdrop-blur-md sticky top-16 sm:top-20 z-20 shadow-md ${className}`}
     >
       <div className="container-wide max-w-6xl mx-auto px-4 sm:px-6">
@@ -95,13 +93,13 @@ export default function MediaSubNav({ activeTab, className = "" }: MediaSubNavPr
                   size={16}
                   className={isActive ? "text-white" : "text-saffron-400 group-hover:text-white"}
                 />
-                <span>{isGujarati ? item.labelGu : item.labelEn}</span>
+                <span>{item.labelEn}</span>
                 <span
                   className={`hidden md:inline-block px-2 py-0.5 rounded-full text-[10px] font-mono tracking-tight font-bold ${
                     isActive ? "bg-black/20 text-white" : "bg-white/10 text-white/70"
                   }`}
                 >
-                  {isGujarati ? item.badgeGu : item.badgeEn}
+                  {item.badgeEn}
                 </span>
               </Link>
             );

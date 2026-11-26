@@ -118,7 +118,7 @@ export default function OurTrustees() {
           <div className="max-w-2xl">
             <SectionHeading
               badge="SWADEEP SHIKSHAN VIKAS SANSTHA"
-              gujaratiText="અમારા ટ્રસ્ટીઓ"
+              
               title="Our Trustees"
               subtitle="We are a professionally managed organisation with decisions taken with utmost care and for the interest of people we strive to serve."
               align="left"
@@ -163,8 +163,8 @@ export default function OurTrustees() {
             }}
           >
             {trusteesList.map((trustee, index) => {
-              const displayName = isGujarati && trustee.nameGu ? trustee.nameGu : trustee.name;
-              const displayRole = isGujarati && trustee.roleGu ? trustee.roleGu : trustee.role;
+              const displayName = trustee.name;
+              const displayRole = trustee.role;
 
               return (
                 <div
@@ -210,7 +210,7 @@ export default function OurTrustees() {
                           <h3 className="font-heading font-extrabold text-base sm:text-lg text-forest-dark group-hover:text-forest transition-colors leading-snug">
                             {displayName}
                           </h3>
-                          {isGujarati && trustee.name && (
+                          {false && (
                             <span className="text-xs text-charcoal/50 block mt-0.5">
                               {trustee.name}
                             </span>

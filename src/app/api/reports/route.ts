@@ -52,7 +52,7 @@ export async function POST(request: Request) {
     const newReport = {
       id: `rep-${Date.now()}`,
       title: sanitizeInput(title.trim()),
-      titleGu: titleGu ? sanitizeInput(String(titleGu).trim()) : sanitizeInput(title.trim()),
+      
       category: category && ["Annual Report", "Project Report", "Audit Report", "FC Accounts"].includes(category)
         ? category
         : "Annual Report",

@@ -34,13 +34,11 @@ export default function GetInvolvedPage() {
             id="get-involved-heading"
             className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight"
           >
-            {isGujarati ? "સહભાગી બનો" : "Get Involved"}
+            Get Involved
           </h1>
 
           <p className="font-body text-cream/90 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed pt-2">
-            {isGujarati
-              ? "શિક્ષણ, આરોગ્ય, આજીવિકા અને સમુદાય વિકાસમાં દાન, સ્વયંસેવા, સંસ્થાકીય સહયોગ અથવા કારકિર્દી દ્વારા સહભાગી બનો."
-              : "Support grassroots transformation in Gujarat through donation, volunteering, partnership, or career opportunities with Swadeep Shikshan Vikas Sanstha."}
+            Support grassroots transformation in Gujarat through donation, volunteering, partnership, or career opportunities with Swadeep Shikshan Vikas Sanstha.
           </p>
         </div>
       </section>
