@@ -78,10 +78,12 @@ export default function GetInvolvedSubNav({ activeTab, className = "" }: GetInvo
   const { isGujarati } = useLanguage();
 
   return (
-    <nav
-      aria-label={"Get Involved Sub Navigation"}
-      className={`w-full bg-[#061F17]/95 border-b border-white/10 backdrop-blur-md sticky top-16 sm:top-20 z-20 shadow-md ${className}`}
-    >
+    <>
+      <div className="h-[88px] sm:h-[102px] bg-[#061F17]" aria-hidden="true" />
+      <nav
+        aria-label={"Get Involved Sub Navigation"}
+        className={`w-full bg-[#061F17]/95 border-b border-white/10 backdrop-blur-md sticky top-[52px] sm:top-[60px] z-20 shadow-md ${className}`}
+      >
       <div className="container-wide max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto py-3 scrollbar-none snap-x snap-mandatory">
           {NAV_ITEMS.map((item) => {
@@ -119,5 +121,6 @@ export default function GetInvolvedSubNav({ activeTab, className = "" }: GetInvo
         </div>
       </div>
     </nav>
+    </>
   );
 }
